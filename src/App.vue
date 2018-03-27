@@ -2,13 +2,26 @@
 	<Layout class="layout">
 		<Header class="layout-header-bar">
 			<div class="layout-header-left">
-				<Icon type="ios-arrow-left" size="24" class="layout-action-btn" @click.native="onBack"></Icon>
-				<Icon type="ios-reload" size="24" class="layout-action-btn" @click.native="onRefresh"></Icon>
+				<div class="layout-action-btn">
+					<Icon type="ios-arrow-left" size="24" @click.native="onBack"></Icon>
+				</div>
+				<div class="layout-action-btn">
+					<Icon type="ios-reload" size="24" @click.native="onRefresh"></Icon>
+				</div>
 			</div>
 			<div class="layout-header-center">
 				{{title}}
 			</div>
 			<div class="layout-header-right">
+				<div class="layout-action-btn">
+					<Icon type="ios-close-empty" size="28" @click.native="onClose" v-show="isClosable"></Icon>
+				</div>
+				<div class="layout-action-btn">
+					<Icon :type="maxIcon" size="20" @click.native="onMax" v-show="isMaximizable"></Icon>
+				</div>
+				<div class="layout-action-btn">
+					<Icon type="ios-minus-empty" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
+				</div>
 				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMenuSelect">
 					<Icon type="ios-more" size="24" class="layout-action-btn"></Icon>
 					<DropdownMenu slot="list">
@@ -18,9 +31,6 @@
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
-				<Icon type="ios-minus-empty" size="24" class="layout-action-btn" @click.native="onMinni"></Icon>
-				<Icon :type="maxIcon" size="20" class="layout-action-btn" @click.native="onMax"></Icon>
-				<Icon type="ios-close-empty" size="28" class="layout-action-btn" @click.native="onClose"></Icon>
 			</div>
 		</Header>
 		<Content class="layout-content">
@@ -41,7 +51,12 @@
 				title: '',
 
 				isDebug: win.isDevToolsOpened(),
-				isMaximize: false
+
+				isMaximize: false,
+
+				isMaximizable: win.isMaximizable(),
+				isMinimizable: win.isMinimizable(),
+				isClosable: win.isClosable(),
 			}
 		},
 		computed: {
@@ -140,14 +155,21 @@
 		width: 156px;
 	}
 
+	.layout-header-right > div {
+		float: right;
+	}
+
 	.layout-action-btn {
+		display: inline-block;
 		padding-left: 10px;
 		padding-right: 10px;
 		vertical-align: middle;
+		line-height: 48px;
+		transition: all 0.1s;
 	}
 
 	.layout-action-btn:active {
-		opacity: 0.8;
+		opacity: 0.3;
 	}
 
 	.layout-content {

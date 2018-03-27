@@ -9,10 +9,16 @@ function createWindow() {
 	mainWindow = new BrowserWindow({
 		width: 320,
 		height: 580,
+		minWidth: 320,
+		minHeight: 480,
 		show: false,
 		titleBarStyle: 'hidden',
 		// transparent: true
-		frame: false
+		frame: false,
+		maximizable: false,
+		minimizable: true,
+		closable: true,
+		isShowMoreMenu: false,
 	});
 
 	//点击穿透 window
