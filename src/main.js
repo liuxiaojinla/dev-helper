@@ -17,6 +17,7 @@ router.afterEach(() => {
 	iView.LoadingBar.finish();
 });
 
+window.IS_DEV = process.env.NODE_ENV === 'development';
 window.__ROUTER__ = router;
 window.__VUE__ = new Vue({
 	el: '#app',
