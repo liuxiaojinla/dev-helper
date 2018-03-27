@@ -5,13 +5,21 @@ window.sys = sys;
 window.IS_DEV = process.env.NODE_ENV === 'development';
 
 sys.addResponseInterceptor((res) => {
-	const data = res.data;
-	if (data.ret) return data;
+	console.log(res)
+	throw new Error('sdas');
+	if (res && res.data) {
+		const data = res.data;
+		if (data.data || data.result) return data;
 
-	const err = new Error(data.msg);
-	err.response = res;
-	err.data = data;
-	throw err;
+		const err = new Error(data.msg);
+		err.response = res;
+		err.data = data;
+		throw err;
+	} else {
+		const err = new Error('请求服务器失败，请联系管理员~');
+		err.response = res;
+		throw err;
+	}
 }, (err) => {
 	console.error(err);
 });

@@ -15,10 +15,16 @@ function createWindow() {
 		titleBarStyle: 'hidden',
 		// transparent: true
 		frame: false,
-		maximizable: false,
-		minimizable: true,
-		closable: true,
+		// maximizable: false,
+		// minimizable: true,
+		// closable: true,
 		isShowMoreMenu: false,
+
+		webPreferences: {
+			webSecurity: false,
+			allowDisplayingInsecureContent: true,
+			allowRunningInsecureContent: true
+		},
 	});
 
 	//点击穿透 window

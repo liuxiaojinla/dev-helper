@@ -46,7 +46,7 @@ function responseFailFunc(options, error, msg) {
  */
 function execSuccessFunc(options, response) {
 	try {
-		options.success && options.success.call(options.thisArg, response.data, response);
+		options.success && options.success.call(options.thisArg, response.data || response.result, response);
 	} catch (err) {
 		console.error(err);
 	}
@@ -119,8 +119,8 @@ function request(options) {
 		}
 	}
 
-	const instance = getRequestInstance();
-	return instance.request(options).then(response => {
+	return getRequestInstance().request(options).then(response => {
+		console.log(response);
 		execSuccessFunc(options, response);
 	}).catch((error) => {
 		responseFailFunc(options, error);

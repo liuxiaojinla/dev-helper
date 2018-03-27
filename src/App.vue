@@ -23,7 +23,9 @@
 					<Icon type="ios-minus-empty" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
 				</div>
 				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMenuSelect">
-					<Icon type="ios-more" size="24" class="layout-action-btn"></Icon>
+					<div class="layout-action-btn">
+						<Icon type="ios-more" size="24"></Icon>
+					</div>
 					<DropdownMenu slot="list">
 						<DropdownItem name="debug">
 							<Icon type="bug" size="20"></Icon>
