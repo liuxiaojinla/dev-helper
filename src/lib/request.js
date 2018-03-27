@@ -120,7 +120,6 @@ function request(options) {
 	}
 
 	return getRequestInstance().request(options).then(response => {
-		console.log(response);
 		execSuccessFunc(options, response);
 	}).catch((error) => {
 		responseFailFunc(options, error);

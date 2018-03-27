@@ -5,8 +5,6 @@ window.sys = sys;
 window.IS_DEV = process.env.NODE_ENV === 'development';
 
 sys.addResponseInterceptor((res) => {
-	console.log(res)
-	throw new Error('sdas');
 	if (res && res.data) {
 		const data = res.data;
 		if (data.data || data.result) return data;
@@ -21,7 +19,7 @@ sys.addResponseInterceptor((res) => {
 		throw err;
 	}
 }, (err) => {
-	console.error(err);
+	return Promise.reject(err);
 });
 
 //上传失败提示信息

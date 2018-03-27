@@ -17,7 +17,7 @@
 		},
 		methods: {
 			loadData() {
-				sys.request.post('https://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC', {}, (data) => {
+				sys.request.get('https://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC', {}, (data) => {
 					console.log(data);
 					this.data = data;
 				});
