@@ -7,18 +7,38 @@ let mainWindow;
 function createWindow() {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
-		width: 400,
-		height: 600,
-		// show: false,
-		// frame: false
+		width: 320,
+		height: 580,
+		minWidth: 320,
+		minHeight: 480,
+		show: false,
+		titleBarStyle: 'hidden',
+		// transparent: true
+		frame: false,
+		// maximizable: false,
+		// minimizable: true,
+		// closable: true,
+		isShowMoreMenu: false,
+
+		webPreferences: {
+			webSecurity: false,
+			allowDisplayingInsecureContent: true,
+			allowRunningInsecureContent: true
+		},
 	});
 
+	//点击穿透 window
+	// mainWindow.setIgnoreMouseEvents(true);
+
 	// 然后加载应用的 index.html。
-	// mainWindow.loadURL(url.format({
-	// 	pathname: path.join(__dirname, 'index.html'),
-	// 	protocol: 'file:',
-	// 	slashes: true
-	// }));
+	mainWindow.loadURL(url.format({
+		pathname: path.join(__dirname, 'index.html'),
+		protocol: 'file:',
+		slashes: true
+	}));
+
+	//load resource
+	// mainWindow.loadURL('http://localhost:8080');
 
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools();
@@ -27,7 +47,7 @@ function createWindow() {
 	mainWindow.on('closed', () => mainWindow = null);
 
 	//显示窗口
-	// mainWindow.show();
+	mainWindow.show();
 }
 
 // This method will be called when Electron has finished
