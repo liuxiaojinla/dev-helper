@@ -14,10 +14,10 @@
 			</div>
 			<div class="layout-header-right">
 				<div class="layout-action-btn">
-					<Icon type="ios-close-empty" size="28" @click.native="onClose" v-show="isClosable"></Icon>
+					<Icon type="ios-close-empty" size="24" @click.native="onClose" v-show="isClosable"></Icon>
 				</div>
 				<div class="layout-action-btn">
-					<Icon :type="maxIcon" size="20" @click.native="onMax" v-show="isMaximizable"></Icon>
+					<Icon :type="maxIcon" size="24" @click.native="onMax" v-show="isMaximizable"></Icon>
 				</div>
 				<div class="layout-action-btn">
 					<Icon type="ios-minus-empty" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
@@ -147,10 +147,10 @@
 	}
 
 	.layout-header-center {
-		-webkit-app-region: drag;
 		text-overflow: ellipsis;
 		font-size: 18px;
 		line-height: 24px;
+		-webkit-app-region: drag;
 	}
 
 	.layout-header-right {
@@ -168,6 +168,9 @@
 		vertical-align: middle;
 		line-height: 48px;
 		transition: all 0.1s;
+
+		user-select: none;
+		-webkit-user-select: none;
 	}
 
 	.layout-action-btn:active {
