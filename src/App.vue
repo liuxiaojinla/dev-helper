@@ -68,6 +68,8 @@
 		},
 		created() {
 			this.$nextTick(this.updateTitle);
+			win.on('maximize', () => this.isMaximize = true);
+			win.on('unmaximize', () => this.isMaximize = false);
 		},
 		methods: {
 			onBack() {
@@ -136,9 +138,9 @@
 	.layout-header-right {
 		display: table-cell;
 		border: 0;
-		vertical-align: middle;
+		vertical-align: top;
 		padding: 0 5px;
-		/*white-space: nowrap;*/
+		white-space: nowrap;
 		overflow: hidden;
 	}
 
@@ -149,7 +151,7 @@
 	.layout-header-center {
 		text-overflow: ellipsis;
 		font-size: 18px;
-		line-height: 24px;
+		line-height: 48px;
 		-webkit-app-region: drag;
 	}
 
@@ -165,12 +167,16 @@
 		display: inline-block;
 		padding-left: 10px;
 		padding-right: 10px;
-		vertical-align: middle;
+
 		line-height: 48px;
 		transition: all 0.1s;
 
 		user-select: none;
 		-webkit-user-select: none;
+	}
+
+	.layout-action-btn > .ivu-icon {
+		vertical-align: middle;
 	}
 
 	.layout-action-btn:active {

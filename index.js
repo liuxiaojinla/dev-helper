@@ -21,8 +21,14 @@ function createWindow() {
 		webPreferences: {
 			webSecurity: false,
 			allowDisplayingInsecureContent: true,
-			allowRunningInsecureContent: true
+			allowRunningInsecureContent: true,
+			nodeIntegrationInWorker: true,
+			scrollBounce: true,
 		},
+	});
+	//优雅地显示窗口
+	mainWindow.once('ready-to-show', () => {
+		mainWindow.show()
 	});
 
 	//点击穿透 window
@@ -38,14 +44,8 @@ function createWindow() {
 	//load resource
 	mainWindow.loadURL('http://localhost:8080');
 
-	// Open the DevTools.
-	// mainWindow.webContents.openDevTools();
-
 	// Emitted when the window is closed.
 	mainWindow.on('closed', () => mainWindow = null);
-
-	//显示窗口
-	mainWindow.show();
 }
 
 // This method will be called when Electron has finished
