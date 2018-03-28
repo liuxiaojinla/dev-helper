@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Index from '@/pages/Index';
 import Hello from '@/components/Hello';
 import World from '@/components/World';
 
@@ -10,6 +11,12 @@ const router = new Router({
 	routes: [
 		{
 			path: '/',
+			name: 'Index',
+			meta: {title: 'Index',},
+			component: Index
+		},
+		{
+			path: '/hello',
 			name: 'Hello',
 			meta: {title: 'Hello',},
 			component: Hello
