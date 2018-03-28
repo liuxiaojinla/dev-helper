@@ -127,10 +127,6 @@
 		width: 100%;
 		border-collapse: collapse;
 		border: 0;
-		line-height: 48px;
-		height: 48px;
-		user-select: none;
-		-webkit-user-select: none;
 	}
 
 	.layout-header-left,

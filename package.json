@@ -8,7 +8,7 @@
 		"dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
 		"app": "electron .",
 		"build": "node build/build.js",
-		"packager": "npm run build && electron-packager ./dist test --win ./packager --arch=x64 --version=0.0.1 --electron-version=1.8.4 --overwrite"
+		"packager": "electron-packager ./dist electron --win --out ./packager --arch=x64 --version=0.0.1 --electron-version=1.8.4 --overwrite"
 	},
 	"dependencies": {
 		"axios": "^0.18.0",
