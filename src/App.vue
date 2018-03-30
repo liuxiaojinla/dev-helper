@@ -180,6 +180,7 @@
 	}
 
 	.layout-content {
+		position: relative;
 		overflow-x: hidden;
 		overflow-y: auto;
 	}
