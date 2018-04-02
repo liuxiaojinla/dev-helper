@@ -1,43 +1,49 @@
 <template>
-	<div class="Index">
-		<codemirror v-model="code" :options="cmOptions" class="editor"/>
+	<div class="index">
+		<Tabs>
+			<TabPane label="本地应用" name="local">
+				<row v-if="localApps.length">
+				</row>
+				<h1 class="tips" v-else>
+					<Icon type="sad-outline"></Icon>
+					本地暂无应用
+				</h1>
+			</TabPane>
+			<TabPane label="服务器" name="server">
+				<row>
+					<i-col span="24" class="spin-container">
+						<Spin size="large" fix></Spin>
+					</i-col>
+				</row>
+			</TabPane>
+		</Tabs>
+
 	</div>
 </template>
 
 <script>
-	import 'codemirror/mode/javascript/javascript.js';
 
 	export default {
 		name: "Index",
 		data() {
 			return {
-				code: '',
-				cmOptions: {
-					tabSize: 4,
-					mode: {
-						name: 'javascript',
-						json: true
-					},
-					theme: 'dracula',
-					indentUnit: 4,  // 缩进单位，默认2
-					smartIndent: true,  // 是否智能缩进
-					showCursorWhenSelecting: true,
-					line: true,
-					lineNumbers: true,// 是否显示行号
-				}
+				localApps: []
 			};
-		}
+		},
+
 	}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-	.Index {
+	.index {
 	}
 
-	.editor {
-		height: calc(100vh - 48px);
-		position: relative;
-		background-color: white;
+	.tips {
+		text-align: center;
+		margin-top: 15%;
+		color: #777;
+		text-shadow: 1px 1px 3px #000;
+		font-size: 48px;
 	}
 </style>

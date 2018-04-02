@@ -6,9 +6,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-		"app": "electron .",
 		"build": "node build/build.js",
-		"start": "npm run app & npm run dev",
+		"app": "electron .",
 		"packager": "npm run build && electron-packager ./dist electron --win --out ./packager --version=0.0.1 --electron-version=1.8.4 --overwrite"
 	},
 	"dependencies": {
@@ -38,7 +37,6 @@
 		"copy-webpack-plugin": "^4.0.1",
 		"css-loader": "^0.28.0",
 		"electron": "^1.8.4",
-		"electron-builder": "^20.8.2",
 		"electron-packager": "^11.2.0",
 		"extract-text-webpack-plugin": "^3.0.0",
 		"file-loader": "^1.1.4",

@@ -12,7 +12,7 @@ const router = new Router({
 		{
 			path: '/',
 			name: 'Index',
-			meta: {title: 'Index',},
+			meta: {title: '首页',},
 			component: Index
 		},
 		{
