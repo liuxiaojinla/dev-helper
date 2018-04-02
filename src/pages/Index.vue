@@ -22,7 +22,6 @@
 </template>
 
 <script>
-
 	export default {
 		name: "Index",
 		data() {
@@ -30,7 +29,9 @@
 				localApps: []
 			};
 		},
-
+		created() {
+			this.localApps = sys.getStorage('apps') || [];
+		},
 	}
 </script>
 
