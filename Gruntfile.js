@@ -11,7 +11,7 @@ grunt.config.init({
 			outputDirectory: './packager', // grunt打包后的输出目录
 			exe: 'electron.exe', // 生成的exe文件
 			description: 'Electron与Vue整合',
-			setupIcon: './dist/icons/icon.ico', // 图标
+			setupIcon: './dist/res/icons/icon.ico', // 图标
 			noMsi: true // 是否生成.msi
 		}
 	}
