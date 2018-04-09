@@ -7,7 +7,7 @@
 	"scripts": {
 		"dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
 		"build": "node build/build.js",
-		"app": "electron .",
+		"app": "electron ./dist/",
 		"packager": "npm run build && electron-packager ./dist electron --win --out ./packager --version=0.0.1 --electron-version=1.8.4 --overwrite"
 	},
 	"dependencies": {
@@ -40,6 +40,8 @@
 		"extract-text-webpack-plugin": "^3.0.0",
 		"file-loader": "^1.1.4",
 		"friendly-errors-webpack-plugin": "^1.6.1",
+		"grunt": "^1.0.2",
+		"grunt-electron-installer": "^2.1.0",
 		"html-webpack-plugin": "^2.30.1",
 		"less": "^3.0.1",
 		"less-loader": "^4.1.0",
