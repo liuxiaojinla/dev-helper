@@ -1,8 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Index from '@/pages/Index';
-import Hello from '@/components/Hello';
-import World from '@/components/World';
+
+const Index = require('@/pages/Index');
+const Hello = require('@/components/Hello');
+const World = require('@/components/World');
+// import Index from '@/pages/Index';
+// import Hello from '@/components/Hello';
+// import World from '@/components/World';
 
 Vue.use(Router);
 
