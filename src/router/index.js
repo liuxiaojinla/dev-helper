@@ -1,10 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-const Index = require('@/pages/Index');
-const Hello = require('@/components/Hello');
-const World = require('@/components/World');
-// import Index from '@/pages/Index';
+import Index from '@/pages/Index';
 // import Hello from '@/components/Hello';
 // import World from '@/components/World';
 
@@ -23,13 +20,13 @@ const router = new Router({
 			path: '/hello',
 			name: 'Hello',
 			meta: {title: 'Hello',},
-			component: Hello
+			component: () => import('@/components/Hello'),
 		},
 		{
 			path: '/world',
 			name: 'World',
 			meta: {title: 'World',},
-			component: World
+			component: () => import('@/components/World'),
 		}
 	],
 	scrollBehavior(to, from, savedPosition) {
