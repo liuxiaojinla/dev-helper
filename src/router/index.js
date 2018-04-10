@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+
 import Index from '@/pages/Index';
-import Hello from '@/components/Hello';
-import World from '@/components/World';
+// import Hello from '@/components/Hello';
+// import World from '@/components/World';
 
 Vue.use(Router);
 
@@ -12,20 +13,20 @@ const router = new Router({
 		{
 			path: '/',
 			name: 'Index',
-			meta: {title: 'Index',},
+			meta: {title: '首页',},
 			component: Index
 		},
 		{
 			path: '/hello',
 			name: 'Hello',
 			meta: {title: 'Hello',},
-			component: Hello
+			component: () => import('@/components/Hello'),
 		},
 		{
 			path: '/world',
 			name: 'World',
 			meta: {title: 'World',},
-			component: World
+			component: () => import('@/components/World'),
 		}
 	],
 	scrollBehavior(to, from, savedPosition) {

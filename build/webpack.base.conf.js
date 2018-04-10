@@ -14,8 +14,7 @@ module.exports = {
 	entry: {
 		app: './src/main.js',
 	},
-	plugins: [
-	],
+	plugins: [],
 	output: {
 		path: config.build.assetsRoot,
 		filename: '[name].js',

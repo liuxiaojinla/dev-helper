@@ -180,7 +180,9 @@
 	}
 
 	.layout-content {
+		position: relative;
 		overflow-x: hidden;
 		overflow-y: auto;
+		background-color: white;
 	}
 </style>
