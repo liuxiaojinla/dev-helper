@@ -111,6 +111,10 @@
 </script>
 
 <style>
+	body {
+		background-color: transparent;
+	}
+
 	.layout {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
@@ -183,6 +187,6 @@
 		position: relative;
 		overflow-x: hidden;
 		overflow-y: auto;
-		background-color: white;
+		/*background-color: white;*/
 	}
 </style>

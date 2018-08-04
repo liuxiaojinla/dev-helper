@@ -2,9 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Index from '@/pages/Index';
-import Login from '@/pages/Login';
-// import Hello from '@/components/Hello';
-// import World from '@/components/World';
 
 Vue.use(Router);
 
@@ -13,28 +10,28 @@ const router = new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'Login',
-			meta: {title: '登录',},
-			component: Login
-		},
-		{
-			path: '/',
 			name: 'Index',
 			meta: {title: '首页',},
 			component: Index
 		},
 		{
-			path: '/hello',
-			name: 'Hello',
-			meta: {title: 'Hello',},
-			component: () => import('@/components/Hello'),
+			path: '/login',
+			name: 'Login',
+			meta: {title: '登录',},
+			component: () => import('@/pages/Login')
 		},
 		{
-			path: '/world',
-			name: 'World',
-			meta: {title: 'World',},
-			component: () => import('@/components/World'),
-		}
+			path: '/app_manager',
+			name: 'AppManager',
+			meta: {title: '应用管理',},
+			component: () => import('@/pages/AppManager')
+		},
+		{
+			path: '/codemirror',
+			name: 'Codemirror',
+			meta: {title: '编辑器',},
+			component: () => import('@/pages/Codemirror')
+		},
 	],
 	scrollBehavior(to, from, savedPosition) {
 		if (to.hash) {

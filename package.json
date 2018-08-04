@@ -8,6 +8,7 @@
 		"dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
 		"build": "node build/build.js",
 		"app": "electron ./dist/",
+		"app-dev": "electron ./dist/ dev",
 		"packager": "npm run build && electron-packager ./dist electron --win --out ./packager --version=0.0.1 --electron-version=1.8.4 --overwrite && grunt"
 	},
 	"dependencies": {
