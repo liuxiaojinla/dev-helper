@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Index from '@/pages/Index';
+import Login from '@/pages/Login';
 // import Hello from '@/components/Hello';
 // import World from '@/components/World';
 
@@ -10,6 +11,12 @@ Vue.use(Router);
 const router = new Router({
 	// mode: 'history',
 	routes: [
+		{
+			path: '/',
+			name: 'Login',
+			meta: {title: '登录',},
+			component: Login
+		},
 		{
 			path: '/',
 			name: 'Index',
@@ -44,7 +51,7 @@ const router = new Router({
 	},
 });
 
-router.afterEach(function (route) {
+router.afterEach(function(route) {
 	if (route.meta && route.meta.title) {
 		document.title = route.meta.title;
 	}

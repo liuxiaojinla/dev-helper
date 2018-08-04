@@ -29,7 +29,7 @@
 					<DropdownMenu slot="list">
 						<DropdownItem name="debug">
 							<Icon type="bug" size="20"></Icon>
-							{{isDebug?'关闭':'开启'}}调试模式
+							开启调试模式
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
@@ -44,18 +44,15 @@
 </template>
 
 <script>
-	const win = sys.getCurrentWindow();
 	export default {
 		name: 'App',
+		win: null,
 		data() {
+			const win = this.$options.win = sys.getCurrentWindow();
 			return {
 				transitionName: '',
 				title: '',
-
-				isDebug: win.isDevToolsOpened(),
-
 				isMaximize: false,
-
 				isMaximizable: win.isMaximizable(),
 				isMinimizable: win.isMinimizable(),
 				isClosable: win.isClosable(),
@@ -68,6 +65,7 @@
 		},
 		created() {
 			this.$nextTick(this.updateTitle);
+			const win = this.$options.win;
 			win.on('maximize', () => this.isMaximize = true);
 			win.on('unmaximize', () => this.isMaximize = false);
 		},
@@ -80,20 +78,22 @@
 			},
 			onMenuSelect(name) {
 				if ('debug' === name) {
+					const win = this.$options.win;
 					this.isDebug = !win.webContents.isDevToolsOpened();
-					win.webContents.toggleDevTools();
+					win.webContents.openDevTools();
 				} else {
 				}
 			},
 			onMinni() {
-				win.minimize();
+				this.$options.win.minimize();
 			},
 			onMax() {
+				const win = this.$options.win;
 				this.isMaximize ? win.restore() : win.maximize();
 				this.isMaximize = !this.isMaximize;
 			},
 			onClose() {
-				win.close();
+				this.$options.win.close();
 			},
 			updateTitle() {
 				this.title = this.$route.meta.title;
