@@ -3,10 +3,10 @@
 		<Header class="layout-header-bar">
 			<div class="layout-header-left">
 				<div class="layout-action-btn">
-					<Icon type="ios-arrow-left" size="24" @click.native="onBack"></Icon>
+					<Icon type="ios-arrow-round-back" size="24" @click.native="onBack"/>
 				</div>
 				<div class="layout-action-btn">
-					<Icon type="ios-reload" size="24" @click.native="onRefresh"></Icon>
+					<Icon type="ios-refresh" size="24" @click.native="onRefresh"></Icon>
 				</div>
 			</div>
 			<div class="layout-header-center">
@@ -14,13 +14,13 @@
 			</div>
 			<div class="layout-header-right">
 				<div class="layout-action-btn">
-					<Icon type="ios-close-empty" size="24" @click.native="onClose" v-show="isClosable"></Icon>
+					<Icon type="ios-close" size="24" @click.native="onClose" v-show="isClosable"></Icon>
 				</div>
 				<div class="layout-action-btn">
 					<Icon :type="maxIcon" size="24" @click.native="onMax" v-show="isMaximizable"></Icon>
 				</div>
 				<div class="layout-action-btn">
-					<Icon type="ios-minus-empty" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
+					<Icon type="ios-remove" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
 				</div>
 				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMenuSelect">
 					<div class="layout-action-btn">
@@ -60,7 +60,7 @@
 		},
 		computed: {
 			maxIcon() {
-				return this.isMaximize ? 'ios-browsers' : 'ios-browsers-outline';
+				return this.isMaximize ? 'ios-browsers' : 'ios-expand';
 			}
 		},
 		created() {
@@ -89,7 +89,7 @@
 			},
 			onMax() {
 				const win = this.$options.win;
-				this.isMaximize ? win.restore() : win.maximize();
+				this.isMaximize ? win.unmaximize() : win.maximize();
 				this.isMaximize = !this.isMaximize;
 			},
 			onClose() {
@@ -111,10 +111,9 @@
 </script>
 
 <style>
-	body {
-		background-color: transparent;
-	}
-
+	/*body {*/
+	/*background-color: transparent;*/
+	/*}*/
 	.layout {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
@@ -126,26 +125,19 @@
 	}
 
 	.layout-header-bar {
-		display: table;
-		table-layout: fixed;
-		width: 100%;
-		border-collapse: collapse;
-		border: 0;
+		display: flex;
 	}
 
 	.layout-header-left,
 	.layout-header-center,
 	.layout-header-right {
-		display: table-cell;
-		border: 0;
-		vertical-align: top;
 		padding: 0 5px;
 		white-space: nowrap;
 		overflow: hidden;
 	}
 
 	.layout-header-left {
-		width: 84px;
+		/*width: 84px;*/
 	}
 
 	.layout-header-center {
@@ -153,10 +145,11 @@
 		font-size: 18px;
 		line-height: 48px;
 		-webkit-app-region: drag;
+		flex-grow: 1;
 	}
 
 	.layout-header-right {
-		width: 156px;
+		/*width: 156px;*/
 	}
 
 	.layout-header-right > div {

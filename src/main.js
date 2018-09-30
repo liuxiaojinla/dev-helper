@@ -1,15 +1,15 @@
 import Vue from 'vue';
+import iView from 'iview';
+import sys from "vuejs-plugin";
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import iView from 'iview';
 
 import './assets/less/app.less';
 
 Vue.use(iView);
 Vue.use(function(Vue, options) {
 	window.sys = sys;
-	sys.__ROUTER__ = router;
 	sys.request.addResponseInterceptor((res) => {
 		if (res && res.data) {
 			const data = res.data;
