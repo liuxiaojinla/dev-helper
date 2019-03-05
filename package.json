@@ -1,33 +1,34 @@
 {
-	"name": "electron-vue",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build",
-		"app": "electron ./dist/",
-		"app-dev": "electron ./ dev"
-	},
-	"dependencies": {
-		"axios": "^0.18.0",
-		"canvas2image": "^1.0.5",
-		"html2canvas": "^1.0.0-alpha.12",
-		"iview": "^3.1.5",
-		"js-cookie": "^2.2.0",
-		"mysql": "^2.16.0",
-		"qs": "^6.6.0",
-		"vue": "^2.5.20",
-		"vue-router": "^3.0.2",
-		"vuex": "^3.0.1"
-	},
-	"devDependencies": {
-		"@vue/cli-plugin-babel": "^3.2.0",
-		"@vue/cli-service": "^3.2.0",
-		"electron": "^3.0.11",
-		"less": "^3.9.0",
-		"less-loader": "^4.1.0",
-		"node-sass": "^4.11.0",
-		"sass-loader": "^7.1.0",
-		"vue-template-compiler": "^2.5.20"
-	}
+  "name": "electron-vue2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "iview": "^3.0.1",
+    "ssh2-sftp-client": "^2.4.3",
+    "vue": "^2.6.7",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "vuejs-plugin": "^1.0.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-service": "^3.4.1",
+    "electron": "^3.0.0",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.6",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-electron-builder": "^1.0.2",
+    "vue-cli-plugin-iview": "^1.0.6",
+    "vue-template-compiler": "^2.6.7"
+  },
+  "main": "background.js"
 }

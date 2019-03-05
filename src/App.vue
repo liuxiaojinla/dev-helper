@@ -9,7 +9,7 @@
 					<Icon type="ios-refresh" size="24" @click.native="onRefresh"></Icon>
 				</div>
 			</div>
-			<div class="layout-header-center">
+			<div class="layout-header-center" @dblclick="onMax">
 				{{title}}
 			</div>
 			<div class="layout-header-right">
@@ -17,7 +17,7 @@
 					<Icon type="ios-close" size="24" @click.native="onClose" v-show="isClosable"></Icon>
 				</div>
 				<div class="layout-action-btn">
-					<Icon :type="maxIcon" size="24" @click.native="onMax" v-show="isMaximizable"></Icon>
+					<Icon :type="maxIcon" size="16" @click.native="onMax" v-show="isMaximizable"></Icon>
 				</div>
 				<div class="layout-action-btn">
 					<Icon type="ios-remove" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
@@ -29,7 +29,7 @@
 					<DropdownMenu slot="list">
 						<DropdownItem name="debug">
 							<Icon type="bug" size="20"></Icon>
-							开启调试模式
+							{{isDebug?'关闭':'开启'}}调试模式
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
@@ -44,76 +44,83 @@
 </template>
 
 <script>
-	export default {
-		name: 'App',
-		win: null,
-		data() {
-			const win = this.$options.win = sys.getCurrentWindow();
-			return {
-				transitionName: '',
-				title: '',
-				isMaximize: false,
-				isMaximizable: win.isMaximizable(),
-				isMinimizable: win.isMinimizable(),
-				isClosable: win.isClosable(),
-			}
+export default {
+	name: 'app',
+	win: null,
+	data() {
+		const win = this.$options.win = sys.getCurrentWindow();
+		return {
+			isDebug: win.webContents.isDevToolsOpened(),
+			transitionName: '',
+			title: '',
+			isMaximize: false,
+			isMaximizable: win.isMaximizable(),
+			isMinimizable: win.isMinimizable(),
+			isClosable: win.isClosable(),
+		}
+	},
+	computed: {
+		maxIcon() {
+			return this.isMaximize ? 'ios-browsers-outline' : 'ios-square-outline';
+		}
+	},
+	created() {
+		this.$nextTick(this.updateTitle);
+		const win = this.$options.win;
+		win.on('maximize', () => this.isMaximize = true);
+		win.on('unmaximize', () => this.isMaximize = false);
+	},
+	methods: {
+		onBack() {
+			sys.navigateBack();
 		},
-		computed: {
-			maxIcon() {
-				return this.isMaximize ? 'ios-browsers' : 'ios-expand';
-			}
+		onRefresh() {
+			window.location.reload();
 		},
-		created() {
-			this.$nextTick(this.updateTitle);
-			const win = this.$options.win;
-			win.on('maximize', () => this.isMaximize = true);
-			win.on('unmaximize', () => this.isMaximize = false);
-		},
-		methods: {
-			onBack() {
-				sys.navigateBack();
-			},
-			onRefresh() {
-				window.location.reload();
-			},
-			onMenuSelect(name) {
-				if ('debug' === name) {
-					const win = this.$options.win;
-					this.isDebug = !win.webContents.isDevToolsOpened();
-					win.webContents.openDevTools();
-				} else {
-				}
-			},
-			onMinni() {
-				this.$options.win.minimize();
-			},
-			onMax() {
+		onMenuSelect(name) {
+			if ('debug' === name) {
 				const win = this.$options.win;
-				this.isMaximize ? win.unmaximize() : win.maximize();
-				this.isMaximize = !this.isMaximize;
-			},
-			onClose() {
-				this.$options.win.close();
-			},
-			updateTitle() {
-				this.title = this.$route.meta.title;
-			},
-		},
-		watch: {
-			'$route'(to, from) {
-				const toDepth = to.path.split('/').length;
-				const fromDepth = from.path.split('/').length;
-				this.transitionName = toDepth < fromDepth ? 'zoom' : 'fade';
-				this.$nextTick(this.updateTitle);
+				const isDebug = win.webContents.isDevToolsOpened();
+				if (isDebug) {
+					win.webContents.closeDevTools();
+				} else {
+					win.webContents.openDevTools();
+				}
+				this.isDebug = !isDebug;
+			} else {
 			}
+		},
+		onMinni() {
+			this.$options.win.minimize();
+		},
+		onMax() {
+			const win = this.$options.win;
+			this.isMaximize ? win.unmaximize() : win.maximize();
+			this.isMaximize = !this.isMaximize;
+		},
+		onClose() {
+			this.$options.win.close();
+		},
+		updateTitle() {
+			this.title = this.$route.meta.title;
+		},
+	},
+	watch: {
+		'$route'(to, from) {
+			const toDepth = to.path.split('/').length;
+			const fromDepth = from.path.split('/').length;
+			this.transitionName = toDepth < fromDepth ? 'zoom' : 'fade';
+			this.$nextTick(this.updateTitle);
 		}
 	}
+}
 </script>
 
 <style>
-	/*body {*/
-	/*background-color: transparent;*/
-	/*}*/
+	body, html {
+		/*background-color: transparent;*/
+	}
+
 	.layout {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
@@ -121,7 +128,12 @@
 
 		position: relative;
 		overflow: hidden;
-		height: 100vh;
+		height: calc(100vh - 30px);
+		margin: 5px;
+		box-shadow: 0 0 5px #2c3e50;
+		border-radius: 5px;
+
+		background-color: white !important;
 	}
 
 	.layout-header-bar {
