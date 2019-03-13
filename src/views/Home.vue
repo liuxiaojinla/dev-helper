@@ -31,12 +31,7 @@ export default {
 	},
 	methods: {
 		onHandle: function(item) {
-			if (item.type === 'web') {
-				this.$router.push({
-					name: 'webview',
-					params: item.detail
-				});
-			} else if (item.type === 'page') {
+			if (item.type === 'page') {
 				this.$router.push(item.detail);
 			}
 		}
