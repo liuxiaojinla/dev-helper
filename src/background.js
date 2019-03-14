@@ -20,7 +20,7 @@ const getWindow = function() {
 		show: false,
 		titleBarStyle: 'hidden',
 		transparent: true,
-		frame: false,
+		frame: isDevelopment,
 		hasShadow: true,
 		// maximizable: false,
 		// minimizable: true,

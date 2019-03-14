@@ -7,26 +7,13 @@
 </template>
 
 <script>
+import ACTION_LIST from '@/data/actions';
+
 export default {
 	name: 'home',
 	data() {
 		return {
-			data: [
-				{
-					title: '微信小程序转换',
-					type: 'page',
-					detail: {
-						name: 'weapp_trsanform',
-					}
-				},
-				{
-					title: '关于',
-					type: 'page',
-					detail: {
-						name: 'about',
-					}
-				}
-			]
+			data: ACTION_LIST
 		};
 	},
 	methods: {

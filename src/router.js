@@ -16,6 +16,13 @@ export default new Router({
 			title: '开发小助手'
 		}
 	}, {
+		path: '/uploader',
+		name: 'uploader',
+		component: () => import(/* webpackChunkName: "uploader" */ './views/Uploader.vue'),
+		meta: {
+			title: '文件上传'
+		}
+	}, {
 		path: '/weapp_trsanform',
 		name: 'weapp_trsanform',
 		component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/WeappTransform.vue'),

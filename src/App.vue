@@ -128,7 +128,7 @@ export default {
 
 		position: relative;
 		overflow: hidden;
-		height: calc(100vh - 30px);
+		height: calc(100vh - 10px);
 		margin: 5px;
 		box-shadow: 0 0 5px #2c3e50;
 		border-radius: 5px;
