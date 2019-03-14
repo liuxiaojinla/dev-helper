@@ -2,7 +2,10 @@
 	<Layout>
 		<Header>Header</Header>
 		<Content>Content</Content>
-		<Footer>Footer</Footer>
+		<Footer>
+			<Button>新增</Button>
+			<Button>删除</Button>
+		</Footer>
 	</Layout>
 </template>
 

@@ -18,7 +18,21 @@ export default new Router({
 	}, {
 		path: '/uploader',
 		name: 'uploader',
-		component: () => import(/* webpackChunkName: "uploader" */ './views/Uploader.vue'),
+		component: () => import(/* webpackChunkName: "uploader" */ './views/uploader/Index.vue'),
+		meta: {
+			title: '文件上传'
+		}
+	}, {
+		path: '/uploader',
+		name: 'uploader',
+		component: () => import(/* webpackChunkName: "uploader" */ './views/uploader/Index.vue'),
+		meta: {
+			title: '文件上传'
+		}
+	}, {
+		path: '/uploader',
+		name: 'uploader',
+		component: () => import(/* webpackChunkName: "uploader" */ './views/uploader/Detail.vue'),
 		meta: {
 			title: '文件上传'
 		}
