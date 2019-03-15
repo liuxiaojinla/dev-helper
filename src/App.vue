@@ -8,6 +8,9 @@
 				<div class="layout-action-btn">
 					<Icon type="ios-refresh" size="24" @click.native="onRefresh"></Icon>
 				</div>
+				<div class="layout-action-btn">
+					<Icon type="ios-home" size="24" @click.native="onHome"></Icon>
+				</div>
 			</div>
 			<div class="layout-header-center" @dblclick="onMax">
 				{{title}}
@@ -72,10 +75,13 @@ export default {
 	},
 	methods: {
 		onBack() {
-			sys.navigateBack();
+			this.$router.go(-1);
 		},
 		onRefresh() {
 			window.location.reload();
+		},
+		onHome() {
+			this.$router.go(-100);
 		},
 		onMenuSelect(name) {
 			if ('debug' === name) {
@@ -109,7 +115,7 @@ export default {
 		'$route'(to, from) {
 			const toDepth = to.path.split('/').length;
 			const fromDepth = from.path.split('/').length;
-			this.transitionName = toDepth < fromDepth ? 'zoom' : 'fade';
+			this.transitionName = toDepth < fromDepth ? 'slide-left' : 'fade';
 			this.$nextTick(this.updateTitle);
 		}
 	}

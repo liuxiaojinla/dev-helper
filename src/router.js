@@ -23,18 +23,18 @@ export default new Router({
 			title: '文件上传'
 		}
 	}, {
-		path: '/uploader',
-		name: 'uploader',
-		component: () => import(/* webpackChunkName: "uploader" */ './views/uploader/Index.vue'),
+		path: '/uploader/add',
+		name: 'uploader.add',
+		component: () => import(/* webpackChunkName: "uploader" */ './views/uploader/Add.vue'),
 		meta: {
-			title: '文件上传'
+			title: '添加监听目录'
 		}
 	}, {
-		path: '/uploader',
-		name: 'uploader',
+		path: '/uploader/detail',
+		name: 'uploader.detail',
 		component: () => import(/* webpackChunkName: "uploader" */ './views/uploader/Detail.vue'),
 		meta: {
-			title: '文件上传'
+			title: '监听目录详情'
 		}
 	}, {
 		path: '/weapp_trsanform',
