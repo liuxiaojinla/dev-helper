@@ -25,7 +25,7 @@
 import store from './store';
 
 export default {
-	name: "UploaderAdd",
+	name: "FileWatcherAdd",
 	data: function() {
 		return {
 			form: {

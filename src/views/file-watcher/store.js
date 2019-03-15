@@ -44,17 +44,18 @@ export default {
 		const item = this.getList()[index];
 		if (!item) return;
 		item.status = 1;
-		item.watcherId = watcherId;
 
 		const watcherId = Symbol('watcher');
+		item.watcherId = watcherId;
+
 		const files = [];
 		const watcher = fs.watch(item.path, {
 			recursive: true,
 		}, (eventType, filename) => {
 			filename = path.resolve(item.path, filename);
-			console.log(eventType, filename);
+			console.debug(eventType, filename);
 
-			const findIndex = files.indexOf(filename);
+			const findIndex = files.findIndex(file => file.path === filename);
 			if (!fs.existsSync(filename)) {
 				if (findIndex >= 0) files.indexOf(findIndex, 1);
 				item.count = files.length;
@@ -62,14 +63,17 @@ export default {
 			}
 
 			const stats = fs.statSync(filename);
-			console.log(stats);
+			console.debug(stats);
 
 			if (stats.isDirectory()) {
 				return console.debug('跳过目录...');
 			}
 
 			if (findIndex === -1) {
-				files.push(filename);
+				files.push({
+					path: filename,
+					_checked: true,
+				});
 				item.count = files.length;
 			}
 		});
@@ -93,6 +97,7 @@ export default {
 		const item = this.getList()[index];
 		if (!item) return;
 		item.status = 0;
+		item.count = 0;
 
 		const watcher = watchers[item.watcherId];
 		if (watcher) {
@@ -102,8 +107,14 @@ export default {
 		}
 	},
 	destroy() {
-		for (const watcher of watchers) {
+		for (const watcherId in watchers) {
+			const watcher = watchers[watcherId];
 			watcher.watcher.close();
 		}
+	},
+	getDetail(watcherId) {
+		const watcher = watchers[watcherId];
+		if (!watcher) return [];
+		return watcher.files;
 	}
 };

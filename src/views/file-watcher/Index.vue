@@ -13,12 +13,13 @@
 
 				<template v-slot:action="{row,index}">
 					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(index)"></Icon>
+					<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
+							:to="{name:'uploader.detail',params:{id:row.watcherId}}" v-show="row.status"></router-link>
 				</template>
 			</Table>
 		</Content>
 		<Footer>
 			<router-link :to="{name:'uploader.add'}" tag="Button">新增</router-link>
-			<!--<Button @click="onDelete()">删除</Button>-->
 		</Footer>
 	</Layout>
 </template>
@@ -27,7 +28,7 @@
 import store from './store';
 
 export default {
-	name: "Uploader",
+	name: "FileWatcher",
 	$store: store,
 	data: function() {
 		return {
@@ -64,10 +65,10 @@ export default {
 		store.destroy();
 	},
 	methods: {
-		onToggle(row,index){
-			if (row.status){
+		onToggle(row, index) {
+			if (row.status) {
 				store.stop(index);
-			} else{
+			} else {
 				store.start(index);
 			}
 		},
