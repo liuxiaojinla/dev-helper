@@ -1,7 +1,10 @@
 <template>
 	<Row class="home">
 		<Col span="4" v-for="item in data" @click.native="onHandle(item)">
-			{{item.title}}
+			<p>
+				<Icon :type="item.icon" size="48"/>
+			</p>
+			<p class="action-title">{{item.title}}</p>
 		</Col>
 	</Row>
 </template>
@@ -32,6 +35,12 @@ export default {
 	}
 
 	.home >>> .ivu-col {
+		padding: 8px;
 		cursor: pointer;
+		text-align: center;
+	}
+
+	.action-title {
+		font-size: 12px;
 	}
 </style>

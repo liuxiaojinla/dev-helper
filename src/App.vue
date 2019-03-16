@@ -39,7 +39,9 @@
 			</div>
 		</Header>
 		<Content class="layout-content">
-			<transition :name="transitionName" mode="out-in">
+			<transition :name="transitionName"
+					v-bind="transitionClass"
+					mode="out-in">
 				<router-view/>
 			</transition>
 		</Content>
@@ -61,11 +63,25 @@ export default {
 			isMinimizable: win.isMinimizable(),
 			isClosable: win.isClosable(),
 			isDev: IS_DEV,
+			isIn: true
 		}
 	},
 	computed: {
 		maxIcon() {
 			return this.isMaximize ? 'ios-browsers-outline' : 'ios-square-outline';
+		},
+		transitionClass() {
+			if (this.isIn) {
+				return {
+					enterActiveClass: "animated fadeInUp",
+					leaveActiveClass: "animated slideOutLeft"
+				};
+			} else {
+				return {
+					enterActiveClass: "animated fadeInDown",
+					leaveActiveClass: "animated bounceOutDown"
+				};
+			}
 		}
 	},
 	created() {
@@ -116,9 +132,9 @@ export default {
 		'$route'(to, from) {
 			const toDepth = to.path.split('/').length;
 			const fromDepth = from.path.split('/').length;
-			this.transitionName = toDepth < fromDepth ? 'slide-bottom' : 'fade';
+			this.transitionName = toDepth < fromDepth ? 'transition-out' : 'transition-in';
+			this.isIn = toDepth >= fromDepth;
 			this.$nextTick(this.updateTitle);
-			console.log(to, from)
 		}
 	}
 }

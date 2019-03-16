@@ -1,6 +1,7 @@
 export default [
 	{
 		title: '文件打包器',
+		icon: 'ios-folder',
 		type: 'page',
 		detail: {
 			name: 'filewatcher',
