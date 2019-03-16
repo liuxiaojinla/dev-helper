@@ -116,5 +116,10 @@ export default {
 		const watcher = watchers[watcherId];
 		if (!watcher) return [];
 		return watcher.files;
+	},
+	getPath(watcherId) {
+		const item = this.getList().find(item => item.watcherId === watcherId);
+		if (item) return item.path;
+		return null;
 	}
 };

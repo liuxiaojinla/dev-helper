@@ -45,6 +45,14 @@ export default {
 	},
 	created() {
 	},
+
+	mounted() {
+		init();
+
+		this.on('hook:beforeDestroy', function() {
+			destroy();
+		});
+	},
 	methods: {
 		onSelectPath() {
 			sys.openFileSelectDialog({

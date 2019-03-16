@@ -7,6 +7,8 @@ import './plugins/vuejs-plugin';
 
 Vue.config.productionTip = false;
 
+window.IS_DEV = process.env.NODE_ENV !== 'production';
+
 window.router = sys.__ROUTER__ = router;
 window.app = new Vue({
 	router,

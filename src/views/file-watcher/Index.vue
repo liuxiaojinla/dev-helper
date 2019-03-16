@@ -62,7 +62,7 @@ export default {
 		};
 	},
 	destroyed() {
-		store.destroy();
+		if (IS_DEV) store.destroy();
 	},
 	methods: {
 		onToggle(row, index) {

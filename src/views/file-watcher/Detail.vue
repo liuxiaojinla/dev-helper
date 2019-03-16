@@ -12,6 +12,11 @@
 
 <script>
 import store from './store';
+import util from './util';
+
+const os = require('os');
+const path = require('path');
+
 
 export default {
 	name: "FileWatcherDetail",
@@ -23,7 +28,7 @@ export default {
 				{
 					type: 'selection',
 					width: 32,
-					key:'_checked'
+					key: '_checked'
 				},
 				{
 					type: 'index',
@@ -38,7 +43,14 @@ export default {
 	},
 	methods: {
 		onExport() {
-			console.log(this.$refs.selection.getSelection())
+			const exportRootDir = path.resolve(os.homedir(), 'Desktop', 'export' + util.dateFormat('yyyyMMddhhmmss'));
+			const originalRootDir = store.getPath(this.$route.params.id);
+			this.$refs.selection.getSelection().forEach(item => {
+				let newPath = item.path.replace(originalRootDir + '\\', '');
+				newPath = path.resolve(exportRootDir, newPath);
+				console.debug(item.path, '->', newPath);
+				util.copyFileSync(item.path, newPath);
+			});
 		}
 	}
 }
