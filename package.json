@@ -1,6 +1,7 @@
 {
 	"name":"dev-helper",
 	"version":"1.0.15",
+	"description":"开发小助手",
 	"private":true,
 	"scripts":{
 		"serve":"vue-cli-service serve",
