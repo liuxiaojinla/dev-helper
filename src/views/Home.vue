@@ -25,3 +25,13 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+	.home {
+		user-select: none;
+	}
+
+	.home >>> .ivu-col {
+		cursor: pointer;
+	}
+</style>

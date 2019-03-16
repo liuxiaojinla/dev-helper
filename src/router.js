@@ -11,27 +11,35 @@ export default new Router({
 	base: process.env.BASE_URL,
 	routes: [
 		{
-			path: '/file-watcher/add',
-			name: 'file-watcher.add',
+			path: '/',
+			name: 'home',
+			component: Home,
+			meta: {
+				title: '开发小助手'
+			}
+		},
+		{
+			path: '/filewatcher',
+			name: 'filewatcher',
+			component: FileWatcher,
+			meta: {
+				title: '目录监听器'
+			}
+		},
+		{
+			path: '/filewatcher/add',
+			name: 'filewatcher.add',
 			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Add.vue'),
 			meta: {
 				title: '添加监听目录'
 			}
 		},
 		{
-			path: '/uploader/detail',
-			name: 'uploader.detail',
+			path: '/filewatcher/detail',
+			name: 'filewatcher.detail',
 			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Detail.vue'),
 			meta: {
 				title: '文件变化详情'
-			}
-		},
-		{
-			path: '/file-watcher',
-			name: 'file-watcher',
-			component: () => FileWatcher,
-			meta: {
-				title: '目录监听器'
 			}
 		},
 		{
@@ -58,15 +66,6 @@ export default new Router({
 			// this generates a separate chunk (about.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
 			component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-		},
-
-		{
-			path: '*',
-			name: 'home',
-			component: Home,
-			meta: {
-				title: '开发小助手'
-			}
 		},
 	]
 })

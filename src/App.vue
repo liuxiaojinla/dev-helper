@@ -116,8 +116,9 @@ export default {
 		'$route'(to, from) {
 			const toDepth = to.path.split('/').length;
 			const fromDepth = from.path.split('/').length;
-			this.transitionName = toDepth < fromDepth ? 'slide-left' : 'fade';
+			this.transitionName = toDepth < fromDepth ? 'slide-bottom' : 'fade';
 			this.$nextTick(this.updateTitle);
+			console.log(to, from)
 		}
 	}
 }

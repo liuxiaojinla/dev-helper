@@ -3,7 +3,7 @@ export default [
 		title: '文件打包器',
 		type: 'page',
 		detail: {
-			name: 'uploader',
+			name: 'filewatcher',
 		}
 	},
 	// {
