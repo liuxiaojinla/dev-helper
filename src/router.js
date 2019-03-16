@@ -7,7 +7,7 @@ import FileWatcher from './views/file-watcher/Index.vue';
 Vue.use(Router);
 const isDev = process.env.NODE_ENV !== 'production';
 export default new Router({
-	mode:'history',
+	mode: isDev ? 'history' : 'hash',
 	base: process.env.BASE_URL,
 	routes: [
 		{
