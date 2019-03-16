@@ -22,7 +22,7 @@ const getWindow = function() {
 		transparent: true,
 		frame: isDevelopment,
 		hasShadow: true,
-		// maximizable: false,
+		maximizable: false,
 		// minimizable: true,
 		// closable: true,
 		isShowMoreMenu: false,

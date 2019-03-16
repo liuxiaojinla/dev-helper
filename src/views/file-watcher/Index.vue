@@ -14,12 +14,12 @@
 				<template v-slot:action="{row,index}">
 					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(index)"></Icon>
 					<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
-							:to="{name:'uploader.detail',params:{id:row.watcherId}}" v-show="row.status"></router-link>
+							:to="{name:'file-watcher.detail',params:{id:row.watcherId}}" v-show="row.status"></router-link>
 				</template>
 			</Table>
 		</Content>
 		<Footer>
-			<router-link :to="{name:'uploader.add'}" tag="Button">新增</router-link>
+			<router-link :to="{name:'file-watcher.add'}" tag="Button">新增</router-link>
 		</Footer>
 	</Layout>
 </template>

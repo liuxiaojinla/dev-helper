@@ -45,14 +45,6 @@ export default {
 	},
 	created() {
 	},
-
-	mounted() {
-		init();
-
-		this.on('hook:beforeDestroy', function() {
-			destroy();
-		});
-	},
 	methods: {
 		onSelectPath() {
 			sys.openFileSelectDialog({
@@ -72,7 +64,7 @@ export default {
 				store.add(Object.assign({
 					count: 0,
 				}, this.form));
-				sys.navigateBack();
+				this.$router.go(-1);
 			})
 		}
 	}
