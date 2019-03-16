@@ -13,7 +13,7 @@ const getWindow = function() {
 
 	// Create the browser window.
 	win = new BrowserWindow({
-		width: 1080,
+		width: isDevelopment ? 1080 : 640,
 		height: 480,
 		minWidth: 480,
 		minHeight: 480,

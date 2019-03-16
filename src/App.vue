@@ -82,7 +82,7 @@ export default {
 			window.location.reload();
 		},
 		onHome() {
-			this.$router.go(-100);
+			this.$router.replace('/');
 		},
 		onMenuSelect(name) {
 			if ('debug' === name) {

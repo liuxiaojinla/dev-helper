@@ -9,16 +9,9 @@ export default new Router({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	routes: [
+
 		{
-			path: '/',
-			name: 'home',
-			component: Home,
-			meta: {
-				title: '开发小助手'
-			}
-		},
-		{
-			path: '/',//uploader
+			path: '/uploader',
 			name: 'uploader',
 			component: () => import(/* webpackChunkName: "uploader" */ './views/file-watcher/Index.vue'),
 			meta: {
@@ -60,5 +53,14 @@ export default new Router({
 			// this generates a separate chunk (about.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
 			component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-		}]
+		},
+		{
+			path: '*',
+			name: 'home',
+			component: Home,
+			meta: {
+				title: '开发小助手'
+			}
+		},
+	]
 })

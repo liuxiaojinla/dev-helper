@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ACTION_LIST from '@/data/actions';
+import ACTION_LIST from '../data/actions';
 
 export default {
 	name: 'home',
