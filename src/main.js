@@ -13,7 +13,11 @@ window.router = sys.__ROUTER__ = router;
 window.app = new Vue({
 	router,
 	store,
-	render: h => h(App)
+	render: h => h(App),
+	mounted() {
+		// Prevent blank screen in Electron builds
+		this.$router.push('/')
+	}
 }).$mount('#app');
 
 process.on('unhandledRejection', error => {

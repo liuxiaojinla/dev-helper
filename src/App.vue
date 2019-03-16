@@ -135,6 +135,7 @@ export default {
 			this.transitionName = toDepth < fromDepth ? 'transition-out' : 'transition-in';
 			this.isIn = toDepth >= fromDepth;
 			this.$nextTick(this.updateTitle);
+			console.log(location.href)
 		}
 	}
 }
