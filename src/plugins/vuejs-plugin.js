@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import iView from 'iview';
+// import iView from 'iview';
 import sys from 'vuejs-plugin';
 import router from '../router';
 
@@ -42,7 +42,7 @@ Vue.mixin({
 
 // 页面打开后的操作
 router.afterEach(function(route) {
-	iView.LoadingBar.finish();
+	// iView.LoadingBar.finish();
 	if (route.meta && route.meta.title) {
 		document.title = route.meta.title;
 	}

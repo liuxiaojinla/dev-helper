@@ -5,7 +5,7 @@
 				<div class="layout-action-btn">
 					<Icon type="ios-arrow-round-back" size="24" @click.native="onBack"/>
 				</div>
-				<div class="layout-action-btn">
+				<div class="layout-action-btn" v-if="isDev">
 					<Icon type="ios-refresh" size="24" @click.native="onRefresh"></Icon>
 				</div>
 				<div class="layout-action-btn">
@@ -60,6 +60,7 @@ export default {
 			isMaximizable: win.isMaximizable(),
 			isMinimizable: win.isMinimizable(),
 			isClosable: win.isClosable(),
+			isDev: IS_DEV,
 		}
 	},
 	computed: {

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Webview from './components/Webview.vue';
+import Home from './views/Home.vue';
 
 Vue.use(Router);
 
@@ -8,14 +9,14 @@ export default new Router({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	routes: [
-		// 	{
-		// 	path: '/',
-		// 	name: 'home',
-		// 	component: Home,
-		// 	meta: {
-		// 		title: '开发小助手'
-		// 	}
-		// },
+		{
+			path: '/',
+			name: 'home',
+			component: Home,
+			meta: {
+				title: '开发小助手'
+			}
+		},
 		{
 			path: '/',//uploader
 			name: 'uploader',
