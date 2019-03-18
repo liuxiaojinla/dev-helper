@@ -63,14 +63,14 @@ export default {
 				title: '温馨提示',
 				content: '你确定要清空文件吗？',
 				onOk: () => {
-					store.clearFile(this.$route.params.id);
+					this.data = store.clearFile(this.$route.params.id);
 				}
 			});
 		},
 
 		// 删除文件
 		onDelete(index) {
-			store.removeFile(index);
+			store.removeFile(this.$route.params.id, index);
 		},
 
 		//导出文件
@@ -89,14 +89,13 @@ export default {
 				title: '温馨提示',
 				content: '文件已导出完毕，是否清空文件？',
 				onOk: () => {
-					store.clearFile(this.$route.params.id, fileList);
+					this.data = store.clearFile(this.$route.params.id, fileList);
 				}
 			});
 		}
 	}
 }
 </script>
-
 
 
 <style scoped>

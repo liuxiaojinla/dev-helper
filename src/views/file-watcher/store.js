@@ -158,6 +158,7 @@ export default {
 		} else {
 			watcher.files = [];
 		}
+		return watcher.files;
 	},
 	// 移除文件
 	removeFile(watcherId, index) {
