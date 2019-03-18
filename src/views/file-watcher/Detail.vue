@@ -46,7 +46,8 @@ export default {
 				},
 				{
 					title: '操作',
-					slot: 'action'
+					slot: 'action',
+					width: 80,
 				}
 			],
 			tableHeight: 0

@@ -48,15 +48,17 @@ export default {
 				{
 					title: '状态',
 					slot: 'status',
-
+					width: 100,
 				},
 				{
 					title: '改动数量',
-					slot: 'count'
+					slot: 'count',
+					width: 100,
 				},
 				{
 					title: '操作',
-					slot: 'action'
+					slot: 'action',
+					width: 100,
 				}
 			],
 			tableHeight: 0
@@ -66,7 +68,7 @@ export default {
 		this.tableHeight = this.$el.getBoundingClientRect().height - 48;
 	},
 	destroyed() {
-		if (IS_DEV) store.destroy();
+		// if (IS_DEV) store.destroy();
 	},
 	methods: {
 		onToggle(row, index) {
