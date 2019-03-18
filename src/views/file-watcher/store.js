@@ -65,7 +65,7 @@ export default {
 			filename = path.resolve(item.path, filename);
 			console.debug(eventType, filename);
 
-			if (path.extname(filename).indexOf('__') === 0) {
+			if (path.extname(filename).indexOf('___') !== -1) {
 				return console.debug('临时文件，跳过...');
 			}
 
@@ -149,7 +149,8 @@ export default {
 		if (list) {
 			const result = [];
 			list.forEach(item => {
-				if (watchers.files.indexOf(item) === -1) {
+				const find = watchers.files.find(oldItem => oldItem.path === item.path);
+				if (!find) {
 					result.push(item);
 				}
 			});
