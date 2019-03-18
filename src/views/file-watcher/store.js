@@ -147,17 +147,14 @@ export default {
 		const watcher = watchers[watcherId];
 		if (!watcher) return [];
 		if (list) {
-			const result = [];
 			list.forEach(item => {
-				const find = watchers.files.find(oldItem => oldItem.path === item.path);
-				if (!find) {
-					result.push(item);
-				}
+				const index = watchers.files.findIndex(oldItem => oldItem.path === item.path);
+				if (index !== -1) watchers.files.splice(index, 1);
 			});
-			watcher.files = result;
 		} else {
-			watcher.files = [];
+			watcher.files.splice(0, watchers.files.length - 1);
 		}
+		this._updateCount(watcherId, watcher.files.length);
 		return watcher.files;
 	},
 	// 移除文件
@@ -165,5 +162,17 @@ export default {
 		const watcher = watchers[watcherId];
 		if (!watcher) return [];
 		watcher.files.splice(index, 1);
+		this._updateCount(watcherId, watcher.files.length);
+		return watcher.files;
+	},
+	// 更新变动数量
+	_updateCount(watcherId, count) {
+		const projectList = this.getProjectList();
+		for (let i = 0; i < projectList.length; i++) {
+			const item = projectList[i];
+			if (item.watcherId === watcherId) {
+				item.count = count;
+			}
+		}
 	},
 };
