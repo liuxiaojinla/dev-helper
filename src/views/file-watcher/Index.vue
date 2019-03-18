@@ -19,7 +19,7 @@
 			</Table>
 		</Content>
 		<Footer class="layout-footer">
-			<router-link :to="{name:'filewatcher.add'}" tag="Button">新增</router-link>
+			<Button :to="{name:'filewatcher.add'}" icon="ios-add" type="primary">新增</Button>
 		</Footer>
 	</Layout>
 </template>
@@ -32,7 +32,7 @@ export default {
 	$store: store,
 	data: function() {
 		return {
-			data: store.getList(),
+			data: store.getProjectList(),
 			columns: [
 				// {
 				// 	type: 'selection'
@@ -82,7 +82,7 @@ export default {
 				title: '温馨提示',
 				content: '你确定要删除这个监听目录吗？',
 				onOk: () => {
-					store.delete(index);
+					store.deleteProject(index);
 				}
 			});
 		}

@@ -16,7 +16,7 @@
 		</FormItem>
 
 		<FormItem>
-			<Button type="primary" @click="onSubmit">保存</Button>
+			<Button icon="ios-folder" type="primary" @click="onSubmit" >保存</Button>
 		</FormItem>
 	</Form>
 </template>
@@ -61,7 +61,7 @@ export default {
 					return;
 				}
 
-				store.add(Object.assign({
+				store.addProject(Object.assign({
 					count: 0,
 				}, this.form));
 				this.$router.go(-1);

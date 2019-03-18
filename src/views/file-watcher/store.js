@@ -14,7 +14,7 @@ export default {
 	 * 获取列表
 	 * @return []
 	 */
-	getList() {
+	getProjectList() {
 		if (this.state.list === null) {
 			this.state.list = sys.getStorageObject('uploader.list', []).map(function(item) {
 				item.status = 0;
@@ -25,8 +25,8 @@ export default {
 		return this.state.list;
 	},
 	// 保存数据
-	_save() {
-		const data = this.getList().map(function(item) {
+	_saveProject() {
+		const data = this.getProjectList().map(function(item) {
 			return {
 				title: item.title,
 				path: item.path
@@ -35,23 +35,23 @@ export default {
 		sys.setStorageObject('uploader.list', data);
 	},
 	// 添加数据
-	add(item) {
+	addProject(item) {
 		if (this.debug) console.log('新增监听目录', item);
-		const index = this.getList().push(item) - 1;
-		this._save();
+		const index = this.getProjectList().push(item) - 1;
+		this._saveProject();
 		if (item.status) this.start(index);
 	},
 	// 删除数据
-	delete(index) {
+	deleteProject(index) {
 		if (this.debug) console.log('删除监听目录', index);
 		this.stop(index);
-		this.getList().splice(index, 1);
-		this._save();
+		this.getProjectList().splice(index, 1);
+		this._saveProject();
 	},
 	// 开始任务
 	start(index) {
 		if (this.debug) console.log('启动监听目录', index);
-		const item = this.getList()[index];
+		const item = this.getProjectList()[index];
 		if (!item) return;
 		item.status = 1;
 
@@ -65,7 +65,7 @@ export default {
 			filename = path.resolve(item.path, filename);
 			console.debug(eventType, filename);
 
-			if (path.extname(filename).indexOf('___') === 0) {
+			if (path.extname(filename).indexOf('__') === 0) {
 				return console.debug('临时文件，跳过...');
 			}
 
@@ -109,7 +109,7 @@ export default {
 	// 终止任务
 	stop(index) {
 		if (this.debug) console.log('终止监听目录', index);
-		const item = this.getList()[index];
+		const item = this.getProjectList()[index];
 		if (!item) return;
 		item.status = 0;
 		item.count = 0;
@@ -123,21 +123,45 @@ export default {
 	},
 	// 销毁所有任务
 	destroy() {
-		for (const watcherId in watchers) {
+		Object.getOwnPropertySymbols(watchers).forEach(watcherId => {
+			if (!watchers.hasOwnProperty(watcherId)) return;
+
 			const watcher = watchers[watcherId];
 			watcher.watcher.close();
-		}
+		});
+	},
+	// 根据watcherId获取路径
+	getProjectPath(watcherId) {
+		const item = this.getProjectList().find(item => item.watcherId === watcherId);
+		if (item) return item.path;
+		return null;
 	},
 	// 获取任务详情
-	getDetail(watcherId) {
+	getProjectDetail(watcherId) {
 		const watcher = watchers[watcherId];
 		if (!watcher) return [];
 		return watcher.files;
 	},
-	// 根据watcherId获取路径
-	getPath(watcherId) {
-		const item = this.getList().find(item => item.watcherId === watcherId);
-		if (item) return item.path;
-		return null;
-	}
+	// 清空文件
+	clearFile(watcherId, list) {
+		const watcher = watchers[watcherId];
+		if (!watcher) return [];
+		if (list) {
+			const result = [];
+			list.forEach(item => {
+				if (watchers.files.indexOf(item) === -1) {
+					result.push(item);
+				}
+			});
+			watcher.files = result;
+		} else {
+			watcher.files = [];
+		}
+	},
+	// 移除文件
+	removeFile(watcherId, index) {
+		const watcher = watchers[watcherId];
+		if (!watcher) return [];
+		watcher.files.splice(index, 1);
+	},
 };
