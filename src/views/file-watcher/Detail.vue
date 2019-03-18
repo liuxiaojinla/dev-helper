@@ -1,10 +1,10 @@
 <template>
-	<Layout>
+	<Layout class="layout">
 		<Content>
-			<Table ref="selection" stripe :columns="columns" :data="data">
+			<Table ref="selection" :columns="columns" :data="data">
 			</Table>
 		</Content>
-		<Footer>
+		<Footer class="layout-footer">
 			<Button @click="onExport">导出到桌面</Button>
 		</Footer>
 	</Layout>
@@ -39,7 +39,11 @@ export default {
 					key: 'path'
 				},
 			],
+			tableHeight: 0
 		};
+	},
+	mounted() {
+		this.tableHeight = this.$el.getBoundingClientRect().height - 48;
 	},
 	methods: {
 		onExport() {
@@ -57,5 +61,21 @@ export default {
 </script>
 
 <style scoped>
+	.layout {
+		position: fixed;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+	}
 
+	>>> .ivu-table-wrapper,
+	>>> .ivu-table-wrapper .ivu-table,
+	>>> .ivu-table-wrapper .ivu-table td {
+		border: none;
+	}
+
+	.layout-footer {
+		padding: 8px 16px;
+	}
 </style>

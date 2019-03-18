@@ -1,6 +1,6 @@
 {
 	"name":"dev-helper",
-	"version":"1.0.20",
+	"version":"1.0.22",
 	"description":"开发小助手",
 	"private":true,
 	"scripts":{

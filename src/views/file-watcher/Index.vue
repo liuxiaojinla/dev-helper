@@ -1,7 +1,7 @@
 <template>
-	<Layout>
+	<Layout class="layout">
 		<Content>
-			<Table stripe :columns="columns" :data="data">
+			<Table :columns="columns" :data="data" :height="tableHeight">
 				<template v-slot:status="{row,index}">
 					<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(row,index)" v-if="row.status"></Icon>
 					<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(row,index)" v-else></Icon>
@@ -18,7 +18,7 @@
 				</template>
 			</Table>
 		</Content>
-		<Footer>
+		<Footer class="layout-footer">
 			<router-link :to="{name:'filewatcher.add'}" tag="Button">新增</router-link>
 		</Footer>
 	</Layout>
@@ -59,7 +59,11 @@ export default {
 					slot: 'action'
 				}
 			],
+			tableHeight: 0
 		};
+	},
+	mounted() {
+		this.tableHeight = this.$el.getBoundingClientRect().height - 48;
 	},
 	destroyed() {
 		if (IS_DEV) store.destroy();
@@ -87,5 +91,21 @@ export default {
 </script>
 
 <style scoped>
+	.layout {
+		position: fixed;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+	}
 
+	>>> .ivu-table-wrapper,
+	>>> .ivu-table-wrapper .ivu-table,
+	>>> .ivu-table-wrapper .ivu-table td {
+		border: none;
+	}
+
+	.layout-footer {
+		padding: 8px 16px;
+	}
 </style>

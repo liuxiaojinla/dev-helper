@@ -1,28 +1,28 @@
 <template>
-	<Layout class="layout">
-		<Header class="layout-header-bar">
-			<div class="layout-header-left">
-				<div class="layout-action-btn">
+	<Layout class="app-layout">
+		<Header class="app-layout-header">
+			<div class="app-layout-header-left">
+				<div class="app-layout-action-btn">
 					<Icon type="ios-arrow-round-back" size="24" @click.native="onBack"/>
 				</div>
-				<div class="layout-action-btn" v-if="isDev">
+				<div class="app-layout-action-btn" v-if="isDev">
 					<Icon type="ios-refresh" size="24" @click.native="onRefresh"></Icon>
 				</div>
-				<div class="layout-action-btn">
+				<div class="app-layout-action-btn">
 					<Icon type="ios-home" size="24" @click.native="onHome"></Icon>
 				</div>
 			</div>
-			<div class="layout-header-center" @dblclick="onMax">
+			<div class="app-layout-header-center" @dblclick="onMax">
 				{{title}}
 			</div>
-			<div class="layout-header-right">
-				<div class="layout-action-btn">
+			<div class="app-layout-header-right">
+				<div class="app-layout-action-btn">
 					<Icon type="ios-close" size="24" @click.native="onClose" v-show="isClosable"></Icon>
 				</div>
-				<div class="layout-action-btn">
+				<div class="app-layout-action-btn">
 					<Icon :type="maxIcon" size="16" @click.native="onMax" v-show="isMaximizable"></Icon>
 				</div>
-				<div class="layout-action-btn">
+				<div class="app-layout-action-btn">
 					<Icon type="ios-remove" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
 				</div>
 				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMenuSelect">
@@ -38,7 +38,7 @@
 				</Dropdown>
 			</div>
 		</Header>
-		<Content class="layout-content">
+		<Content class="app-layout-content">
 			<transition :name="transitionName"
 					v-bind="transitionClass"
 					mode="out-in">
@@ -141,12 +141,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 	body, html {
 		/*background-color: transparent;*/
 	}
 
-	.layout {
+	.app-layout {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
@@ -155,29 +155,29 @@ export default {
 		overflow: hidden;
 		height: calc(100vh - 10px);
 		margin: 5px;
-		box-shadow: 0 0 5px #2c3e50;
+		box-shadow: 0 0 5px #A0A0A0;
 		border-radius: 5px;
 
 		background-color: white !important;
 	}
 
-	.layout-header-bar {
+	.app-layout-header {
 		display: flex;
 	}
 
-	.layout-header-left,
-	.layout-header-center,
-	.layout-header-right {
+	.app-layout-header > .app-layout-header-left,
+	.app-layout-header > .app-layout-header-center,
+	.app-layout-header > .app-layout-header-right {
 		padding: 0 5px;
 		white-space: nowrap;
 		overflow: hidden;
 	}
 
-	.layout-header-left {
+	.app-layout-header > .app-layout-header-left {
 		/*width: 84px;*/
 	}
 
-	.layout-header-center {
+	.app-layout-header > .app-layout-header-center {
 		text-overflow: ellipsis;
 		font-size: 18px;
 		line-height: 48px;
@@ -185,15 +185,15 @@ export default {
 		flex-grow: 1;
 	}
 
-	.layout-header-right {
+	.app-layout-header > .app-layout-header-right {
 		/*width: 156px;*/
 	}
 
-	.layout-header-right > div {
+	.app-layout-header > .app-layout-header-right > div {
 		float: right;
 	}
 
-	.layout-action-btn {
+	.app-layout-header .app-layout-action-btn {
 		display: inline-block;
 		padding-left: 10px;
 		padding-right: 10px;
@@ -205,18 +205,19 @@ export default {
 		-webkit-user-select: none;
 	}
 
-	.layout-action-btn > .ivu-icon {
+	.app-layout-header > .app-layout-action-btn > .ivu-icon {
 		vertical-align: middle;
 	}
 
-	.layout-action-btn:active {
+	.app-layout-header > .app-layout-action-btn:active {
 		opacity: 0.3;
 	}
 
-	.layout-content {
+	.app-layout-content {
 		position: relative;
 		overflow-x: hidden;
 		overflow-y: auto;
+		transform: translate(0, 0);
 		/*background-color: white;*/
 	}
 </style>

@@ -9,6 +9,11 @@ export default {
 	state: {
 		list: null
 	},
+
+	/**
+	 * 获取列表
+	 * @return []
+	 */
 	getList() {
 		if (this.state.list === null) {
 			this.state.list = sys.getStorageObject('uploader.list', []).map(function(item) {
@@ -19,6 +24,7 @@ export default {
 		}
 		return this.state.list;
 	},
+	// 保存数据
 	_save() {
 		const data = this.getList().map(function(item) {
 			return {
@@ -28,17 +34,21 @@ export default {
 		});
 		sys.setStorageObject('uploader.list', data);
 	},
+	// 添加数据
 	add(item) {
 		if (this.debug) console.log('新增监听目录', item);
-		this.getList().push(item);
+		const index = this.getList().push(item) - 1;
 		this._save();
+		if (item.status) this.start(index);
 	},
+	// 删除数据
 	delete(index) {
 		if (this.debug) console.log('删除监听目录', index);
 		this.stop(index);
 		this.getList().splice(index, 1);
 		this._save();
 	},
+	// 开始任务
 	start(index) {
 		if (this.debug) console.log('启动监听目录', index);
 		const item = this.getList()[index];
@@ -92,6 +102,7 @@ export default {
 			watcher: watcher,
 		};
 	},
+	// 终止任务
 	stop(index) {
 		if (this.debug) console.log('终止监听目录', index);
 		const item = this.getList()[index];
@@ -106,17 +117,20 @@ export default {
 			delete item.watcherId;
 		}
 	},
+	// 销毁所有任务
 	destroy() {
 		for (const watcherId in watchers) {
 			const watcher = watchers[watcherId];
 			watcher.watcher.close();
 		}
 	},
+	// 获取任务详情
 	getDetail(watcherId) {
 		const watcher = watchers[watcherId];
 		if (!watcher) return [];
 		return watcher.files;
 	},
+	// 根据watcherId获取路径
 	getPath(watcherId) {
 		const item = this.getList().find(item => item.watcherId === watcherId);
 		if (item) return item.path;
