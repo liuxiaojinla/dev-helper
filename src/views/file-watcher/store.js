@@ -65,18 +65,22 @@ export default {
 			filename = path.resolve(item.path, filename);
 			console.debug(eventType, filename);
 
+			if (path.extname(filename).indexOf('___') === 0) {
+				return console.debug('临时文件，跳过...');
+			}
+
 			const findIndex = files.findIndex(file => file.path === filename);
 			if (!fs.existsSync(filename)) {
 				if (findIndex >= 0) files.indexOf(findIndex, 1);
 				item.count = files.length;
-				return console.warn('文件已丢失');
+				return console.warn('文件已丢失，删除记录');
 			}
 
 			const stats = fs.statSync(filename);
 			console.debug(stats);
 
 			if (stats.isDirectory()) {
-				return console.debug('跳过目录...');
+				return console.debug('目录，跳过...');
 			}
 
 			if (findIndex === -1) {
