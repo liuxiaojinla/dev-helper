@@ -152,7 +152,7 @@ export default {
 				if (index !== -1) watchers.files.splice(index, 1);
 			});
 		} else {
-			watcher.files.splice(0, watchers.files.length - 1);
+			watcher.files.splice(0, watchers.files.length);
 		}
 		this._updateCount(watcherId, watcher.files.length);
 		return watcher.files;
