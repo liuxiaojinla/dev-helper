@@ -148,11 +148,11 @@ export default {
 		if (!watcher) return [];
 		if (list) {
 			list.forEach(item => {
-				const index = watchers.files.findIndex(oldItem => oldItem.path === item.path);
-				if (index !== -1) watchers.files.splice(index, 1);
+				const index = watcher.files.findIndex(oldItem => oldItem.path === item.path);
+				if (index !== -1) watcher.files.splice(index, 1);
 			});
 		} else {
-			watcher.files.splice(0, watchers.files.length);
+			watcher.files.splice(0, watcher.files.length);
 		}
 		this._updateCount(watcherId, watcher.files.length);
 		return watcher.files;
