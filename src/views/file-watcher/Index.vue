@@ -73,9 +73,9 @@ export default {
 	methods: {
 		onToggle(row, index) {
 			if (row.status) {
-				store.stop(index);
+				store.stopProject(index);
 			} else {
-				store.start(index);
+				store.startProject(index);
 			}
 		},
 		onDelete: function(index) {

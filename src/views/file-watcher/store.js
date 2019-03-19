@@ -4,175 +4,269 @@ const path = require('path');
 // 文件监听器的目录列表
 const watchers = {};
 
-export default {
-	debug: true,
-	state: {
-		list: null
-	},
+/**
+ * 获取watcher实例
+ * @param projectId
+ * @return {*}
+ */
+function makeWatcher(projectId) {
+	if (!watchers.hasOwnProperty(projectId)) {
+		watchers[projectId] = sys.getStorageObject('filewatch.watcher.' + projectId, {
+			files: []
+		});
+	}
+	saveWatcher(projectId);
+	return watchers[projectId];
+}
 
-	/**
-	 * 获取列表
-	 * @return []
-	 */
-	getProjectList() {
-		if (this.state.list === null) {
-			this.state.list = sys.getStorageObject('uploader.list', []).map(function(item) {
+/**
+ * 保存文件watcher
+ * @param {string} projectId
+ */
+function saveWatcher(projectId) {
+	sys.setStorageObject('filewatch.watcher.' + projectId, {
+		files: watchers[projectId].files
+	});
+}
+
+/**
+ * 删除watcher
+ * @param {string} projectId
+ */
+function deleteWatcher(projectId) {
+	if (!watchers[projectId]) return;
+	sys.removeStorage('filewatch.watcher.' + projectId);
+}
+
+/**
+ * 获取项目列表
+ */
+const getProjectList = (function() {
+	let list = null;
+	return () => {
+		if (list === null) {
+			list = sys.getStorageObject('filewatch.list', []).map(function(item) {
 				item.status = 0;
 				item.count = 0;
 				return item;
 			});
 		}
-		return this.state.list;
-	},
-	// 保存数据
-	_saveProject() {
-		const data = this.getProjectList().map(function(item) {
-			return {
-				title: item.title,
-				path: item.path
-			};
-		});
-		sys.setStorageObject('uploader.list', data);
-	},
-	// 添加数据
-	addProject(item) {
-		if (this.debug) console.log('新增监听目录', item);
-		const index = this.getProjectList().push(item) - 1;
-		this._saveProject();
-		if (item.status) this.start(index);
-	},
-	// 删除数据
-	deleteProject(index) {
-		if (this.debug) console.log('删除监听目录', index);
-		this.stop(index);
-		this.getProjectList().splice(index, 1);
-		this._saveProject();
-	},
-	// 开始任务
-	start(index) {
-		if (this.debug) console.log('启动监听目录', index);
-		const item = this.getProjectList()[index];
-		if (!item) return;
-		item.status = 1;
+		return list;
+	}
+})();
 
-		const watcherId = Symbol('watcher');
-		item.watcherId = watcherId;
+/**
+ * 获取项目详情
+ * @param projectId
+ * @return {*}
+ */
+function getProjectDetail(projectId) {
+	return getProjectList().find(item => item.id = projectId);
+}
 
-		const files = [];
-		const watcher = fs.watch(item.path, {
-			recursive: true,
-		}, (eventType, filename) => {
-			filename = path.resolve(item.path, filename);
-			console.debug(eventType, filename);
+/**
+ * 获取项目地址
+ * @param {string} projectId
+ * @return string|null
+ * @deprecated
+ */
+function getProjectPath(projectId) {
+	const project = getProjectDetail(projectId);
+	if (project) return project.path;
+	return null;
+}
 
-			if (path.extname(filename).indexOf('___') !== -1) {
-				return console.debug('临时文件，跳过...');
-			}
+/**
+ * 保存数据
+ */
+function saveProject() {
+	const data = getProjectList().map(function(item) {
+		return item;
+	});
+	sys.setStorageObject('filewatch.list', data);
+}
 
-			const findIndex = files.findIndex(file => file.path === filename);
-			if (!fs.existsSync(filename)) {
-				if (findIndex >= 0) files.indexOf(findIndex, 1);
-				item.count = files.length;
-				return console.warn('文件已丢失，删除记录');
-			}
+/**
+ * 添加项目
+ * @param {*} item
+ */
+function addProject(item) {
+	if (this.debug) console.log('新增监听目录', item);
 
-			const stats = fs.statSync(filename);
-			console.debug(stats);
+	getProjectList().push(item);
+	saveProject();
 
-			if (stats.isDirectory()) {
-				return console.debug('目录，跳过...');
-			}
+	if (item.status) {
+		startProject(item.projectId);
+	}
+}
 
-			if (findIndex === -1) {
-				files.push({
-					path: filename,
-					_checked: true,
-				});
-				item.count = files.length;
-			}
-		});
-		watcher.on('error', (e) => {
-			sys.showModal({
-				icon: 'warning',
-				content: e.message
+/**
+ * 删除项目
+ * @param {string} projectId
+ */
+function deleteProject(projectId) {
+	if (this.debug) console.log('删除监听目录,projectId:', projectId);
+	stopProject(projectId);
+
+	const index = getProjectList().findIndex(item => item.id === projectId);
+	getProjectList().splice(index, 1);
+	saveProject();
+
+	deleteWatcher(projectId);
+}
+
+/**
+ * 更新变动数量
+ * @param {string} projectId
+ * @param {number} count
+ */
+function updateProjectCount(projectId, count) {
+	const project = getProjectDetail(projectId);
+	if (project) project.count = count;
+	saveProject();
+}
+
+/**
+ * 开始任务
+ * @param {string} projectId
+ */
+function startProject(projectId) {
+	const project = getProjectDetail(projectId);
+	if (this.debug) console.log('启动监听目录', projectId, project);
+	if (!project) return;
+
+	const watcher = makeWatcher(projectId);
+	project.status = 1;
+	watcher.watcher = fs.watch(project.path, {
+		recursive: true,
+	}, (eventType, filename) => {
+		filename = path.resolve(project.path, filename);
+		console.debug(eventType, filename);
+
+		if (path.extname(filename).indexOf('___') !== -1) {
+			return console.debug('临时文件，跳过...');
+		}
+
+		const files = watcher.files;
+		const findIndex = files.findIndex(file => file.path === filename);
+		if (!fs.existsSync(filename)) {
+			if (findIndex >= 0) files.indexOf(findIndex, 1);
+			project.count = files.length;
+			saveProject();
+			return console.warn('文件已丢失，删除记录');
+		}
+
+		const stats = fs.statSync(filename);
+		console.debug(stats);
+		if (stats.isDirectory()) {
+			return console.debug('目录，跳过...');
+		}
+
+		if (findIndex === -1) {
+			files.push({
+				path: filename,
+				_checked: true,
 			});
-			this.stop(index);
+			project.count = files.length;
+			saveProject();
+			saveWatcher(projectId);
+		}
+	});
+	watcher.on('error', (e) => {
+		sys.showModal({
+			icon: 'warning',
+			content: e.message
 		});
-		watcher.on('close', () => {
-			this.stop(index);
-		});
-		watchers[watcherId] = {
-			files: files,
-			watcher: watcher,
-		};
-	},
-	// 终止任务
-	stop(index) {
-		if (this.debug) console.log('终止监听目录', index);
-		const item = this.getProjectList()[index];
-		if (!item) return;
-		item.status = 0;
-		item.count = 0;
+		this.stop(projectId);
+	});
+	watcher.on('close', () => {
+		this.stop(projectId);
+	});
+}
 
-		const watcher = watchers[item.watcherId];
-		if (watcher) {
-			watcher.watcher.close();
-			delete watchers[item.watcherId];
-			delete item.watcherId;
-		}
-	},
-	// 销毁所有任务
-	destroy() {
-		Object.getOwnPropertySymbols(watchers).forEach(watcherId => {
-			if (!watchers.hasOwnProperty(watcherId)) return;
+/**
+ * 终止任务
+ * @param {string} projectId
+ */
+function stopProject(projectId) {
+	const project = getProjectDetail(projectId);
+	if (this.debug) console.log('终止监听目录', projectId, project);
+	if (!project) return;
 
-			const watcher = watchers[watcherId];
-			watcher.watcher.close();
+	item.status = 0;
+	item.count = 0;
+
+	const watcher = watchers[projectId];
+	if (watcher) {
+		watcher.watcher.close();
+		delete watchers[projectId];
+	}
+}
+
+/**
+ * 销毁所有任务
+ */
+function destroy() {
+	Object.getOwnPropertyNames(watchers).forEach(watcherId => {
+		if (!watchers.hasOwnProperty(watcherId)) return;
+		const watcher = watchers[watcherId];
+		watcher.watcher.close();
+	});
+}
+
+/**
+ * 清空文件
+ * @param {string} projectId
+ * @param {[]} [list]
+ * @return {[]}
+ */
+function clearFile(projectId, list) {
+	const watcher = watchers[projectId];
+	if (!watcher) return [];
+
+	const result = [];
+	if (list) {
+		list.forEach(item => {
+			const index = watcher.files.findIndex(oldItem => oldItem.path === item.path);
+			if (index === -1) result.push(item);
 		});
-	},
-	// 根据watcherId获取路径
-	getProjectPath(watcherId) {
-		const item = this.getProjectList().find(item => item.watcherId === watcherId);
-		if (item) return item.path;
-		return null;
-	},
-	// 获取任务详情
-	getProjectDetail(watcherId) {
-		const watcher = watchers[watcherId];
-		if (!watcher) return [];
-		return watcher.files;
-	},
-	// 清空文件
-	clearFile(watcherId, list) {
-		const watcher = watchers[watcherId];
-		if (!watcher) return [];
-		if (list) {
-			list.forEach(item => {
-				const index = watcher.files.findIndex(oldItem => oldItem.path === item.path);
-				if (index !== -1) watcher.files.splice(index, 1);
-			});
-		} else {
-			watcher.files.splice(0, watcher.files.length);
-		}
-		this._updateCount(watcherId, watcher.files.length);
-		return watcher.files;
-	},
-	// 移除文件
-	removeFile(watcherId, index) {
-		const watcher = watchers[watcherId];
-		if (!watcher) return [];
-		watcher.files.splice(index, 1);
-		this._updateCount(watcherId, watcher.files.length);
-		return watcher.files;
-	},
-	// 更新变动数量
-	_updateCount(watcherId, count) {
-		const projectList = this.getProjectList();
-		for (let i = 0; i < projectList.length; i++) {
-			const item = projectList[i];
-			if (item.watcherId === watcherId) {
-				item.count = count;
-			}
-		}
-	},
+	}
+	watcher.files = result;
+	updateProjectCount(projectId, watcher.files.length);
+	saveWatcher(projectId);
+	return watcher.files;
+}
+
+/**
+ * 移除文件
+ * @param {string} projectId
+ * @param {number} index
+ * @return {[]}
+ */
+function removeFile(projectId, index) {
+	const watcher = watchers[projectId];
+	if (!watcher) return [];
+
+	watcher.files.splice(index, 1);
+	updateProjectCount(projectId, watcher.files.length);
+	saveWatcher(projectId);
+
+	return watcher.files;
+}
+
+export default {
+	debug: true,
+	state: {},
+	getProjectList,
+	getProjectDetail,
+	addProject,
+	deleteProject,
+	getProjectPath,
+	startProject,
+	stopProject,
+	destroy,
+	clearFile,
+	removeFile,
+
 };
