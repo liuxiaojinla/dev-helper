@@ -1,37 +1,38 @@
 {
-	"name":"dev-helper",
-	"version":"1.0.36",
-	"description":"开发小助手",
-	"private":true,
-	"scripts":{
-		"serve":"vue-cli-service serve",
-		"build":"vue-cli-service build",
-		"electron:build":"vue-cli-service electron:build",
-		"electron:serve":"vue-cli-service electron:serve",
-		"postinstall":"electron-builder install-app-deps",
-		"postuninstall":"electron-builder install-app-deps",
-		"electron:generate-icons":"electron-icon-builder --input=./public/icon.png --output=build --flatten"
+	"name": "dev-helper",
+	"version": "1.0.42",
+	"description": "开发小助手",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"electron:build": "vue-cli-service electron:build",
+		"electron:serve": "vue-cli-service electron:serve",
+		"postinstall": "electron-builder install-app-deps",
+		"postuninstall": "electron-builder install-app-deps",
+		"electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
 	},
-	"dependencies":{
-		"iview":"^3.0.1",
-		"ssh2-sftp-client":"^2.4.3",
-		"vue":"^2.6.9",
-		"vue-router":"^3.0.1",
-		"vuejs-plugin":"^1.0.8",
-		"vuex":"^3.0.1"
+	"dependencies": {
+		"archiver": "^3.0.0",
+		"iview": "^3.3.2",
+		"ssh2-sftp-client": "^2.4.3",
+		"vue": "^2.6.9",
+		"vue-router": "^3.0.1",
+		"vuejs-plugin": "^1.0.10",
+		"vuex": "^3.0.1"
 	},
-	"devDependencies":{
-		"@vue/cli-plugin-babel":"^3.4.0",
-		"@vue/cli-service":"^3.4.1",
-		"electron":"^3.0.0",
-		"electron-icon-builder":"^1.0.0",
-		"less":"^2.7.3",
-		"less-loader":"^4.0.6",
-		"node-sass":"^4.9.0",
-		"sass-loader":"^7.1.0",
-		"vue-cli-plugin-electron-builder":"^1.0.2",
-		"vue-cli-plugin-iview":"^1.0.6",
-		"vue-template-compiler":"^2.6.9"
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "^3.4.0",
+		"@vue/cli-service": "^3.4.1",
+		"electron": "^3.0.0",
+		"electron-icon-builder": "^1.0.0",
+		"less": "^2.7.3",
+		"less-loader": "^4.0.6",
+		"node-sass": "^4.9.0",
+		"sass-loader": "^7.1.0",
+		"vue-cli-plugin-electron-builder": "^1.0.2",
+		"vue-cli-plugin-iview": "^1.0.6",
+		"vue-template-compiler": "^2.6.9"
 	},
-	"main":"background.js"
+	"main": "background.js"
 }

@@ -1,16 +1,23 @@
 <template>
 	<Layout class="layout">
 		<Content>
-			<Table ref="selection" :columns="columns" :data="data">
+			<Table ref="selection" :columns="columns" :data="data" :height="tableHeight">
 				<template v-slot:action="{row,index}">
 					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(index)"></Icon>
 				</template>
 			</Table>
 		</Content>
 		<Footer class="layout-footer">
-			<Button icon="ios-download-outline" @click="onExport" type="success">
-				导出到桌面
-			</Button>
+			<Dropdown @on-click="onExport">
+				<Button icon="ios-download-outline" @click="onExport('folder')" type="success">
+					导出到桌面
+					<Icon type="ios-arrow-down"></Icon>
+				</Button>
+				<DropdownMenu slot="list">
+					<DropdownItem name="zip">压缩包</DropdownItem>
+				</DropdownMenu>
+			</Dropdown>
+
 			<Button icon="ios-trash-outline" @click="onClear" type="error" style="margin-left: 16px">
 				清空
 			</Button>
@@ -24,6 +31,7 @@ import util from './util';
 
 const os = require('os');
 const path = require('path');
+const fs = require('fs');
 
 export default {
 	name: "FileWatcherDetail",
@@ -74,24 +82,66 @@ export default {
 		},
 
 		//导出文件
-		onExport() {
+		onExport(name) {
+			sys.showLoading();
+			const rootDir = store.getProjectPath(this.$route.params.id);
 			const exportRootDir = path.resolve(os.homedir(), 'Desktop', 'export' + util.dateFormat('yyyyMMddhhmmss'));
-			const originalRootDir = store.getProjectPath(this.$route.params.id);
 			const fileList = this.$refs.selection.getSelection();
+
+			if (!fileList.length) {
+				sys.showToast({content: '无文件选择！'});
+				sys.hideLoading();
+				return;
+			}
+
+			try {
+				if (name === 'zip') {
+					this.exportZip(fileList, rootDir, exportRootDir);
+				} else {
+					this.exportFolder(fileList, rootDir, exportRootDir);
+				}
+
+				sys.showModal({
+					title: '温馨提示',
+					content: '文件已导出完毕，是否清空文件？',
+					onOk: () => {
+						this.data = store.clearFile(this.$route.params.id, fileList);
+					}
+				});
+			} catch (e) {
+				sys.showToast({content: e.message});
+				console.error(e);
+			}
+
+			sys.hideLoading();
+		},
+
+		// 导出文件夹
+		exportFolder(fileList, rootDir, exportRootDir) {
 			fileList.forEach(item => {
-				let newPath = item.path.replace(originalRootDir + '\\', '');
+				let newPath = item.path.replace(rootDir + '\\', '');
 				newPath = path.resolve(exportRootDir, newPath);
 				console.debug(item.path, '->', newPath);
 				util.copyFileSync(item.path, newPath);
 			});
+		},
 
-			sys.showModal({
-				title: '温馨提示',
-				content: '文件已导出完毕，是否清空文件？',
-				onOk: () => {
-					this.data = store.clearFile(this.$route.params.id, fileList);
-				}
+		// 导出zip格式文件
+		exportZip(fileList, rootDir, exportRootDir) {
+			const zipArchiver = require('archiver')('zip', {
+				store: true
 			});
+			const output = fs.createWriteStream(exportRootDir + '.zip');
+			zipArchiver.on('error', function(err) {
+				throw err;
+			});
+			zipArchiver.pipe(output);
+			fileList.forEach(item => {
+				let newPath = item.path.replace(rootDir + '\\', '');
+				console.debug(item.path, '->', newPath);
+				zipArchiver.append(fs.readFileSync(item.path), {name: newPath});
+			});
+			zipArchiver.finalize();
 		}
 	}
 }
