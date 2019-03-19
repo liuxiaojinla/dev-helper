@@ -7,14 +7,14 @@ export default [
 			name: 'filewatcher',
 		}
 	},
-	{
-		title: 'Hosts文件',
-		icon: 'ios-document',
-		type: 'page',
-		detail: {
-			name: 'hosts',
-		}
-	},
+	// {
+	// 	title: 'Hosts文件',
+	// 	icon: 'ios-document',
+	// 	type: 'page',
+	// 	detail: {
+	// 		name: 'hosts',
+	// 	}
+	// },
 	// {
 	// 	title: '微信小程序转换',
 	// 	type: 'page',
