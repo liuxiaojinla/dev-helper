@@ -55,6 +55,7 @@ const getProjectList = (function() {
 	return () => {
 		if (list === null) {
 			list = sys.getStorageObject('filewatch.list', []).map(function(item) {
+				item.status = 0;
 				return item;
 			});
 		}
@@ -158,7 +159,6 @@ function startProject(projectId) {
 		}
 
 		const files = watcher.files;
-		console.log(files)
 		const findIndex = files.findIndex(file => file.path === filename);
 		if (!fs.existsSync(filename)) {
 			if (findIndex >= 0) files.indexOf(findIndex, 1);
