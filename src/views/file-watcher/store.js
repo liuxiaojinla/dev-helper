@@ -101,7 +101,7 @@ function addProject(item) {
 	item.id = uniqueId();
 	getProjectList().push(item);
 
-	if (this.debug) console.log('新增监听目录', item);
+	console.log('新增监听目录', item);
 
 	saveProject();
 
@@ -115,7 +115,7 @@ function addProject(item) {
  * @param {string} projectId
  */
 function deleteProject(projectId) {
-	if (this.debug) console.log('删除监听目录,projectId:', projectId);
+	console.log('删除监听目录,projectId:', projectId);
 	stopProject(projectId);
 
 	const index = getProjectList().findIndex(item => item.id === projectId);
@@ -142,7 +142,7 @@ function updateProjectCount(projectId, count) {
  */
 function startProject(projectId) {
 	const project = getProjectDetail(projectId);
-	if (this.debug) console.log('启动监听目录', projectId, project);
+	console.log('启动监听目录', projectId, project);
 	if (!project) return;
 
 	const watcher = makeWatcher(projectId);
@@ -158,6 +158,7 @@ function startProject(projectId) {
 		}
 
 		const files = watcher.files;
+		console.log(files)
 		const findIndex = files.findIndex(file => file.path === filename);
 		if (!fs.existsSync(filename)) {
 			if (findIndex >= 0) files.indexOf(findIndex, 1);
@@ -187,10 +188,7 @@ function startProject(projectId) {
 			icon: 'warning',
 			content: e.message
 		});
-		this.stop(projectId);
-	});
-	watcher.watcher.on('close', () => {
-		this.stop(projectId);
+		stopProject(projectId);
 	});
 }
 
@@ -200,18 +198,18 @@ function startProject(projectId) {
  */
 function stopProject(projectId) {
 	const project = getProjectDetail(projectId);
-	if (this.debug) console.log('终止监听目录', projectId, project);
+	console.log('终止监听目录', projectId, project);
 	if (!project) return;
 
 	project.status = 0;
 
 	const watcher = watchers[projectId];
-	if (watcher) {
-		watcher.watcher.close();
-		delete watchers[projectId];
-	}
-	saveProject();
+	if (watcher) watcher.watcher.close();
+
 	saveWatcher(projectId);
+	saveProject();
+
+	delete watchers[projectId];
 }
 
 /**
@@ -265,6 +263,7 @@ function clearFile(projectId, list) {
  */
 function removeFile(projectId, index) {
 	const watcher = watchers[projectId];
+	console.log(watchers)
 	if (!watcher) return [];
 
 	watcher.files.splice(index, 1);
@@ -288,5 +287,4 @@ export default {
 	getFiles,
 	clearFile,
 	removeFile,
-
 };

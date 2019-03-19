@@ -71,20 +71,20 @@ export default {
 				title: '温馨提示',
 				content: '你确定要清空文件吗？',
 				onOk: () => {
-					this.data = store.clearFile(this.$route.params.id);
+					this.data = store.clearFile(this.$route.query.id);
 				}
 			});
 		},
 
 		// 删除文件
 		onDelete(index) {
-			store.removeFile(this.$route.params.id, index);
+			this.data = store.removeFile(this.$route.query.id, index);
 		},
 
 		//导出文件
 		onExport(name) {
 			sys.showLoading();
-			const rootDir = store.getProjectPath(this.$route.params.id);
+			const rootDir = store.getProjectPath(this.$route.query.id);
 			const exportRootDir = path.resolve(os.homedir(), 'Desktop', 'export' + util.dateFormat('yyyyMMddhhmmss'));
 			const fileList = this.$refs.selection.getSelection();
 
@@ -105,7 +105,7 @@ export default {
 					title: '温馨提示',
 					content: '文件已导出完毕，是否清空文件？',
 					onOk: () => {
-						this.data = store.clearFile(this.$route.params.id, fileList);
+						this.data = store.clearFile(this.$route.query.id, fileList);
 					}
 				});
 			} catch (e) {
