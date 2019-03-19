@@ -37,7 +37,7 @@ export default {
 	name: "FileWatcherDetail",
 	data: function() {
 		return {
-			data: store.getProjectDetail(this.$route.params.id),
+			data: store.getFiles(this.$route.query.id),
 			columns: [
 				{
 					type: 'selection',

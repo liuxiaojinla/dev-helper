@@ -4,6 +4,16 @@ const path = require('path');
 // 文件监听器的目录列表
 const watchers = {};
 
+// 生成唯一id
+const uniqueId = (function() {
+	let index = 100000;
+	return function() {
+		index++;
+		return "fw_" + (new Date().getTime()).toString() + index.toString();
+	};
+})();
+
+
 /**
  * 获取watcher实例
  * @param projectId
@@ -15,7 +25,6 @@ function makeWatcher(projectId) {
 			files: []
 		});
 	}
-	saveWatcher(projectId);
 	return watchers[projectId];
 }
 
@@ -46,8 +55,6 @@ const getProjectList = (function() {
 	return () => {
 		if (list === null) {
 			list = sys.getStorageObject('filewatch.list', []).map(function(item) {
-				item.status = 0;
-				item.count = 0;
 				return item;
 			});
 		}
@@ -61,7 +68,7 @@ const getProjectList = (function() {
  * @return {*}
  */
 function getProjectDetail(projectId) {
-	return getProjectList().find(item => item.id = projectId);
+	return getProjectList().find(item => item.id === projectId);
 }
 
 /**
@@ -91,13 +98,15 @@ function saveProject() {
  * @param {*} item
  */
 function addProject(item) {
+	item.id = uniqueId();
+	getProjectList().push(item);
+
 	if (this.debug) console.log('新增监听目录', item);
 
-	getProjectList().push(item);
 	saveProject();
 
 	if (item.status) {
-		startProject(item.projectId);
+		startProject(item.id);
 	}
 }
 
@@ -173,14 +182,14 @@ function startProject(projectId) {
 			saveWatcher(projectId);
 		}
 	});
-	watcher.on('error', (e) => {
+	watcher.watcher.on('error', (e) => {
 		sys.showModal({
 			icon: 'warning',
 			content: e.message
 		});
 		this.stop(projectId);
 	});
-	watcher.on('close', () => {
+	watcher.watcher.on('close', () => {
 		this.stop(projectId);
 	});
 }
@@ -194,14 +203,15 @@ function stopProject(projectId) {
 	if (this.debug) console.log('终止监听目录', projectId, project);
 	if (!project) return;
 
-	item.status = 0;
-	item.count = 0;
+	project.status = 0;
 
 	const watcher = watchers[projectId];
 	if (watcher) {
 		watcher.watcher.close();
 		delete watchers[projectId];
 	}
+	saveProject();
+	saveWatcher(projectId);
 }
 
 /**
@@ -213,6 +223,15 @@ function destroy() {
 		const watcher = watchers[watcherId];
 		watcher.watcher.close();
 	});
+}
+
+/**
+ * 获取任务文件列表
+ * @param {string} projectId
+ */
+function getFiles(projectId) {
+	const watcher = makeWatcher(projectId);
+	return watcher.files;
 }
 
 /**
@@ -266,6 +285,7 @@ export default {
 	startProject,
 	stopProject,
 	destroy,
+	getFiles,
 	clearFile,
 	removeFile,
 

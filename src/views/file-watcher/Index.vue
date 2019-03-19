@@ -3,8 +3,8 @@
 		<Content>
 			<Table :columns="columns" :data="data" :height="tableHeight">
 				<template v-slot:status="{row,index}">
-					<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(row,index)" v-if="row.status"></Icon>
-					<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(row,index)" v-else></Icon>
+					<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(row)" v-if="row.status"></Icon>
+					<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(row)" v-else></Icon>
 				</template>
 
 				<template v-slot:count="{row,index}">
@@ -14,7 +14,7 @@
 				<template v-slot:action="{row,index}">
 					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(index)"></Icon>
 					<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
-							:to="{name:'filewatcher.detail',params:{id:row.watcherId}}" v-show="row.status"></router-link>
+							:to="{name:'filewatcher.detail',query:{id:row.id}}" v-show="row.status"></router-link>
 				</template>
 			</Table>
 		</Content>
@@ -71,11 +71,11 @@ export default {
 		// if (IS_DEV) store.destroy();
 	},
 	methods: {
-		onToggle(row, index) {
+		onToggle(row) {
 			if (row.status) {
-				store.stopProject(index);
+				store.stopProject(row.id);
 			} else {
-				store.startProject(index);
+				store.startProject(row.id);
 			}
 		},
 		onDelete: function(index) {
