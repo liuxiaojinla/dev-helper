@@ -36,7 +36,7 @@
 							<Icon type="ios-bug-outline" size="20"></Icon>
 							{{isDebug?'关闭':'开启'}}调试模式
 						</DropdownItem>
-						<DropdownItem name="debug">
+						<DropdownItem name="always-top">
 							<Icon :type="isAlwaysOnTop?'ios-radio-button-on':'ios-radio-button-off'" size="20"/>
 							{{isAlwaysOnTop?'取消':'设置'}}置顶
 						</DropdownItem>
@@ -119,7 +119,7 @@ export default {
 				this.isDebug = !isDebug;
 			} else if ('home' === name) {
 				this.$router.replace('/');
-			} else if ('top' === name) {
+			} else if ('always-top' === name) {
 				const isAlwaysOnTop = this.$options.win.isAlwaysOnTop();
 				win.setAlwaysOnTop(!isAlwaysOnTop);
 				this.isAlwaysOnTop = isAlwaysOnTop;
