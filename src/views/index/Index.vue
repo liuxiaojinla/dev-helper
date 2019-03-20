@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import ACTION_LIST from '../data/actions';
+import ACTION_LIST from '../../data/actions';
 import {shell} from 'electron';
 
 const iconPrefixCls = 'ivu-icon';
 export default {
-	name: 'home',
+	name: 'Home',
 	data() {
 		return {
 			data: ACTION_LIST

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Webview from './components/Webview.vue';
-import Home from './views/Home.vue';
+import Home from './views/index/Index.vue';
 import FileWatcher from './views/file-watcher/Index.vue';
 
 Vue.use(Router);
@@ -48,7 +48,7 @@ export default new Router({
 			// route level code-splitting
 			// this generates a separate chunk (weapp_trsanform.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
-			component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/WeappTransform.vue'),
+			component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/weapp-transform/Index.vue'),
 			meta: {
 				title: '开发小助手'
 			}
