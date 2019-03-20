@@ -4,7 +4,7 @@
 			<span :class="iconClasses(group.icon)" style="font-size: 18px"></span>
 			{{group.title}}
 			<Row slot="content">
-				<Col span="4" v-for="item in group.child" @click.native="onHandle(item)">
+				<Col :xs="8" :sm="6" :md="4" :lg="2" v-for="item in group.child" @click.native="onHandle(item)">
 					<p>
 						<Icon :type="item.icon" size="32"/>
 					</p>
@@ -64,5 +64,8 @@ export default {
 	.action-title {
 		font-size: 12px;
 		margin-top: 8px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 </style>

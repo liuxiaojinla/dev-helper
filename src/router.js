@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Webview from './components/Webview.vue';
 import Home from './views/index/Index.vue';
-import FileWatcher from './views/file-watcher/Index.vue';
 
 Vue.use(Router);
 const isDev = process.env.NODE_ENV !== 'production';
@@ -21,7 +20,7 @@ export default new Router({
 		{
 			path: '/filewatcher',
 			name: 'filewatcher',
-			component: FileWatcher,
+			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Index.vue'),
 			meta: {
 				title: '目录监听器'
 			}
@@ -43,6 +42,14 @@ export default new Router({
 			}
 		},
 		{
+			path: '/hosts',
+			name: 'hosts',
+			component: () => import(/* webpackChunkName: "hosts" */ './views/hosts/Index.vue'),
+			meta: {
+				title: '微信小程序转换助手'
+			}
+		},
+		{
 			path: '/weapp_trsanform',
 			name: 'weapp_trsanform',
 			// route level code-splitting
@@ -50,7 +57,7 @@ export default new Router({
 			// which is lazy-loaded when the route is visited.
 			component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/weapp-transform/Index.vue'),
 			meta: {
-				title: '开发小助手'
+				title: '微信小程序转换助手'
 			}
 		},
 		{

@@ -5,7 +5,7 @@ export default [
 		child: [
 			{
 				title: '文件打包器',
-				icon: 'ios-folder',
+				icon: 'ios-archive',
 				type: 'page',
 				detail: {
 					name: 'filewatcher',

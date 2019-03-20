@@ -1,8 +1,9 @@
 'use strict';
-import {app, BrowserWindow, protocol} from 'electron'
+import {app, BrowserWindow, Menu, protocol, Tray} from 'electron'
 import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
 import "./ipc";
 
+const path = require('path');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -13,18 +14,18 @@ const getWindow = function() {
 
 	// Create the browser window.
 	win = new BrowserWindow({
-		width: isDevelopment ? 1080 : 640,
+		width: isDevelopment ? 1080 : 360,
 		height: isDevelopment ? 640 : 480,
-		minWidth: 560,
+		minWidth: 360,
 		minHeight: 480,
 		show: false,
 		titleBarStyle: 'hidden',
 		transparent: true,
 		frame: isDevelopment,
-		hasShadow: true,
+		minimizable: false,
 		maximizable: true,
-		// minimizable: true,
-		// closable: true,
+		closable: true,
+		hasShadow: true,
 		isShowMoreMenu: false,
 		backgroundColor: '#00FFFFFF',
 		// backgroundColor: '#FFFFFF',
@@ -52,7 +53,8 @@ const getWindow = function() {
 
 	win.on('closed', () => {
 		win = null
-	})
+	});
+	return win;
 };
 
 // Standard scheme must be registered before the app is ready
@@ -63,14 +65,14 @@ app.on('window-all-closed', () => {
 	// On macOS it is common for applications and their menu bar
 	// to stay active until the user quits explicitly with Cmd + Q
 	if (process.platform !== 'darwin') {
-		app.quit()
+		app.quit();
 	}
 });
 
 app.on('activate', () => {
 	// On macOS it's common to re-create a window in the app when the
 	// dock icon is clicked and there are no other windows open.
-	getWindow()
+	getWindow();
 });
 
 // This method will be called when Electron has finished
@@ -81,7 +83,28 @@ app.on('ready', async () => {
 		// Install Vue Devtools
 		// await installVueDevtools()
 	}
-	getWindow()
+	const win = getWindow();
+	const iconPath = path.resolve(__dirname, '../public/icon.png');
+	const tray = new Tray(iconPath);
+	const contextMenu = Menu.buildFromTemplate([
+		{
+			label: '退出',
+			click: () => {
+				win.close();
+			}
+		},
+	]);
+	tray.setToolTip('开发小助手');
+	tray.setContextMenu(contextMenu);
+	tray.on('click', () => {
+		win.isVisible() ? win.hide() : win.show();
+	});
+	win.on('show', () => {
+		tray.setHighlightMode('always')
+	});
+	win.on('hide', () => {
+		tray.setHighlightMode('never')
+	});
 });
 
 // Exit cleanly on request from parent process in development mode.
@@ -89,12 +112,12 @@ if (isDevelopment) {
 	if (process.platform === 'win32') {
 		process.on('message', data => {
 			if (data === 'graceful-exit') {
-				app.quit()
+				app.quit();
 			}
 		})
 	} else {
 		process.on('SIGTERM', () => {
-			app.quit()
-		})
+			app.quit();
+		});
 	}
 }

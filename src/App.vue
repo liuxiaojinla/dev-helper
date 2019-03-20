@@ -18,7 +18,7 @@
 					<Icon type="ios-close" size="24" @click.native="onClose" v-show="isClosable"></Icon>
 				</div>
 				<div class="app-layout-action-btn">
-					<Icon :type="maxIcon" size="16" @click.native="onMax" v-show="isMaximizable"></Icon>
+					<Icon :type="maxIcon" size="16" @click.native="onMax" v-show="isMaximizable" style="width: 24px;height: 24px;text-align: center;line-height: 24px"></Icon>
 				</div>
 				<div class="app-layout-action-btn">
 					<Icon type="ios-remove" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
@@ -122,7 +122,8 @@ export default {
 			this.isMaximize = !this.isMaximize;
 		},
 		onClose() {
-			this.$options.win.close();
+			// this.$options.win.close();
+			this.$options.win.hide();
 		},
 		updateTitle() {
 			this.title = this.$route.meta.title;
