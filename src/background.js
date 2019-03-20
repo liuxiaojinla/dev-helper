@@ -14,10 +14,13 @@ const getWindow = function() {
 
 	// Create the browser window.
 	win = new BrowserWindow({
-		width: isDevelopment ? 1080 : 360,
-		height: isDevelopment ? 640 : 480,
+		// width: 320,
+		// height: 500,
+		width: isDevelopment ? 1080 : 320,
+		height: isDevelopment ? 640 : 640,
+
 		minWidth: 360,
-		minHeight: 480,
+		minHeight: 500,
 		show: false,
 		titleBarStyle: 'hidden',
 		transparent: true,
@@ -84,7 +87,7 @@ app.on('ready', async () => {
 		// await installVueDevtools()
 	}
 	const win = getWindow();
-	const iconPath = path.resolve(__dirname, '../public/icon.png');
+	const iconPath = isDevelopment ? path.resolve(__dirname, '../public/icon.png') : path.join(__dirname, 'icon.png');
 	const tray = new Tray(iconPath);
 	const contextMenu = Menu.buildFromTemplate([
 		{
