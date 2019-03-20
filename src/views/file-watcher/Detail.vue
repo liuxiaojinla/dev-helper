@@ -14,7 +14,10 @@
 					<Icon type="ios-arrow-down"></Icon>
 				</Button>
 				<DropdownMenu slot="list">
-					<DropdownItem name="zip">压缩包</DropdownItem>
+					<DropdownItem name="zip">
+						<Icon type="ios-archive"/>
+						压缩包
+					</DropdownItem>
 				</DropdownMenu>
 			</Dropdown>
 

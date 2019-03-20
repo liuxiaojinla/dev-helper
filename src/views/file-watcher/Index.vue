@@ -14,7 +14,7 @@
 				<template v-slot:action="{row,index}">
 					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(index)"></Icon>
 					<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
-							:to="{name:'filewatcher.detail',query:{id:row.id}}" v-show="row.status"></router-link>
+							:to="{name:'filewatcher.detail',query:{id:row.id}}"></router-link>
 				</template>
 			</Table>
 		</Content>

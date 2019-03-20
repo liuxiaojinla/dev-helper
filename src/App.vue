@@ -8,11 +8,9 @@
 				<div class="app-layout-action-btn" v-if="isDev">
 					<Icon type="ios-refresh" size="24" @click.native="onRefresh"></Icon>
 				</div>
-				<div class="app-layout-action-btn">
-					<Icon type="ios-home" size="24" @click.native="onHome"></Icon>
-				</div>
 			</div>
 			<div class="app-layout-header-center" @dblclick="onMax">
+				<Icon type="ios-bug" size="24" style="color: #19be6b"/>
 				{{title}}
 			</div>
 			<div class="app-layout-header-right">
@@ -31,8 +29,12 @@
 					</div>
 					<DropdownMenu slot="list">
 						<DropdownItem name="debug">
-							<Icon type="bug" size="20"></Icon>
+							<Icon type="ios-bug-outline" size="20"></Icon>
 							{{isDebug?'关闭':'开启'}}调试模式
+						</DropdownItem>
+						<DropdownItem name="home">
+							<Icon type="ios-home-outline" size="20"></Icon>
+							返回首页
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
@@ -97,9 +99,6 @@ export default {
 		onRefresh() {
 			window.location.reload();
 		},
-		onHome() {
-			this.$router.replace('/');
-		},
 		onMenuSelect(name) {
 			if ('debug' === name) {
 				const win = this.$options.win;
@@ -110,7 +109,8 @@ export default {
 					win.webContents.openDevTools();
 				}
 				this.isDebug = !isDebug;
-			} else {
+			} else if ('home' === name) {
+				this.$router.replace('/');
 			}
 		},
 		onMinni() {
@@ -141,13 +141,14 @@ export default {
 }
 </script>
 
+
 <style scoped>
 	body, html {
 		/*background-color: transparent;*/
 	}
 
 	.app-layout {
-		font-family: 'Avenir', Helvetica, Arial, sans-serif;
+		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 
@@ -178,9 +179,10 @@ export default {
 	}
 
 	.app-layout-header > .app-layout-header-center {
-		text-overflow: ellipsis;
-		font-size: 18px;
+		font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+		font-size: 16px;
 		line-height: 48px;
+		text-overflow: ellipsis;
 		-webkit-app-region: drag;
 		flex-grow: 1;
 	}
@@ -195,8 +197,8 @@ export default {
 
 	.app-layout-header .app-layout-action-btn {
 		display: inline-block;
-		padding-left: 10px;
-		padding-right: 10px;
+		/*padding-left: 10px;*/
+		/*padding-right: 10px;*/
 
 		line-height: 48px;
 		transition: all 0.1s;

@@ -45,6 +45,9 @@ export default new Router({
 		{
 			path: '/weapp_trsanform',
 			name: 'weapp_trsanform',
+			// route level code-splitting
+			// this generates a separate chunk (weapp_trsanform.[hash].js) for this route
+			// which is lazy-loaded when the route is visited.
 			component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/WeappTransform.vue'),
 			meta: {
 				title: '开发小助手'
@@ -58,14 +61,6 @@ export default new Router({
 				title: ''
 			},
 			props: true
-		},
-		{
-			path: '/about',
-			name: 'about',
-			// route level code-splitting
-			// this generates a separate chunk (about.[hash].js) for this route
-			// which is lazy-loaded when the route is visited.
-			component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
 		},
 	]
 })
