@@ -28,13 +28,17 @@
 						<Icon type="ios-more" size="24"></Icon>
 					</div>
 					<DropdownMenu slot="list">
+						<DropdownItem name="home">
+							<Icon type="ios-home-outline" size="20"></Icon>
+							返回首页
+						</DropdownItem>
 						<DropdownItem name="debug">
 							<Icon type="ios-bug-outline" size="20"></Icon>
 							{{isDebug?'关闭':'开启'}}调试模式
 						</DropdownItem>
-						<DropdownItem name="home">
-							<Icon type="ios-home-outline" size="20"></Icon>
-							返回首页
+						<DropdownItem name="debug">
+							<Icon :type="isAlwaysOnTop?'ios-radio-button-on':'ios-radio-button-off'" size="20"/>
+							{{isAlwaysOnTop?'取消':'设置'}}置顶
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
@@ -58,6 +62,7 @@ export default {
 		const win = this.$options.win = sys.getCurrentWindow();
 		return {
 			isDebug: win.webContents.isDevToolsOpened(),
+			isAlwaysOnTop: win.isAlwaysOnTop(),
 			transitionName: '',
 			title: '',
 			isMaximize: false,
@@ -65,7 +70,7 @@ export default {
 			isMinimizable: win.isMinimizable(),
 			isClosable: win.isClosable(),
 			isDev: IS_DEV,
-			isIn: true
+			isIn: true,
 		}
 	},
 	computed: {
@@ -91,6 +96,9 @@ export default {
 		const win = this.$options.win;
 		win.on('maximize', () => this.isMaximize = true);
 		win.on('unmaximize', () => this.isMaximize = false);
+
+		this.isAlwaysOnTop = sys.getStorage('isAlwaysOnTop', false);
+		win.setAlwaysOnTop(this.isAlwaysOnTop);
 	},
 	methods: {
 		onBack() {
@@ -100,8 +108,8 @@ export default {
 			window.location.reload();
 		},
 		onMenuSelect(name) {
+			const win = this.$options.win;
 			if ('debug' === name) {
-				const win = this.$options.win;
 				const isDebug = win.webContents.isDevToolsOpened();
 				if (isDebug) {
 					win.webContents.closeDevTools();
@@ -111,6 +119,10 @@ export default {
 				this.isDebug = !isDebug;
 			} else if ('home' === name) {
 				this.$router.replace('/');
+			} else if ('top' === name) {
+				const isAlwaysOnTop = this.$options.win.isAlwaysOnTop();
+				win.setAlwaysOnTop(!isAlwaysOnTop);
+				this.isAlwaysOnTop = isAlwaysOnTop;
 			}
 		},
 		onMinni() {
