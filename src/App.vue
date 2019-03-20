@@ -61,7 +61,7 @@ export default {
 			transitionName: '',
 			title: '',
 			isMaximize: false,
-			isMaximizable: win.isMaximizable(),
+			isMaximizable: win.isMaximizable() || true,
 			isMinimizable: win.isMinimizable(),
 			isClosable: win.isClosable(),
 			isDev: IS_DEV,

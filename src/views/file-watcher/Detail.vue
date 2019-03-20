@@ -65,7 +65,14 @@ export default {
 		};
 	},
 	mounted() {
-		this.tableHeight = this.$el.getBoundingClientRect().height - 48;
+		const handler = () => {
+			this.tableHeight = this.$el.getBoundingClientRect().height - 48;
+		};
+		window.addEventListener('resize', handler);
+		this.$once('hook:beforeDestroy', () => {
+			window.removeEventListener('resize', handler);
+		});
+		handler();
 	},
 	methods: {
 		// 清空文件

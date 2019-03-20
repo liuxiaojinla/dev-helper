@@ -34,6 +34,8 @@ export default {
 				this.$router.push(item.detail);
 			} else if (item.type === 'url') {
 				shell.openExternal(item.url);
+			} else if (item.type === 'custom') {
+				item.click();
 			}
 		},
 		iconClasses(type) {
