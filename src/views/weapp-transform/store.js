@@ -1,6 +1,5 @@
 import util from '../../libs/util';
 
-const fs = require('fs');
 const path = require('path');
 
 // 生成唯一id
@@ -80,6 +79,11 @@ function startProject(projectId) {
 	if (!project) return;
 
 	project.status = 1;
+	sys.childProcessExec({
+		command: 'npm ls weapp-transform1 -g --depath 0'
+	}).then(res => {
+		console.log(res)
+	});
 }
 
 /**

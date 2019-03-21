@@ -2,6 +2,7 @@ import Vue from 'vue';
 // import iView from 'iview';
 import sys from 'vuejs-plugin';
 import router from '../router';
+import util from "../libs/util";
 
 window.sys = sys;
 sys.request.addResponseInterceptor((res) => {
@@ -60,6 +61,25 @@ sys.define('openFileSelectDialog', function(options) {
 				resolve(result);
 			} else {
 				reject('未选择文件或目录');
+			}
+		});
+	});
+});
+
+
+// 生成唯一id
+const uniqueId = util.uniqueIdor('_child_process_');
+sys.define('childProcessExec', function(options) {
+	const ID = options.__ID__ = uniqueId();
+	ipcRenderer.send('child_process-exec', options);
+	return new Promise(function(resolve, reject) {
+		ipcRenderer.on('child_process-exec-result', function(event, result) {
+			if (result.__ID__ === ID) {
+				if (!result.error) {
+					resolve(result.data);
+				} else {
+					reject(result.error);
+				}
 			}
 		});
 	});
