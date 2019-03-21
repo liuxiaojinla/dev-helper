@@ -2,6 +2,9 @@
 	"name": "dev-helper",
 	"version": "1.0.58",
 	"description": "开发小助手",
+	"author":{
+		"name":"BD"
+	},
 	"private": true,
 	"scripts": {
 		"serve": "vue-cli-service serve",
