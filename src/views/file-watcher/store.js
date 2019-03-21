@@ -1,3 +1,5 @@
+import util from '../../libs/util';
+
 const fs = require('fs');
 const path = require('path');
 
@@ -5,13 +7,7 @@ const path = require('path');
 const watchers = {};
 
 // 生成唯一id
-const uniqueId = (function() {
-	let index = 100000;
-	return function() {
-		index++;
-		return "fw_" + (new Date().getTime()).toString() + index.toString();
-	};
-})();
+const uniqueId = util.uniqueIdor('fw_');
 
 
 /**

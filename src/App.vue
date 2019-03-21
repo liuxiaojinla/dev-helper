@@ -98,7 +98,8 @@ export default {
 		win.on('unmaximize', () => this.isMaximize = false);
 
 		this.isAlwaysOnTop = sys.getStorage('isAlwaysOnTop', false);
-		win.setAlwaysOnTop(this.isAlwaysOnTop);
+		win.setAlwaysOnTop(this.isAlwaysOnTop === 'true');
+		this.isAlwaysOnTop = win.isAlwaysOnTop();
 	},
 	methods: {
 		onBack() {
@@ -122,7 +123,7 @@ export default {
 			} else if ('always-top' === name) {
 				const isAlwaysOnTop = this.$options.win.isAlwaysOnTop();
 				win.setAlwaysOnTop(!isAlwaysOnTop);
-				this.isAlwaysOnTop = isAlwaysOnTop;
+				this.isAlwaysOnTop = !isAlwaysOnTop;
 			}
 		},
 		onMinni() {

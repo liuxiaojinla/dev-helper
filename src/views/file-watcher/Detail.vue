@@ -11,7 +11,7 @@
 			<Dropdown @on-click="onExport">
 				<Button icon="ios-download-outline" @click="onExport('folder')" type="success">
 					导出到桌面
-					<Icon type="ios-arrow-down"></Icon>
+					<Icon type="ios-arrow-up" @click.capture.stop=""></Icon>
 				</Button>
 				<DropdownMenu slot="list">
 					<DropdownItem name="zip">

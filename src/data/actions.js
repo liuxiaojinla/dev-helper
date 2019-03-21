@@ -25,12 +25,9 @@ export default [
 			{
 				title: '微信小程序转换',
 				icon: 'ios-build',
-				type: 'custom',
+				type: 'page',
 				detail: {
-					name: 'weapp_trsanform',
-				},
-				click() {
-					sys.showToast({content: '开发中...'});
+					name: 'weapp_transform',
 				}
 			},
 		]

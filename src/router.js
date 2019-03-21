@@ -50,12 +50,17 @@ export default new Router({
 			}
 		},
 		{
-			path: '/weapp_trsanform',
-			name: 'weapp_trsanform',
-			// route level code-splitting
-			// this generates a separate chunk (weapp_trsanform.[hash].js) for this route
-			// which is lazy-loaded when the route is visited.
+			path: '/weapp_transform',
+			name: 'weapp_transform',
 			component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/weapp-transform/Index.vue'),
+			meta: {
+				title: '微信小程序转换助手'
+			}
+		},
+		{
+			path: '/weapp_transform/add',
+			name: 'weapp_transform.add',
+			component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/weapp-transform/Add.vue'),
 			meta: {
 				title: '微信小程序转换助手'
 			}
@@ -63,6 +68,9 @@ export default new Router({
 		{
 			path: '/webview',
 			name: 'webview',
+			// route level code-splitting
+			// this generates a separate chunk (weapp_trsanform.[hash].js) for this route
+			// which is lazy-loaded when the route is visited.
 			component: Webview,
 			meta: {
 				title: ''

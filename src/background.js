@@ -25,13 +25,14 @@ const getWindow = function() {
 		titleBarStyle: 'hidden',
 		transparent: true,
 		frame: isDevelopment,
-		minimizable: false,
+		minimizable: isDevelopment,
 		maximizable: true,
 		closable: true,
 		hasShadow: true,
 		isShowMoreMenu: false,
 		backgroundColor: '#00FFFFFF',
 		// backgroundColor: '#FFFFFF',
+		skipTaskbar: !isDevelopment,
 
 		webPreferences: {
 			webSecurity: false,
