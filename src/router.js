@@ -66,6 +66,22 @@ export default new Router({
 			}
 		},
 		{
+			path: '/encrypt/url',
+			name: 'encrypt.url',
+			component: () => import(/* webpackChunkName: "encrypt" */ './views/encrypt/Url.vue'),
+			meta: {
+				title: 'URL转码'
+			}
+		},
+		{
+			path: '/encrypt/base64',
+			name: 'encrypt.base64',
+			component: () => import(/* webpackChunkName: "encrypt" */ './views/encrypt/Base64.vue'),
+			meta: {
+				title: 'Base64转码'
+			}
+		},
+		{
 			path: '/webview',
 			name: 'webview',
 			// route level code-splitting

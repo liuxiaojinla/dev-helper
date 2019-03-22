@@ -47,6 +47,22 @@ export default [
 					sys.showToast({content: '已复制！'});
 				}
 			},
+			{
+				title: 'URL加/解密',
+				icon: 'ios-swap',
+				type: 'page',
+				detail: {
+					name: 'encrypt.url',
+				}
+			},
+			{
+				title: 'Base64加/解密',
+				icon: 'ios-swap',
+				type: 'page',
+				detail: {
+					name: 'encrypt.base64',
+				}
+			},
 		]
 	},
 	{
