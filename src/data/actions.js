@@ -1,3 +1,4 @@
+const {clipboard} = require('electron');
 export default [
 	{
 		title: '常用工具',
@@ -32,6 +33,18 @@ export default [
 				type: 'custom',
 				click() {
 					sys.showToast({content: '开发中...'});
+				}
+			},
+			{
+				title: '时间戳',
+				icon: 'ios-time',
+				detail: {
+					name: 'weapp_transform',
+				},
+				type: 'custom',
+				click() {
+					clipboard.writeText(Math.floor(new Date().getTime() / 1000).toString());
+					sys.showToast({content: '已复制！'});
 				}
 			},
 		]
