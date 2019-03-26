@@ -48,6 +48,20 @@ export default [
 				}
 			},
 			{
+				title: '物流查询',
+				icon: 'ios-filing',
+				type: 'page',
+				detail: {
+					name: 'logistics',
+				}
+			},
+		]
+	},
+	{
+		title: '加密/解密',
+		icon: 'ios-link-outline',
+		child: [
+			{
 				title: 'URL加/解密',
 				icon: 'ios-swap',
 				type: 'page',
@@ -61,6 +75,22 @@ export default [
 				type: 'page',
 				detail: {
 					name: 'encrypt.base64',
+				}
+			},
+			{
+				title: 'MD5加密',
+				icon: 'ios-swap',
+				type: 'page',
+				detail: {
+					name: 'encrypt.md5',
+				}
+			},
+			{
+				title: 'SHA1加密',
+				icon: 'ios-swap',
+				type: 'page',
+				detail: {
+					name: 'encrypt.sha1',
 				}
 			},
 		]
@@ -88,7 +118,7 @@ export default [
 				url: 'https://docs.alipay.com/mini/developer/getting-started'
 			},
 			{
-				title: 'VUE',
+				title: 'Vue',
 				icon: 'ios-link',
 				type: 'url',
 				url: 'https://cn.vuejs.org/v2/guide/'

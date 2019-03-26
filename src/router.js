@@ -18,6 +18,14 @@ export default new Router({
 			}
 		},
 		{
+			path: '/logistics',
+			name: 'logistics',
+			component: () => import(/* webpackChunkName: "util" */ './views/index/Logistics.vue'),
+			meta: {
+				title: '物流查询'
+			}
+		},
+		{
 			path: '/filewatcher',
 			name: 'filewatcher',
 			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Index.vue'),
@@ -79,6 +87,22 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "encrypt" */ './views/encrypt/Base64.vue'),
 			meta: {
 				title: 'Base64转码'
+			}
+		},
+		{
+			path: '/encrypt/md5',
+			name: 'encrypt.md5',
+			component: () => import(/* webpackChunkName: "encrypt" */ './views/encrypt/Md5.vue'),
+			meta: {
+				title: 'MD5加密'
+			}
+		},
+		{
+			path: '/encrypt/sha1',
+			name: 'encrypt.sha1',
+			component: () => import(/* webpackChunkName: "encrypt" */ './views/encrypt/Sha1.vue'),
+			meta: {
+				title: 'SHA1加密'
 			}
 		},
 		{
