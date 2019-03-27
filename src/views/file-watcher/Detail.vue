@@ -18,6 +18,10 @@
 						<Icon type="ios-archive"/>
 						压缩包
 					</DropdownItem>
+					<DropdownItem name="target" v-if="info && info.targetpath">
+						<Icon type="ios-download-outline"/>
+						目标目录
+					</DropdownItem>
 				</DropdownMenu>
 			</Dropdown>
 
@@ -41,6 +45,7 @@ export default {
 	data: function() {
 		return {
 			data: store.getFiles(this.$route.query.id),
+			info: store.getProjectDetail(this.$route.query.id),
 			columns: [
 				{
 					type: 'selection',
@@ -74,6 +79,17 @@ export default {
 		});
 		handler();
 	},
+	created() {
+		if (this.info.status !== 1) {
+			sys.showModal({
+				title: '温馨提示',
+				content: '当前项目未开启目录监听，是否现在开启？',
+				onOk: () => {
+					store.startProject(this.info.id);
+				}
+			});
+		}
+	},
 	methods: {
 		// 清空文件
 		onClear() {
@@ -94,8 +110,16 @@ export default {
 		//导出文件
 		onExport(name) {
 			sys.showLoading();
-			const rootDir = store.getProjectPath(this.$route.query.id);
-			const exportRootDir = path.resolve(os.homedir(), 'Desktop', 'export' + util.dateFormat('yyyyMMddhhmmss'));
+			const rootDir = this.info.path;
+			const exportRootDir = (() => {
+				if (name === 'target') {
+					name = 'file';
+					return this.info.targetpath;
+				} else {
+					return path.resolve(os.homedir(), 'Desktop', 'export' + util.dateFormat('yyyyMMddhhmmss'));
+				}
+			})();
+
 			const fileList = this.$refs.selection.getSelection();
 
 			if (!fileList.length) {

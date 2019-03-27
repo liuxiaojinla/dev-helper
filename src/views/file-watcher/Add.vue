@@ -5,7 +5,11 @@
 		</FormItem>
 
 		<FormItem prop="path" label="监听目录">
-			<Input type="text" v-model="form.path" placeholder="请选择路径" icon="ios-folder-outline" @on-click="onSelectPath" readonly/>
+			<Input type="text" v-model="form.path" placeholder="请选择路径" icon="ios-folder-outline" @on-click="onSelectPath('path')" readonly/>
+		</FormItem>
+
+		<FormItem prop="target_path" label="目标目录">
+			<Input type="text" v-model="form.targetpath" placeholder="请选择路径" icon="ios-folder-outline" @on-click="onSelectPath('targetpath')" readonly/>
 		</FormItem>
 
 		<FormItem label="立即监听">
@@ -31,6 +35,7 @@ export default {
 			form: {
 				title: '',
 				path: '',
+				targetpath: '',
 				status: 0,
 			},
 			rules: {
@@ -46,12 +51,12 @@ export default {
 	created() {
 	},
 	methods: {
-		onSelectPath() {
+		onSelectPath(name) {
 			sys.openFileSelectDialog({
 				properties: ['openDirectory']
 			}).then((files) => {
 				console.log(files);
-				this.form.path = files[0];
+				this.form[name] = files[0];
 			});
 		},
 		onSubmit() {

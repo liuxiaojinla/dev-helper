@@ -52,6 +52,7 @@ const getProjectList = (function() {
 		if (list === null) {
 			list = sys.getStorageObject('filewatch.list', []).map(function(item) {
 				item.status = 0;
+				if (!item.targetpath) item.targetpath = '';
 				return item;
 			});
 		}
@@ -130,6 +131,19 @@ function deleteProject(projectId) {
 function updateProjectCount(projectId, count) {
 	const project = getProjectDetail(projectId);
 	if (project) project.count = count;
+	saveProject();
+}
+
+/**
+ * 设置导出路径
+ * @param {string} projectId
+ * @param {string} path
+ */
+function setProjectTargetPath(projectId, path) {
+	const project = getProjectDetail(projectId);
+	console.log('设置导出目录', projectId, project);
+	if (!project) return;
+	project.targetpath = path;
 	saveProject();
 }
 
@@ -282,6 +296,7 @@ export default {
 	getProjectDetail,
 	addProject,
 	deleteProject,
+	setProjectTargetPath,
 	getProjectPath,
 	startProject,
 	stopProject,

@@ -7,12 +7,17 @@
 					<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(row)" v-else></Icon>
 				</template>
 
+				<template v-slot:targetpath="{row,index}">
+					<Icon type="ios-folder" @click="onSelectPath(row,'target_path')" size="18" style="margin-right: 8px"/>
+					<span>{{row.targetpath}}</span>
+				</template>
+
 				<template v-slot:count="{row,index}">
 					<span style="color: #19be6b">{{row.count}}</span>
 				</template>
 
 				<template v-slot:action="{row,index}">
-					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(index)"></Icon>
+					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(row)"></Icon>
 					<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
 							:to="{name:'filewatcher.detail',query:{id:row.id}}"></router-link>
 				</template>
@@ -44,6 +49,10 @@ export default {
 				{
 					title: '路径',
 					key: 'path'
+				},
+				{
+					title: '目标路径',
+					slot: 'targetpath'
 				},
 				{
 					title: '状态',
@@ -85,16 +94,23 @@ export default {
 				store.startProject(row.id);
 			}
 		},
-		onDelete: function(index) {
+		onDelete: function(row) {
 			sys.showModal({
 				icon: 'confirm',
 				title: '温馨提示',
 				content: '你确定要删除这个监听目录吗？',
 				onOk: () => {
-					store.deleteProject(index);
+					store.deleteProject(row.id);
 				}
 			});
-		}
+		},
+		onSelectPath(row) {
+			sys.openFileSelectDialog({
+				properties: ['openDirectory']
+			}).then((files) => {
+				store.setProjectTargetPath(row.id, files[0]);
+			});
+		},
 	}
 }
 </script>
