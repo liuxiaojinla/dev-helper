@@ -17,27 +17,27 @@
 	},
 	"dependencies": {
 		"archiver": "^3.0.0",
-		"iview": "^3.3.2",
+		"iview": "^3.3.3",
 		"js-md5": "^0.7.3",
 		"js-sha1": "^0.6.0",
 		"ssh2-sftp-client": "^2.4.3",
-		"vue": "^2.6.9",
+		"vue": "^2.6.10",
 		"vue-router": "^3.0.1",
 		"vuejs-plugin": "^1.0.10",
 		"vuex": "^3.0.1"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "^3.4.0",
-		"@vue/cli-service": "^3.4.1",
+		"@vue/cli-service": "^3.5.2",
 		"electron": "^3.0.0",
 		"electron-icon-builder": "^1.0.0",
 		"less": "^2.7.3",
 		"less-loader": "^4.0.6",
 		"node-sass": "^4.9.0",
 		"sass-loader": "^7.1.0",
-		"vue-cli-plugin-electron-builder": "^1.0.2",
+		"vue-cli-plugin-electron-builder": "^1.2.0",
 		"vue-cli-plugin-iview": "^1.0.6",
-		"vue-template-compiler": "^2.6.9"
+		"vue-template-compiler": "^2.6.10"
 	},
 	"main": "background.js"
 }
