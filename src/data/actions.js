@@ -55,6 +55,14 @@ export default [
 					name: 'logistics',
 				}
 			},
+			// {
+			// 	title: '请求器',
+			// 	icon: 'ios-git-pull-request',
+			// 	type: 'page',
+			// 	detail: {
+			// 		name: 'logistics',
+			// 	}
+			// },
 		]
 	},
 	{

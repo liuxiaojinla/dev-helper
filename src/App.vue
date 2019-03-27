@@ -178,6 +178,7 @@ export default {
 
 	.app-layout-header {
 		display: flex;
+		z-index: 10;
 	}
 
 	.app-layout-header > .app-layout-header-left,
