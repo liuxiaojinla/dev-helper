@@ -59,7 +59,7 @@ export default [
 	},
 	{
 		title: '加密/解密',
-		icon: 'ios-link-outline',
+		icon: 'ios-swap',
 		child: [
 			{
 				title: 'URL加/解密',

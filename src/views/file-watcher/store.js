@@ -147,7 +147,9 @@ function startProject(projectId) {
 	watcher.watcher = fs.watch(project.path, {
 		recursive: true,
 	}, (eventType, filename) => {
-		if (filename.indexOf('.idea\\') === 0) {
+		if (filename.indexOf('.idea\\') === 0
+			|| filename.indexOf('.svn\\') === 0
+			|| filename.indexOf('.git\\') === 0) {
 			return console.debug('ide配置文件，跳过...');
 		}
 
