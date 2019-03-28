@@ -1,28 +1,18 @@
-# electron-vue2
+# 开发小助手（dev-helper）
 
-## Project setup
+## 项目安装
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 开启开发环境
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 发布产品
 ```
 npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
 
 ### Customize configuration
