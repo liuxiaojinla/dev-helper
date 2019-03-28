@@ -192,12 +192,15 @@ function startProject(projectId) {
 		if (findIndex === -1) {
 			files.push({
 				path: filename,
+				last_time: new Date().getTime(),
 				_checked: true,
 			});
 			project.count = files.length;
 			saveProject();
-			saveWatcher(projectId);
+		} else {
+			files[findIndex].last_time = new Date().getTime();
 		}
+		saveWatcher(projectId);
 	});
 	watcher.watcher.on('error', (e) => {
 		sys.showModal({
