@@ -86,6 +86,11 @@ export default {
 	destroyed() {
 		// if (IS_DEV) store.destroy();
 	},
+	created() {
+		if (this.$root.$win.getSize()[0] < 640) {
+			this.$root.$win.setSize(640, 480);
+		}
+	},
 	methods: {
 		onToggle(row) {
 			if (row.status) {
