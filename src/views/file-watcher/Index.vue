@@ -83,13 +83,15 @@ export default {
 		});
 		handler();
 	},
+	created() {
+		const win = sys.getCurrentWindow();
+		console.log(win.getSize());
+		if (win.getSize()[0] < 640) {
+			win.setSize(640, 480);
+		}
+	},
 	destroyed() {
 		// if (IS_DEV) store.destroy();
-	},
-	created() {
-		if (this.$root.$win.getSize()[0] < 640) {
-			this.$root.$win.setSize(640, 480);
-		}
 	},
 	methods: {
 		onToggle(row) {
