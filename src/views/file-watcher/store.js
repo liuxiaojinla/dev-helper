@@ -311,4 +311,5 @@ export default {
 	getFiles,
 	clearFile,
 	removeFile,
+	saveWatcher,
 };

@@ -1,7 +1,11 @@
 <template>
 	<Layout class="layout">
 		<Content>
-			<Table ref="selection" :columns="columns" :data="data" :height="tableHeight">
+			<Table ref="selection" :columns="columns" :data="data" :height="tableHeight"
+					@on-select-all="onSelectAll(true)"
+					@on-select-all-cancel="onSelectAll(false)"
+					@on-select="onSelect"
+					@on-select-cancel="onSelect">
 				<template v-slot:action="{row,index}">
 					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(index)"></Icon>
 				</template>
@@ -184,7 +188,23 @@ export default {
 				zipArchiver.append(fs.readFileSync(item.path), {name: newPath});
 			});
 			zipArchiver.finalize();
-		}
+		},
+
+		// 全选
+		onSelectAll(flag) {
+			this.data.forEach(item => {
+				item._checked = flag;
+			});
+			store.saveWatcher(this.$route.query.id);
+		},
+
+		// 某行选择
+		onSelect(selection) {
+			this.data.forEach(item => {
+				item._checked = selection.findIndex(item2 => item2.path === item.path) !== -1;
+			});
+			store.saveWatcher(this.$route.query.id);
+		},
 	}
 }
 </script>
