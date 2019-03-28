@@ -20,6 +20,10 @@ function makeWatcher(projectId) {
 		watchers[projectId] = sys.getStorageObject('filewatch.watcher.' + projectId, {
 			files: []
 		});
+		watchers[projectId].files = watchers[projectId].files.map(item => {
+			if (item.last_time) item.last_time = 0;
+			return item;
+		});
 	}
 	return watchers[projectId];
 }
@@ -282,7 +286,7 @@ function clearFile(projectId, list) {
  */
 function removeFile(projectId, index) {
 	const watcher = watchers[projectId];
-	console.log(watchers)
+	console.log(watcher);
 	if (!watcher) return [];
 
 	watcher.files.splice(index, 1);
