@@ -63,7 +63,7 @@ export default {
 				{
 					title: '最后更新时间',
 					key: 'last_time',
-					width: 120,
+					width: 140,
 					render: (h, params) => {
 						return h('span', util.dateFormat('yyyy-MM-dd hh:mm:ss', new Date(params.row.last_time)));
 					}
