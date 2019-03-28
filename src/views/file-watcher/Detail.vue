@@ -65,7 +65,7 @@ export default {
 					key: 'last_time',
 					width: 140,
 					render: (h, params) => {
-						return h('span', util.dateFormat('yyyy-MM-dd hh:mm:ss', new Date(params.row.last_time)));
+						return h('span', util.dateFormat('yyyy-MM-dd hh:mm:ss', new Date(params.row.last_time || 0)));
 					}
 				},
 				{

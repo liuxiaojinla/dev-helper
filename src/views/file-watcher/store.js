@@ -21,7 +21,7 @@ function makeWatcher(projectId) {
 			files: []
 		});
 		watchers[projectId].files = watchers[projectId].files.map(item => {
-			if (item.last_time) item.last_time = 0;
+			if (!item.last_time) item.last_time = 0;
 			return item;
 		});
 	}
@@ -194,7 +194,7 @@ function startProject(projectId) {
 		}
 
 		if (findIndex === -1) {
-			files.push({
+			files.unshift({
 				path: filename,
 				last_time: new Date().getTime(),
 				_checked: true,
