@@ -89,9 +89,11 @@ app.on('ready', async () => {
 	}
 
 	// 自动更新
-	if (!isDevelopment && process.argv[1] !== '--squirrel-firstrun') {
+	if (process.argv[1] !== '--squirrel-firstrun') {
 		require('update-electron-app')();
 	}
+
+	require('update-electron-app')();
 
 	const win = getWindow();
 	const iconPath = isDevelopment ? path.resolve(__dirname, '../public/icon.png') : path.join(__dirname, 'icon.png');
