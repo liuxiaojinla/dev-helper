@@ -85,9 +85,8 @@ export default {
 	},
 	created() {
 		const win = sys.getCurrentWindow();
-		console.log(win.getSize());
 		if (win.getSize()[0] < 640) {
-			win.setSize(640, 480);
+			win.setSize(640, 480, true);
 		}
 	},
 	destroyed() {
