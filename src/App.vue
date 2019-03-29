@@ -1,5 +1,5 @@
 <template>
-	<Layout class="app-layout">
+	<Layout class="app-layout" id="app-layout">
 		<Header class="app-layout-header">
 			<div class="app-layout-header-left">
 				<div class="app-layout-action-btn">
@@ -91,6 +91,70 @@ export default {
 			}
 		}
 	},
+	mounted() {
+		require('particles.js');
+		particlesJS('app-layout', {
+			particles: {
+				number: {
+					value: 200
+				},
+				color: {
+					value: ["#b61924", "#009688", "#5FB878", "#393D49", "#1E9FFF", "#FFB800"]
+				},
+				opacity: {
+					value: 1,
+					random: true,
+					anim: {
+						enable: true,
+						speed: 1,
+						opacity_min: 0,
+						sync: false
+					}
+				},
+				size: {
+					value: 3,
+					random: true,
+					anim: {
+						enable: true,
+						speed: 4,
+						size_min: 0.3,
+						sync: false
+					}
+				},
+				line_linked: {
+					enable: false
+				},
+				move: {
+					speed: 1,
+					random: true
+				}
+			},
+			interactivity: {
+				detect_on: "canvas",
+				events: {
+					onhover: {
+						enable: true,
+						mode: "bubble"
+					},
+					onclick: {
+						enable: false,
+						mode: "repulse"
+					},
+					resize: true
+				},
+				modes: {
+					bubble: {
+						distance: 250,
+						size: 5,
+						duration: 2,
+						opacity: 0,
+						speed: 3
+					}
+				}
+			},
+			retina_detect: true
+		});
+	},
 	created() {
 		this.$nextTick(this.updateTitle);
 		const win = this.$options.win;
@@ -155,7 +219,17 @@ export default {
 }
 </script>
 
+<style>
+	.particles-js-canvas-el {
+		position: fixed;
+		left: 0;
+		top: 0;
+		pointer-events: none;
+		z-index: 99999999;
+	}
+</style>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 	body, html {
 		/*background-color: transparent;*/
