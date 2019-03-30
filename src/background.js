@@ -79,6 +79,17 @@ app.on('activate', () => {
 	getWindow();
 });
 
+// 创建单实例
+const shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
+	// Someone tried to run a second instance, we should focus our window.
+	const win = getWindow();
+	if (win.isMinimized()) win.restore();
+	win.focus()
+});
+if (shouldQuit) {
+	app.quit()
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
