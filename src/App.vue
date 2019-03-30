@@ -96,13 +96,13 @@ export default {
 		particlesJS('app-layout', {
 			particles: {
 				number: {
-					value: 200
+					value: 50
 				},
 				color: {
 					value: ["#b61924", "#009688", "#5FB878", "#393D49", "#1E9FFF", "#FFB800"]
 				},
 				opacity: {
-					value: 1,
+					value: 0.75,
 					random: true,
 					anim: {
 						enable: true,
@@ -112,11 +112,11 @@ export default {
 					}
 				},
 				size: {
-					value: 3,
+					value: 5,
 					random: true,
 					anim: {
 						enable: true,
-						speed: 4,
+						speed: 3,
 						size_min: 0.3,
 						sync: false
 					}
@@ -127,25 +127,17 @@ export default {
 				move: {
 					speed: 1,
 					random: true
+				},
+				shape: {
+					type: ["circle", "edge", "polygon", "star"]
 				}
 			},
 			interactivity: {
 				detect_on: "canvas",
-				events: {
-					onhover: {
-						enable: true,
-						mode: "bubble"
-					},
-					onclick: {
-						enable: false,
-						mode: "repulse"
-					},
-					resize: true
-				},
 				modes: {
 					bubble: {
 						distance: 250,
-						size: 5,
+						size: 20,
 						duration: 2,
 						opacity: 0,
 						speed: 3
