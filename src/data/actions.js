@@ -55,6 +55,14 @@ export default [
 					name: 'logistics',
 				}
 			},
+			{
+				title: 'IntelliJ IDEA注册码',
+				icon: 'ios-hammer',
+				type: 'page',
+				detail: {
+					name: 'IntelliJIDEA',
+				}
+			},
 			// {
 			// 	title: '请求器',
 			// 	icon: 'ios-git-pull-request',

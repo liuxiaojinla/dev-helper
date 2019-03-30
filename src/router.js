@@ -26,6 +26,14 @@ export default new Router({
 			}
 		},
 		{
+			path: '/IntelliJIDEA',
+			name: 'IntelliJIDEA',
+			component: () => import(/* webpackChunkName: "util" */ './views/index/IntelliJIDEA.vue'),
+			meta: {
+				title: 'IntelliJ IDEA注册码'
+			}
+		},
+		{
 			path: '/filewatcher',
 			name: 'filewatcher',
 			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Index.vue'),
