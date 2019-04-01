@@ -219,6 +219,12 @@ export default {
 		pointer-events: none;
 		z-index: 99999999;
 	}
+
+	.ivu-modal-mask {
+		height: calc(100vh - 10px);
+		margin: 5px;
+		border-radius: 5px;
+	}
 </style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
