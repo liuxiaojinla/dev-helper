@@ -1,6 +1,7 @@
 'use strict';
 import {app, BrowserWindow, Menu, protocol, Tray} from 'electron'
 import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
+import {autoUpdater} from 'electron-updater'
 import "./ipc";
 
 const path = require('path');
@@ -80,14 +81,17 @@ app.on('activate', () => {
 });
 
 // 创建单实例
-const shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
-	// Someone tried to run a second instance, we should focus our window.
-	const win = getWindow();
-	if (win.isMinimized()) win.restore();
-	win.focus()
-});
-if (shouldQuit) {
-	app.quit()
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+	app.quit();
+} else {
+	app.on('second-instance', (event, commandLine, workingDirectory) => {
+		// 当运行第二个实例时,将会聚焦到myWindow这个窗口
+		if (win) {
+			if (win.isMinimized()) win.restore();
+			win.focus();
+		}
+	});
 }
 
 // This method will be called when Electron has finished
@@ -101,10 +105,10 @@ app.on('ready', async () => {
 
 	// 自动更新
 	if (process.argv[1] !== '--squirrel-firstrun') {
-		require('update-electron-app')();
-	}
 
-	require('update-electron-app')();
+	}
+	autoUpdater.checkForUpdatesAndNotify();
+
 
 	const win = getWindow();
 	const iconPath = isDevelopment ? path.resolve(__dirname, '../public/icon.png') : path.join(__dirname, 'icon.png');
@@ -120,8 +124,8 @@ app.on('ready', async () => {
 	tray.setToolTip('开发小助手');
 	tray.setContextMenu(contextMenu);
 	tray.on('click', () => {
-		// win.isVisible() ? win.hide() : win.show();
-		win.show();
+		win.isVisible() ? win.hide() : win.show();
+		// win.restore();
 	});
 	win.on('show', () => {
 		tray.setHighlightMode('always')
