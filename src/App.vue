@@ -48,7 +48,9 @@
 			<transition :name="transitionName"
 					v-bind="transitionClass"
 					mode="out-in">
-				<router-view/>
+				<keep-alive exclude="$router.exclude">
+					<router-view/>
+				</keep-alive>
 			</transition>
 		</Content>
 	</Layout>
