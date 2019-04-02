@@ -1,7 +1,6 @@
 'use strict';
 import {app, BrowserWindow, Menu, protocol, Tray} from 'electron'
 import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
-import {autoUpdater} from 'electron-updater'
 import "./ipc";
 
 const path = require('path');
@@ -105,10 +104,7 @@ app.on('ready', async () => {
 
 	// 自动更新
 	if (process.argv[1] !== '--squirrel-firstrun') {
-
 	}
-	autoUpdater.checkForUpdatesAndNotify();
-
 
 	const win = getWindow();
 	const iconPath = isDevelopment ? path.resolve(__dirname, '../public/icon.png') : path.join(__dirname, 'icon.png');
