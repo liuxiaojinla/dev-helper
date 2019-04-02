@@ -80,18 +80,22 @@ app.on('activate', () => {
 });
 
 // 创建单实例
-const gotTheLock = app.requestSingleInstanceLock();
-if (!gotTheLock) {
-	app.quit();
-} else {
-	app.on('second-instance', (event, commandLine, workingDirectory) => {
-		// 当运行第二个实例时,将会聚焦到myWindow这个窗口
-		if (win) {
-			if (win.isMinimized()) win.restore();
-			win.focus();
+(function() {
+	if (!isDevelopment) {
+		const lock = app.requestSingleInstanceLock();
+		if (!lock) {
+			app.quit();
+		} else {
+			app.on('second-instance', (event, commandLine, workingDirectory) => {
+				// 当运行第二个实例时,将会聚焦到myWindow这个窗口
+				if (win) {
+					if (win.isMinimized()) win.restore();
+					win.focus();
+				}
+			});
 		}
-	});
-}
+	}
+})();
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

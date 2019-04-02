@@ -48,9 +48,9 @@
 			<transition :name="transitionName"
 					v-bind="transitionClass"
 					mode="out-in">
-				<!--				<keep-alive exclude="$router.exclude">-->
-				<router-view/>
-				<!--				</keep-alive>-->
+				<keep-alive :exclude="$router.options.exclude">
+					<router-view/>
+				</keep-alive>
 			</transition>
 		</Content>
 	</Layout>
@@ -62,6 +62,7 @@ export default {
 	win: null,
 	data() {
 		const win = this.$options.win = sys.getCurrentWindow();
+		console.log(this.$router.options.exclude)
 		return {
 			isDebug: win.webContents.isDevToolsOpened(),
 			isAlwaysOnTop: win.isAlwaysOnTop(),
