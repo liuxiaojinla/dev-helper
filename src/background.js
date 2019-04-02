@@ -124,8 +124,9 @@ app.on('ready', async () => {
 	tray.setToolTip('开发小助手');
 	tray.setContextMenu(contextMenu);
 	tray.on('click', () => {
-		win.isVisible() ? win.hide() : win.show();
+		// win.isVisible() ? win.hide() : win.show();
 		// win.restore();
+		win.show();
 	});
 	win.on('show', () => {
 		tray.setHighlightMode('always')
