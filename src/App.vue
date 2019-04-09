@@ -29,16 +29,20 @@
 					</div>
 					<DropdownMenu slot="list">
 						<DropdownItem name="home">
-							<Icon type="ios-home-outline" size="20"></Icon>
+							<Icon type="ios-home-outline" size="18"></Icon>
 							返回首页
 						</DropdownItem>
 						<DropdownItem name="debug">
-							<Icon type="ios-bug-outline" size="20"></Icon>
+							<Icon type="ios-bug-outline" size="18"></Icon>
 							{{isDebug?'关闭':'开启'}}调试模式
 						</DropdownItem>
 						<DropdownItem name="always-top">
-							<Icon :type="isAlwaysOnTop?'ios-radio-button-on':'ios-radio-button-off'" size="20"/>
+							<Icon :type="isAlwaysOnTop?'ios-radio-button-on':'ios-radio-button-off'" size="18"/>
 							{{isAlwaysOnTop?'取消':'设置'}}置顶
+						</DropdownItem>
+						<DropdownItem name="setting">
+							<Icon type="ios-cog-outline" size="18" />
+							设置
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
@@ -62,7 +66,6 @@ export default {
 	win: null,
 	data() {
 		const win = this.$options.win = sys.getCurrentWindow();
-		console.log(this.$router.options.exclude)
 		return {
 			isDebug: win.webContents.isDevToolsOpened(),
 			isAlwaysOnTop: win.isAlwaysOnTop(),
@@ -183,6 +186,8 @@ export default {
 				const isAlwaysOnTop = this.$options.win.isAlwaysOnTop();
 				win.setAlwaysOnTop(!isAlwaysOnTop);
 				this.isAlwaysOnTop = !isAlwaysOnTop;
+			} else if ('setting' === name) {
+				this.$router.push('/setting');
 			}
 		},
 		onMinni() {

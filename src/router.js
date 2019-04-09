@@ -8,8 +8,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 export default new Router({
 	mode: isDev ? 'history' : 'hash',
 	base: process.env.BASE_URL,
-	exclude: [
-	],
+	exclude: [],
 	routes: [
 		{
 			path: '/',
@@ -17,6 +16,14 @@ export default new Router({
 			component: Home,
 			meta: {
 				title: '开发小助手'
+			}
+		},
+		{
+			path: '/setting',
+			name: 'setting',
+			component: () => import(/* webpackChunkName: "setting" */ './views/index/Setting.vue'),
+			meta: {
+				title: '设置'
 			}
 		},
 		{
