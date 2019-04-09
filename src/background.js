@@ -89,7 +89,7 @@ app.on('activate', () => {
 			app.on('second-instance', (event, commandLine, workingDirectory) => {
 				// 当运行第二个实例时,将会聚焦到myWindow这个窗口
 				if (win) {
-					if (win.isMinimized()){
+					if (win.isMinimized()) {
 						win.restore();
 						win.show();
 					}

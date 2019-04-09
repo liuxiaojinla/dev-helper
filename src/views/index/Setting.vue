@@ -7,8 +7,11 @@
 </template>
 
 <script>
-const regedit = require('regedit');
-const selfStartKey = '\\HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run';
+const path = require('path');
+const electron = require('electron');
+const childProcess = require('child_process');
+const selfStartKey = 'HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run';
+
 
 export default {
 	name: "Setting",
@@ -18,33 +21,48 @@ export default {
 		};
 	},
 	created() {
-		regedit.list(selfStartKey, function(err, result) {
-			console.log(result);
-		})
+		childProcess.exec(`REG QUERY ${selfStartKey}`, (error, stdout) => {
+			if (error) {
+				console.error(error);
+			} else {
+				const list = stdout.split('\n').map(item => {
+					return item.trim().split(' ', 2)[0];
+				}).filter(item => item);
+				this.self_start = list.indexOf("DevHelper") !== -1;
+			}
+		});
 	},
 	methods: {
 		onSelfStartChange(isSwitch) {
 			if (isSwitch) {
-				console.log({
-					[selfStartKey]: {
-						'dev-helper': {
-							value: app.getPath('exe'),
-							type: 'REG_SZ'
-						}
+				// console.log(electron.remote.app.getPath('exe'))
+				// regedit.putValue({
+				// 	[selfStartKey]: {
+				// 		'dev-helper': {
+				// 			value: "C:\\Windows",
+				// 			type: 'REG_SZ'
+				// 		}
+				// 	}
+				// }, function(err) {
+				// 	console.error(err);
+				const appPath = electron.remote.app.getPath('exe');
+				// })
+				console.log(`REG ADD ${selfStartKey} /v DevHelper /t REG_SZ /d ${appPath} /f`);
+				childProcess.exec(`REG ADD ${selfStartKey} /v DevHelper /t REG_SZ /d ${appPath} /f`, function(error, stdout) {
+					if (error) {
+						sys.showToast({content: '设置失败！'});
+						console.error(error.message);
+						this.self_start = false;
 					}
-				})
-				regedit.putValue({
-					[selfStartKey]: {
-						'dev-helper': {
-							value: "C:\\Windows",
-							type: 'REG_SZ'
-						}
-					}
-				}, function(err) {
-					console.error(err);
-				})
+				});
 			} else {
-
+				childProcess.exec(`REG DELETE ${selfStartKey} /v DevHelper /f`, function(error, stdout) {
+					if (error) {
+						sys.showToast({content: '取消失败！'});
+						console.error(error.message);
+						this.self_start = true;
+					}
+				});
 			}
 		},
 	}
