@@ -5,7 +5,7 @@ export default [
 		icon: 'ios-bulb-outline',
 		child: [
 			{
-				title: '文件打包器',
+				title: '目录监听器',
 				icon: 'ios-archive',
 				type: 'page',
 				detail: {
