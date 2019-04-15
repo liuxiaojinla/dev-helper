@@ -43,6 +43,14 @@ export default new Router({
 			}
 		},
 		{
+			path: '/request',
+			name: 'request',
+			component: () => import(/* webpackChunkName: "util" */ './views/index/Request.vue'),
+			meta: {
+				title: '请求器'
+			}
+		},
+		{
 			path: '/filewatcher',
 			name: 'filewatcher',
 			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Index.vue'),
