@@ -1,7 +1,9 @@
 'use strict';
-import {app, BrowserWindow, Menu, protocol, Tray} from 'electron'
+import {app,  BrowserWindow, protocol} from 'electron'
 import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
 import "./ipc";
+
+const { autoUpdater } = require('electron-updater');
 
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -81,22 +83,21 @@ app.on('activate', () => {
 
 // 创建单实例
 (function() {
-	if (!isDevelopment) {
-		const lock = app.requestSingleInstanceLock();
-		if (!lock) {
-			app.quit();
-		} else {
-			app.on('second-instance', (event, commandLine, workingDirectory) => {
-				// 当运行第二个实例时,将会聚焦到myWindow这个窗口
-				if (win) {
-					if (win.isMinimized()) {
-						win.restore();
-						win.show();
-					}
-					win.focus();
+	if (isDevelopment) return;
+	const lock = app.requestSingleInstanceLock();
+	if (!lock) {
+		app.quit();
+	} else {
+		app.on('second-instance', (event, commandLine, workingDirectory) => {
+			// 当运行第二个实例时,将会聚焦到myWindow这个窗口
+			if (win) {
+				if (win.isMinimized()) {
+					win.restore();
+					win.show();
 				}
-			});
-		}
+				win.focus();
+			}
+		});
 	}
 })();
 
@@ -110,33 +111,45 @@ app.on('ready', async () => {
 	}
 
 	// 自动更新
-	if (process.argv[1] !== '--squirrel-firstrun') {
-	}
+	if (require('electron-squirrel-startup')) return;
+	(function() {
+		const url = 'http://xx5.51daoteng.com/index/test/checkUpdates';
+		autoUpdater.setFeedURL(url + "?v=" + require('../package.json').version);
+		autoUpdater.on('error', function() {
+			console.log(arguments);
+		}).on('update-available', function() {
+			console.log('Update available');
+		}).on('update-downloaded', function() {
+			console.log('Update downloaded');
+		});
+		autoUpdater.checkForUpdates();
 
-	const win = getWindow();
-	const iconPath = isDevelopment ? path.resolve(__dirname, '../public/icon.png') : path.join(__dirname, 'icon.png');
-	const tray = new Tray(iconPath);
-	const contextMenu = Menu.buildFromTemplate([
-		{
-			label: '退出',
-			click: () => {
-				win.close();
-			}
-		},
-	]);
-	tray.setToolTip('开发小助手');
-	tray.setContextMenu(contextMenu);
-	tray.on('click', () => {
-		// win.isVisible() ? win.hide() : win.show();
-		// win.restore();
-		win.show();
-	});
-	win.on('show', () => {
-		tray.setHighlightMode('always')
-	});
-	win.on('hide', () => {
-		tray.setHighlightMode('never')
-	});
+	})();
+
+	// const win = getWindow();
+	// const iconPath = isDevelopment ? path.resolve(__dirname, '../public/icon.png') : path.join(__dirname, 'icon.png');
+	// const tray = new Tray(iconPath);
+	// const contextMenu = Menu.buildFromTemplate([
+	// 	{
+	// 		label: '退出',
+	// 		click: () => {
+	// 			win.close();
+	// 		}
+	// 	},
+	// ]);
+	// tray.setToolTip('开发小助手');
+	// tray.setContextMenu(contextMenu);
+	// tray.on('click', () => {
+	// 	// win.isVisible() ? win.hide() : win.show();
+	// 	// win.restore();
+	// 	win.show();
+	// });
+	// win.on('show', () => {
+	// 	tray.setHighlightMode('always')
+	// });
+	// win.on('hide', () => {
+	// 	tray.setHighlightMode('never')
+	// });
 });
 
 // Exit cleanly on request from parent process in development mode.

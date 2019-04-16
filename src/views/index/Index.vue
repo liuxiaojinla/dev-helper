@@ -1,10 +1,10 @@
 <template>
 	<Collapse class="home" :value="Object.keys(data)" simple>
-		<Panel v-for="group in data">
+		<Panel v-for="group in data" :key="group.title">
 			<span :class="iconClasses(group.icon)" style="font-size: 18px"></span>
 			{{group.title}}
 			<Row slot="content">
-				<Col :xs="8" :sm="6" :md="4" :lg="2" v-for="item in group.child" @click.native="onHandle(item)">
+				<Col :xs="8" :sm="6" :md="4" :lg="2" v-for="item in group.child" @click.native="onHandle(item)" :key="item.title">
 					<p>
 						<Icon :type="item.icon" size="32"/>
 					</p>
