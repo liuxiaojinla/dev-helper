@@ -1,7 +1,7 @@
 <template>
 	<Form>
 		<FormItem label="请求地址">
-			<Input type="text" v-model="form.url" search enter-button="Send" placeholder="请输入请求地址" @on-search="onSubmit"/>
+			<Input type="text" v-model="form.url" search :enter-button="isRequesting?'Stop':'Send'" placeholder="请输入请求地址" @on-search="onSubmit"/>
 		</FormItem>
 		<FormItem label="其他配置">
 			<div class="form-mini-block">
@@ -13,7 +13,7 @@
 				<InputNumber type="number" v-model="form.thread_count" :min="0"/>
 			</div>
 		</FormItem>
-		<FormItem label="状态" v-show="isRequesting">
+		<FormItem label="状态">
 			<div class="form-mini-block">当前执行次数：<span style="color: orangered">{{currentIndex}}</span></div>
 			<div class="form-mini-block">当前执行线程数：<span style="color: orangered">{{currentExecCount}}</span></div>
 		</FormItem>
@@ -31,9 +31,12 @@ class Request {
 		this.currentExecCount = 0;
 		this.updateCallback = null;
 		this.completeCallback = null;
+		this.onRequestCallback = null;
+		this.isRequesting = false;
 	}
 
 	send() {
+		this.isRequesting = true;
 		const update = (data) => {
 			if (!this.updateCallback) return;
 			this.updateCallback(data);
@@ -42,8 +45,16 @@ class Request {
 			if (!this.completeCallback) return;
 			this.completeCallback();
 		};
+		const onRequest = () => {
+			if (!this.onRequestCallback) return;
+			this.onRequestCallback();
+		};
 		const handle = () => {
 			if (this.currentIndex >= this.config.total_count) {
+				complete();
+				return;
+			}
+			if (this.isRequesting === false) {
 				complete();
 				return;
 			}
@@ -60,15 +71,21 @@ class Request {
 				console.debug(response);
 				this.currentExecCount--;
 				update({currentExecCount: this.currentExecCount});
+				onRequest(response);
 				handle();
-			}, () => {
+			}, (err) => {
 				this.currentExecCount--;
 				update({currentExecCount: this.currentExecCount});
+				onRequest(err);
 				handle();
 			});
 			setTimeout(() => handle(), 0);
 		};
 		handle();
+	}
+
+	stop() {
+		this.isRequesting = false;
 	}
 }
 
@@ -88,17 +105,24 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			this.isRequesting = true;
-			currentRequest = new Request(this.form);
-			currentRequest.updateCallback = (data) => {
-				Object.assign(this, data);
-			};
-			currentRequest.completeCallback = () => {
-				setTimeout(() => {
-					this.isRequesting = false;
-				}, 1000);
-			};
-			currentRequest.send();
+			if (this.isRequesting) {
+				currentRequest.stop();
+			} else {
+				this.isRequesting = true;
+				currentRequest = new Request(this.form);
+				currentRequest.updateCallback = (data) => {
+					Object.assign(this, data);
+				};
+				currentRequest.completeCallback = () => {
+					setTimeout(() => {
+						this.isRequesting = false;
+					}, 1000);
+				};
+				currentRequest.onRequestCallback = (res) => {
+					console.log(res);
+				};
+				currentRequest.send();
+			}
 		}
 	}
 }
