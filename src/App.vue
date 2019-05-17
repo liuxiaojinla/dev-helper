@@ -52,7 +52,7 @@
 			<transition :name="transitionName"
 					v-bind="transitionClass"
 					mode="out-in">
-				<keep-alive :exclude="$router.options.exclude">
+				<keep-alive :exclude="$router.options.exclude" :max="10">
 					<router-view/>
 				</keep-alive>
 			</transition>

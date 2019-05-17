@@ -8,7 +8,9 @@ const isDev = process.env.NODE_ENV !== 'production';
 export default new Router({
 	mode: isDev ? 'history' : 'hash',
 	base: process.env.BASE_URL,
-	exclude: [],
+	exclude: [
+		'filewatcher.detail'
+	],
 	routes: [
 		{
 			path: '/',
