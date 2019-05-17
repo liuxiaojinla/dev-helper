@@ -6,7 +6,8 @@ import Home from './views/index/Index.vue';
 Vue.use(Router);
 const isDev = process.env.NODE_ENV !== 'production';
 export default new Router({
-	mode: isDev ? 'history' : 'hash',
+	// mode: isDev ? 'history' : 'hash',
+	mode: 'hash',
 	base: process.env.BASE_URL,
 	exclude: [
 		'FileWatcherDetail'

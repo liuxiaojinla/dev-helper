@@ -2,28 +2,31 @@
 	<Layout class="app-layout" id="app-layout">
 		<Header class="app-layout-header">
 			<div class="app-layout-header-left">
-				<div class="app-layout-action-btn">
-					<Icon type="ios-arrow-round-back" size="24" @click.native="onBack"/>
-				</div>
-				<div class="app-layout-action-btn" v-if="isDev">
-					<Icon type="ios-refresh" size="24" @click.native="onRefresh"></Icon>
-				</div>
-			</div>
-			<div class="app-layout-header-center" @dblclick="onMax">
 				<Icon type="ios-bug" size="24" style="color: #19be6b"/>
 				{{title}}
 			</div>
+			<div class="app-layout-header-center" @dblclick="onMax">
+				<div class="app-layout-action-btn" :class="{'disabled':!isCanBack()}">
+					<Icon type="ios-arrow-back" size="24" @click.native.stop="onBack"/>
+				</div>
+				<div class="app-layout-action-btn" :class="{'disabled':!isCanForward()}">
+					<Icon type="ios-arrow-forward" size="24" @click.native.stop="onForward"/>
+				</div>
+				<div class="app-layout-action-btn" v-if="isDev">
+					<Icon type="md-refresh" size="24" @click.native.stop="onRefresh"></Icon>
+				</div>
+			</div>
 			<div class="app-layout-header-right">
 				<div class="app-layout-action-btn">
-					<Icon type="ios-close" size="24" @click.native="onClose" v-show="isClosable"></Icon>
+					<Icon type="ios-close" size="24" @click.native.stop="onClose" v-show="isClosable"></Icon>
 				</div>
 				<div class="app-layout-action-btn">
-					<Icon :type="maxIcon" size="16" @click.native="onMax" v-show="isMaximizable" style="width: 24px;height: 24px;text-align: center;line-height: 24px"></Icon>
+					<Icon :type="maxIcon" size="16" @click.native.stop="onMax" v-show="isMaximizable" style="width: 24px;height: 24px;text-align: center;line-height: 24px"></Icon>
 				</div>
 				<div class="app-layout-action-btn">
-					<Icon type="ios-remove" size="24" @click.native="onMinni" v-show="isMinimizable"></Icon>
+					<Icon type="ios-remove" size="24" @click.native.stop="onMinni" v-show="isMinimizable"></Icon>
 				</div>
-				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMenuSelect">
+				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click.stop="onMoreMenuSelect">
 					<div class="layout-action-btn">
 						<Icon type="ios-more" size="24"></Icon>
 					</div>
@@ -41,7 +44,7 @@
 							{{isAlwaysOnTop?'取消':'设置'}}置顶
 						</DropdownItem>
 						<DropdownItem name="setting">
-							<Icon type="ios-cog-outline" size="18" />
+							<Icon type="ios-cog-outline" size="18"/>
 							设置
 						</DropdownItem>
 					</DropdownMenu>
@@ -61,6 +64,8 @@
 </template>
 
 <script>
+import particlesConfig from "./particles.config";
+
 export default {
 	name: 'app',
 	win: null,
@@ -95,63 +100,11 @@ export default {
 					leaveActiveClass: "animated bounceOutDown"
 				};
 			}
-		}
+		},
 	},
 	mounted() {
 		require('particles.js');
-		particlesJS('app-layout', {
-			particles: {
-				number: {
-					value: 50
-				},
-				color: {
-					value: ["#b61924", "#009688", "#5FB878", "#393D49", "#1E9FFF", "#FFB800"]
-				},
-				opacity: {
-					value: 0.75,
-					random: true,
-					anim: {
-						enable: true,
-						speed: 1,
-						opacity_min: 0,
-						sync: false
-					}
-				},
-				size: {
-					value: 5,
-					random: true,
-					anim: {
-						enable: true,
-						speed: 3,
-						size_min: 0.3,
-						sync: false
-					}
-				},
-				line_linked: {
-					enable: false
-				},
-				move: {
-					speed: 1,
-					random: true
-				},
-				shape: {
-					type: ["circle", "edge", "polygon", "star"]
-				}
-			},
-			interactivity: {
-				detect_on: "canvas",
-				modes: {
-					bubble: {
-						distance: 250,
-						size: 20,
-						duration: 2,
-						opacity: 0,
-						speed: 3
-					}
-				}
-			},
-			retina_detect: true
-		});
+		particlesJS('app-layout', particlesConfig);
 	},
 	created() {
 		this.$nextTick(this.updateTitle);
@@ -164,13 +117,24 @@ export default {
 		this.isAlwaysOnTop = win.isAlwaysOnTop();
 	},
 	methods: {
+		isCanBack() {
+			return this.$router.history.current.fullPath !== '/';
+		},
+		isCanForward() {
+			return true;
+		},
 		onBack() {
+			if (!this.isCanBack()) return;
 			this.$router.go(-1);
+		},
+		onForward() {
+			if (!this.isCanForward()) return;
+			this.$router.go(1);
 		},
 		onRefresh() {
 			window.location.reload();
 		},
-		onMenuSelect(name) {
+		onMoreMenuSelect(name) {
 			const win = this.$options.win;
 			if ('debug' === name) {
 				const isDebug = win.webContents.isDevToolsOpened();
@@ -213,7 +177,8 @@ export default {
 			this.transitionName = toDepth < fromDepth ? 'transition-out' : 'transition-in';
 			this.isIn = toDepth >= fromDepth;
 			this.$nextTick(this.updateTitle);
-			console.log(location.href)
+			console.log(location.href);
+			console.log(this.$router, window.history.length)
 		}
 	}
 }
@@ -259,6 +224,7 @@ export default {
 	.app-layout-header {
 		display: flex;
 		z-index: 10;
+		-webkit-app-region: drag;
 	}
 
 	.app-layout-header > .app-layout-header-left,
@@ -270,15 +236,14 @@ export default {
 	}
 
 	.app-layout-header > .app-layout-header-left {
-		/*width: 84px;*/
-	}
-
-	.app-layout-header > .app-layout-header-center {
 		font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 		font-size: 16px;
 		line-height: 48px;
 		text-overflow: ellipsis;
-		-webkit-app-region: drag;
+	}
+
+	.app-layout-header > .app-layout-header-center {
+		/*width: 84px;*/
 		flex-grow: 1;
 	}
 
@@ -300,6 +265,14 @@ export default {
 
 		user-select: none;
 		-webkit-user-select: none;
+	}
+
+	.app-layout-header .app-layout-action-btn:not(.disabled):active {
+		opacity: 0.8;
+	}
+
+	.app-layout-header .app-layout-action-btn.disabled {
+		opacity: 0.6;
 	}
 
 	.app-layout-header > .app-layout-action-btn > .ivu-icon {
