@@ -8,10 +8,41 @@ export default [
 		child: []
 	},
 	{
+		title: '自动化部署',
+		name: 'auto-deployment',
+		icon: 'ios-code-working',
+		page: 'auto-deployment',
+		child: []
+	},
+	{
 		title: '常用工具',
 		name: 'util',
 		icon: 'ios-bulb-outline',
 		child: [
+			{
+				title: '网站套件',
+				icon: 'ios-power',
+				// type: 'page',
+				type: 'custom',
+				detail: {
+					name: 'website-kit',
+				},
+				click() {
+					sys.showToast({content: '开发中...'});
+				}
+			},
+			{
+				title: '自动化部署',
+				icon: 'md-code-working',
+				// type: 'page',
+				type: 'custom',
+				detail: {
+					name: 'auto-deployment',
+				},
+				click() {
+					sys.showToast({content: '开发中...'});
+				}
+			},
 			{
 				title: '目录监听器',
 				icon: 'ios-archive',
