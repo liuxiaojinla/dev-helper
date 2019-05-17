@@ -53,7 +53,6 @@ const getWindow = function() {
 		// Load the index.html when not in development
 		win.loadURL('app://./index.html');
 	}
-	win.webContents.openDevTools();
 
 	win.show();
 
