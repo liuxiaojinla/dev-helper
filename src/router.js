@@ -9,7 +9,7 @@ export default new Router({
 	mode: isDev ? 'history' : 'hash',
 	base: process.env.BASE_URL,
 	exclude: [
-		'filewatcher.detail'
+		'FileWatcherDetail'
 	],
 	routes: [
 		{
