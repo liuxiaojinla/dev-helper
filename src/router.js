@@ -6,9 +6,15 @@ import Home from './views/index/Index.vue';
 Vue.use(Router);
 const isDev = process.env.NODE_ENV !== 'production';
 export default new Router({
-	// mode: isDev ? 'history' : 'hash',
-	mode: 'hash',
+	mode: isDev ? 'history' : 'hash',
 	base: process.env.BASE_URL,
+	scrollBehavior(to, from, savedPosition) {
+		if (savedPosition) {
+			return savedPosition
+		} else {
+			return {x: 0, y: 0}
+		}
+	},
 	exclude: [
 		'FileWatcherDetail'
 	],
