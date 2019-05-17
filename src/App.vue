@@ -1,32 +1,32 @@
 <template>
 	<Layout class="app-layout" id="app-layout">
-		<Header class="app-layout-header">
+		<Header class="app-layout-header" @dblclick="onMax">
 			<div class="app-layout-header-left">
 				<Icon type="ios-bug" size="24" style="color: #19be6b"/>
 				{{title}}
 			</div>
-			<div class="app-layout-header-center" @dblclick="onMax">
-				<div class="app-layout-action-btn" :class="{'disabled':!isCanBack()}">
-					<Icon type="ios-arrow-back" size="24" @click.native.stop="onBack"/>
+			<div class="app-layout-header-center">
+				<div class="app-layout-action-btn" :class="{'disabled':!isCanBack()}" @click="onBack">
+					<Icon type="ios-arrow-back" size="24"/>
 				</div>
-				<div class="app-layout-action-btn" :class="{'disabled':!isCanForward()}">
-					<Icon type="ios-arrow-forward" size="24" @click.native.stop="onForward"/>
+				<div class="app-layout-action-btn" :class="{'disabled':!isCanForward()}" @click="onForward">
+					<Icon type="ios-arrow-forward" size="24"/>
 				</div>
-				<div class="app-layout-action-btn" v-if="isDev">
-					<Icon type="md-refresh" size="24" @click.native.stop="onRefresh"></Icon>
+				<div class="app-layout-action-btn" v-if="isDev" @click="onRefresh">
+					<Icon type="md-refresh" size="24"></Icon>
 				</div>
 			</div>
 			<div class="app-layout-header-right">
-				<div class="app-layout-action-btn">
-					<Icon type="ios-close" size="24" @click.native.stop="onClose" v-show="isClosable"></Icon>
+				<div class="app-layout-action-btn" @click="onClose">
+					<Icon type="ios-close" size="24" v-show="isClosable"></Icon>
 				</div>
-				<div class="app-layout-action-btn">
-					<Icon :type="maxIcon" size="16" @click.native.stop="onMax" v-show="isMaximizable" style="width: 24px;height: 24px;text-align: center;line-height: 24px"></Icon>
+				<div class="app-layout-action-btn" @click="onMax">
+					<Icon :type="maxIcon" size="16" v-show="isMaximizable" style="width: 24px;height: 24px;text-align: center;line-height: 24px"></Icon>
 				</div>
-				<div class="app-layout-action-btn">
-					<Icon type="ios-remove" size="24" @click.native.stop="onMinni" v-show="isMinimizable"></Icon>
+				<div class="app-layout-action-btn" @click="onMinni">
+					<Icon type="ios-remove" size="24" v-show="isMinimizable"></Icon>
 				</div>
-				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click.stop="onMoreMenuSelect">
+				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMoreMenuSelect">
 					<div class="layout-action-btn">
 						<Icon type="ios-more" size="24"></Icon>
 					</div>

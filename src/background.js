@@ -26,7 +26,7 @@ const getWindow = function() {
 		titleBarStyle: 'hidden',
 		transparent: true,
 		frame: isDevelopment,
-		minimizable: isDevelopment,
+		minimizable: true,
 		maximizable: true,
 		closable: true,
 		hasShadow: true,
