@@ -20,8 +20,8 @@ const getWindow = function() {
 		width: isDevelopment ? 1080 : 580,
 		height: isDevelopment ? 560 : 520,
 
-		minWidth: 480,
-		minHeight: 480,
+		minWidth: 580,
+		minHeight: 520,
 		show: false,
 		titleBarStyle: 'hidden',
 		transparent: true,
@@ -53,6 +53,7 @@ const getWindow = function() {
 		// Load the index.html when not in development
 		win.loadURL('app://./index.html');
 	}
+	win.webContents.openDevTools();
 
 	win.show();
 

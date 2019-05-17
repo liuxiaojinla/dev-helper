@@ -1,7 +1,15 @@
 const {clipboard} = require('electron');
 export default [
 	{
+		title: '网站套件',
+		name: 'website-kit',
+		icon: 'ios-power-outline',
+		page: 'website-kit',
+		child: []
+	},
+	{
 		title: '常用工具',
+		name: 'util',
 		icon: 'ios-bulb-outline',
 		child: [
 			{
@@ -48,6 +56,28 @@ export default [
 				}
 			},
 			{
+				title: '颜色转换器',
+				icon: 'ios-color-palette',
+				detail: {
+					name: 'weapp_transform',
+				},
+				type: 'custom',
+				click() {
+					sys.showToast({content: '开发中...'});
+				}
+			},
+			{
+				title: 'TP5验证器',
+				icon: 'ios-create',
+				detail: {
+					name: 'weapp_transform',
+				},
+				type: 'custom',
+				click() {
+					sys.showToast({content: '开发中...'});
+				}
+			},
+			{
 				title: '物流查询',
 				icon: 'ios-filing',
 				type: 'page',
@@ -75,6 +105,7 @@ export default [
 	},
 	{
 		title: '加密/解密',
+		name: 'encrypt',
 		icon: 'ios-swap',
 		child: [
 			{
@@ -113,6 +144,7 @@ export default [
 	},
 	{
 		title: '文档/链接',
+		name: 'document',
 		icon: 'ios-link-outline',
 		child: [
 			{

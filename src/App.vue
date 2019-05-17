@@ -1,29 +1,29 @@
 <template>
 	<Layout class="app-layout" id="app-layout">
-		<Header class="app-layout-header" @dblclick="onMax">
-			<div class="app-layout-header-left">
+		<Header class="app-layout-header">
+			<div class="app-layout-header-left" @dblclick="onMax">
 				<Icon type="ios-bug" size="24" style="color: #19be6b"/>
 				{{title}}
 			</div>
-			<div class="app-layout-header-center">
-				<div class="app-layout-action-btn" :class="{'disabled':!isCanBack()}" @click="onBack">
-					<Icon type="ios-arrow-back" size="24"/>
+			<div class="app-layout-header-center" @dblclick="onMax">
+				<div class="app-layout-action-btn" :class="{'disabled':!isCanBack()}">
+					<Icon type="ios-arrow-back" size="24" @click.capture.stop="onBack"/>
 				</div>
-				<div class="app-layout-action-btn" :class="{'disabled':!isCanForward()}" @click="onForward">
+				<div class="app-layout-action-btn" :class="{'disabled':!isCanForward()}" @click.capture.stop="onForward">
 					<Icon type="ios-arrow-forward" size="24"/>
 				</div>
-				<div class="app-layout-action-btn" v-if="isDev" @click="onRefresh">
+				<div class="app-layout-action-btn" v-if="isDev" @click.capture.stop="onRefresh">
 					<Icon type="md-refresh" size="24"></Icon>
 				</div>
 			</div>
 			<div class="app-layout-header-right">
-				<div class="app-layout-action-btn" @click="onClose">
+				<div class="app-layout-action-btn" @click.capture.stop="onClose">
 					<Icon type="ios-close" size="24" v-show="isClosable"></Icon>
 				</div>
-				<div class="app-layout-action-btn" @click="onMax">
+				<div class="app-layout-action-btn" @click.capture.stop="onMax">
 					<Icon :type="maxIcon" size="16" v-show="isMaximizable" style="width: 24px;height: 24px;text-align: center;line-height: 24px"></Icon>
 				</div>
-				<div class="app-layout-action-btn" @click="onMinni">
+				<div class="app-layout-action-btn" @click.capture.stop="onMinni">
 					<Icon type="ios-remove" size="24" v-show="isMinimizable"></Icon>
 				</div>
 				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMoreMenuSelect">
@@ -265,6 +265,7 @@ export default {
 
 		user-select: none;
 		-webkit-user-select: none;
+		-webkit-app-region: no-drag;
 	}
 
 	.app-layout-header .app-layout-action-btn:not(.disabled):active {

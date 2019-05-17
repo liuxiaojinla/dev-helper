@@ -1,4 +1,17 @@
 <template>
+<!--	<Row type="flex">-->
+<!--		<Col :xs="6" :sm="8" :md="6" :lg="4" class="nav">-->
+<!--			<Menu active-name="group[0].name" width="auto">-->
+<!--				<MenuItem v-for="group in data" :key="group.name" :name="group.name">-->
+<!--					<span :class="iconClasses(group.icon)" style="font-size: 18px"></span>-->
+<!--					{{group.title}}-->
+<!--				</MenuItem>-->
+<!--			</Menu>-->
+<!--		</Col>-->
+<!--		<Col :xs="18" :sm="16" :md="18" :lg="20" class="content">-->
+<!--			-->
+<!--		</Col>-->
+<!--	</Row>-->
 	<Collapse class="home" :value="Object.keys(data)" simple>
 		<Panel v-for="group in data" :key="group.title">
 			<span :class="iconClasses(group.icon)" style="font-size: 18px"></span>
