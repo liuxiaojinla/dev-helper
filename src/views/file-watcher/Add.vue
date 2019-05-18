@@ -13,7 +13,7 @@
 		</FormItem>
 
 		<FormItem prop="target_path" label="上传执行命令">
-			<Input type="text" v-model="form.uploader_cmd" placeholder="上传执行命令" icon="ios-folder-outline" @on-click="onSelectPath('uploader_cmd','openFile',{})" readonly/>
+			<Input type="text" v-model="form.uploader_cmd" placeholder="上传执行命令" icon="ios-folder-outline" @on-click="onSelectPath('uploader_cmd','openFile',filterFile)" readonly/>
 		</FormItem>
 
 		<FormItem label="立即监听">
@@ -36,6 +36,9 @@ export default {
 	name: "FileWatcherAdd",
 	data: function() {
 		return {
+			filterFile: [
+				{name: '可执行文件', extensions: ['exe', 'bat']},
+			],
 			form: {
 				title: '',
 				path: '',
@@ -56,9 +59,10 @@ export default {
 	created() {
 	},
 	methods: {
-		onSelectPath(name, type = 'openDirectory', options = '') {
+		onSelectPath(name, type = 'openDirectory', filters = '') {
 			sys.openFileSelectDialog({
-				properties: ['openDirectory']
+				properties: [type],
+				filters: filters
 			}).then((files) => {
 				console.log(files);
 				this.form[name] = files[0];

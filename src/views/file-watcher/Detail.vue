@@ -29,10 +29,9 @@
 				</DropdownMenu>
 			</Dropdown>
 
-			<Button @click="onToggleUploader" icon="ios-add" :type="isStartUploader?'error':'success'" style="margin-left: 16px">
+			<Button @click="onToggleUploader" icon="ios-cloud-upload-outline" :type="isStartUploader?'error':'success'" style="margin-left: 16px" :disabled="isStartUploader">
 				上传{{isStartUploader?"中...":""}}
 			</Button>
-
 			<Button icon="ios-trash-outline" @click="onClear" type="error" style="margin-left: 16px">
 				清空
 			</Button>
@@ -215,43 +214,72 @@ export default {
 
 		// 上传
 		onToggleUploader() {
-			if (this.isStartUploader) {
-				uploaderProcess.kill();
-			} else {
-				uploaderProcess = spawn(`D:\\FileUpload\\Start_program\\life.exe`, [], {
-					cwd: `D:\\FileUpload\\Start_program`,
-					detached: true,
-					stdio: 'inherit',
-					shell: true,
-					// windowsHide: true
+			this.isStartUploader = true;
+			// {
+			// 	cwd: `D:\\FileUpload\\Start_program`,
+			// 		detached: true,
+			// 	shell: true,
+			// 	// windowsHide: true
+			// }
+			// const CMD = `D:\\FileUpload\\Start_program\\life.exe`;
+			const CMD = this.info.uploader_cmd;
+			console.log('upload cmd', CMD);
+
+			if (!CMD) {
+				sys.showModal({
+					title: '温馨提示',
+					content: '未设置上传命令行',
+					showCancel: false,
+					onOk: () => {
+					}
 				});
-				// uploaderProcess = exec(`D:\\FileUpload\\Start_program\\start_program.exe`, {
-				// 	cwd: `D:\\FileUpload\\Start_program`,
-				// }, function(error, stdout) {
-				// 	console.log(error, stdout);
-				// });
-				uploaderProcess.on('disconnect', () => {
-					console.log('disconnect');
-					this.isStartUploader = false;
-				});
-				uploaderProcess.on('close', (code, signal) => {
-					console.log('close', code, signal);
-				});
-				uploaderProcess.on('exit', (code, signal) => {
-					console.log('exit', code, signal);
-				});
-				uploaderProcess.on('error', (err) => {
-					console.log('error', err);
-				});
-				uploaderProcess.on('message', (message, sendHandle) => {
-					console.log('message', message, sendHandle);
-				});
-				this.isStartUploader = true;
+				return;
 			}
+
+
+			const showModal = function(content) {
+				sys.showModal({
+					width: '80%',
+					content: `<pre style="white-space: pre-wrap">${content}</pre>`,
+					showCancel: false,
+					onOk: () => {
+						uploaderProcess.kill();
+					}
+				});
+			};
+
+			console.log(uploaderProcess);
+
+			uploaderProcess = spawn(CMD, []);
+			uploaderProcess.stdout.on('data', (data) => {
+				console.log(`stdout: ${data}`);
+				showModal(data);
+			});
+			uploaderProcess.stderr.on('data', (data) => {
+				console.log(`stderr: ${data}`);
+				showModal(data);
+			});
+			uploaderProcess.on('close', (code, signal) => {
+				console.log('close', code, signal);
+				this.isStartUploader = false;
+			});
+			uploaderProcess.on('exit', (code, signal) => {
+				console.log('exit', code, signal);
+			});
+			uploaderProcess.on('error', (err) => {
+				console.log('error', err);
+				showModal(typeof err === 'object' ? JSON.stringify(err) : err);
+			});
 		}
 	}
 }
 </script>
+
+<style>
+	.ivu-modal-confirm-body {
+		padding-left: 0;
+	}
+</style>
 
 <style scoped>
 	.layout {
