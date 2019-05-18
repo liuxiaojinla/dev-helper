@@ -1,7 +1,7 @@
 <template>
 	<Layout class="layout">
 		<Content class="content">
-			<Row v-show="data.length">
+			<Row v-show="data.length" :gutter="16">
 				<Col :md="12" :lg="8" v-for="(item,index) in data" :key="index">
 					<Card style="margin-bottom: 16px">
 						<p slot="title">{{item.title}}</p>
@@ -113,6 +113,7 @@ export default {
 
 	.content {
 		padding: 16px;
+		overflow-y: auto;
 	}
 
 	.card-body {

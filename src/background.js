@@ -17,10 +17,10 @@ const getWindow = function() {
 	win = new BrowserWindow({
 		// width: 320,
 		// height: 500,
-		width: isDevelopment ? 1080 : 560,
-		height: isDevelopment ? 560 : 480,
+		width: isDevelopment ? 1080 : 570,
+		height: isDevelopment ? 560 : 400,
 
-		minWidth: 560,
+		minWidth: 570,
 		minHeight: 240,
 		show: false,
 		titleBarStyle: 'hidden',
