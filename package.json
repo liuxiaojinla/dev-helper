@@ -1,6 +1,6 @@
 {
 	"name": "dev-helper",
-	"version": "1.2.138",
+	"version": "1.2.142",
 	"description": "开发小助手",
 	"author": {
 		"name": "BD"
@@ -22,7 +22,6 @@
 		"js-sha1": "^0.6.0",
 		"particles.js": "^2.0.0",
 		"regedit": "^3.0.2",
-		"sqlite3": "^4.0.8",
 		"ssh2-sftp-client": "^2.4.3",
 		"vue": "^2.6.10",
 		"vue-router": "^3.0.6",
