@@ -3,13 +3,14 @@
 		<Content class="content">
 			<Row v-show="data.length">
 				<Col :md="12" :lg="8" v-for="(item,index) in data" :key="index">
-					<Card>
+					<Card style="margin-bottom: 16px">
 						<p slot="title">{{item.title}}</p>
 						<p slot="extra">共<span style="color: #19be6b">{{item.count}}</span>个文件</p>
 
 						<div class="card-body">
 							<p class="path">监听目录：{{item.path}}</p>
 							<p class="path">目标目录：{{item.targetpath||'未设置'}}</p>
+							<p class="path">上传命令：{{item.uploader_cmd||'未设置'}}</p>
 						</div>
 
 						<Row class="action">
