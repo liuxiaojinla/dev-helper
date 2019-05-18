@@ -14,15 +14,8 @@
 			</keep-alive>
 		</Col>
 	</Row>
-
 </template>
-<!--<Collapse class="home" :value="Object.keys(data)" simple>-->
-<!--	<Panel v-for="group in data" :key="group.title">-->
-<!--		<span :class="iconClasses(group.icon)" style="font-size: 18px"></span>-->
-<!--		{{group.title}}-->
 
-<!--	</Panel>-->
-<!--</Collapse>-->
 <script>
 import ACTION_LIST from '../../data/actions';
 import FileWatcher from '../file-watcher/Index';

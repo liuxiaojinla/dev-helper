@@ -1,5 +1,5 @@
 <template>
-	<Form ref="form" :model="form" :rules="rules" :label-width="80">
+	<Form ref="form" :model="form" :rules="rules" :label-width="80" >
 		<FormItem prop="title" label="项目名称">
 			<Input type="text" v-model="form.title" placeholder="请输入项目名称"/>
 		</FormItem>
@@ -79,5 +79,6 @@ export default {
 <style scoped>
 	Form {
 		padding: 15px;
+		max-width: 560px;
 	}
 </style>

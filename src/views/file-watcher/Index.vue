@@ -2,29 +2,38 @@
 	<Layout class="layout">
 		<Content class="content">
 			<Row v-show="data.length">
-				<Col :sm="12" :md="6" :lg="4" v-for="(item,index) in data" :key="index">
+				<Col :md="12" :lg="8" v-for="(item,index) in data" :key="index">
 					<Card>
 						<p slot="title">{{item.title}}</p>
+						<p slot="extra">共<span style="color: #19be6b">{{item.count}}</span>个文件</p>
 
 						<div class="card-body">
-							<Icon type="ios-folder" @click="onSelectPath(row,'target_path')" size="18" style="margin-right: 8px"/>
-							<span>{{row.targetpath}}</span>
+							<p class="path">监听目录：{{item.path}}</p>
+							<p class="path">目标目录：{{item.targetpath||'未设置'}}</p>
 						</div>
 
 						<Row class="action">
-							<Col>
-								<span style="color: #19be6b">{{item.count}}</span>
+							<Col span="6">
+								<Tooltip content="重新设置目标目录" style="color: #ff9900">
+									<Icon type="ios-folder" @click="onSelectPath(item,'target_path')" size="18"/>
+								</Tooltip>
 							</Col>
-							<Col>
-								<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(item)"></Icon>
+							<Col span="6">
+								<Tooltip content="删除项目">
+									<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(item)"></Icon>
+								</Tooltip>
 							</Col>
-							<Col>
-								<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(row)" v-if="row.status"></Icon>
-								<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(row)" v-else></Icon>
+							<Col span="6">
+								<Tooltip content="启动/终止监听目录">
+									<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(item)" v-if="item.status"></Icon>
+									<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(item)" v-else></Icon>
+								</Tooltip>
 							</Col>
-							<Col>
-								<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
-										:to="{name:'filewatcher.detail',query:{id:item.id}}"></router-link>
+							<Col span="6">
+								<Tooltip content="查看项目文件监听详情" style="color: #2db7f5">
+									<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
+											:to="{name:'filewatcher.detail',query:{id:item.id}}"></router-link>
+								</Tooltip>
 							</Col>
 						</Row>
 
@@ -43,11 +52,9 @@
 
 <script>
 import store from './store';
-import Col from "iview/src";
 
 export default {
 	name: "FileWatcher",
-	components: {Col},
 	$store: store,
 	data: function() {
 		return {
@@ -107,6 +114,19 @@ export default {
 		padding: 16px;
 	}
 
+	.card-body {
+		margin-bottom: 16px;
+		background-color: rgba(0, 0, 0, 0.05);
+		padding: 5px;
+	}
+
+	.card-body .path {
+		line-height: 1.6;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap
+	}
+
 	.layout-footer {
 		padding: 8px 16px;
 	}
@@ -117,5 +137,9 @@ export default {
 		text-align: center;
 		margin-top: 15%;
 		font-weight: bold;
+	}
+
+	.action {
+		text-align: center;
 	}
 </style>
