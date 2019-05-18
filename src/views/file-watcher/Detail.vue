@@ -29,9 +29,14 @@
 				</DropdownMenu>
 			</Dropdown>
 
+			<Button @click="onToggleUploader" icon="ios-add" :type="isStartUploader?'error':'success'" style="margin-left: 16px">
+				上传{{isStartUploader?"中...":""}}
+			</Button>
+
 			<Button icon="ios-trash-outline" @click="onClear" type="error" style="margin-left: 16px">
 				清空
 			</Button>
+
 		</Footer>
 	</Layout>
 </template>
@@ -43,11 +48,13 @@ import util from './util';
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
-
+const {spawn, exec} = require('child_process');
+let uploaderProcess = null;
 export default {
 	name: "FileWatcherDetail",
 	data: function() {
 		return {
+			isStartUploader: false,
 			data: store.getFiles(this.$route.query.id),
 			info: store.getProjectDetail(this.$route.query.id),
 			columns: [
@@ -205,10 +212,46 @@ export default {
 			});
 			store.saveWatcher(this.$route.query.id);
 		},
+
+		// 上传
+		onToggleUploader() {
+			if (this.isStartUploader) {
+				uploaderProcess.kill();
+			} else {
+				uploaderProcess = spawn(`D:\\FileUpload\\Start_program\\life.exe`, [], {
+					cwd: `D:\\FileUpload\\Start_program`,
+					detached: true,
+					stdio: 'inherit',
+					shell: true,
+					// windowsHide: true
+				});
+				// uploaderProcess = exec(`D:\\FileUpload\\Start_program\\start_program.exe`, {
+				// 	cwd: `D:\\FileUpload\\Start_program`,
+				// }, function(error, stdout) {
+				// 	console.log(error, stdout);
+				// });
+				uploaderProcess.on('disconnect', () => {
+					console.log('disconnect');
+					this.isStartUploader = false;
+				});
+				uploaderProcess.on('close', (code, signal) => {
+					console.log('close', code, signal);
+				});
+				uploaderProcess.on('exit', (code, signal) => {
+					console.log('exit', code, signal);
+				});
+				uploaderProcess.on('error', (err) => {
+					console.log('error', err);
+				});
+				uploaderProcess.on('message', (message, sendHandle) => {
+					console.log('message', message, sendHandle);
+				});
+				this.isStartUploader = true;
+			}
+		}
 	}
 }
 </script>
-
 
 <style scoped>
 	.layout {

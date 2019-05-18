@@ -1,5 +1,5 @@
 <template>
-	<Form ref="form" :model="form" :rules="rules" :label-width="80" >
+	<Form ref="form" :model="form" :rules="rules" :label-width="80">
 		<FormItem prop="title" label="项目名称">
 			<Input type="text" v-model="form.title" placeholder="请输入项目名称"/>
 		</FormItem>
@@ -12,6 +12,10 @@
 			<Input type="text" v-model="form.targetpath" placeholder="请选择路径" icon="ios-folder-outline" @on-click="onSelectPath('targetpath')" readonly/>
 		</FormItem>
 
+		<FormItem prop="target_path" label="上传执行命令">
+			<Input type="text" v-model="form.uploader_cmd" placeholder="上传执行命令" icon="ios-folder-outline" @on-click="onSelectPath('uploader_cmd','openFile',{})" readonly/>
+		</FormItem>
+
 		<FormItem label="立即监听">
 			<RadioGroup v-model="form.status">
 				<Radio :label="1">开启</Radio>
@@ -20,7 +24,7 @@
 		</FormItem>
 
 		<FormItem>
-			<Button icon="ios-folder" type="primary" @click="onSubmit" >保存</Button>
+			<Button icon="ios-folder" type="primary" @click="onSubmit">保存</Button>
 		</FormItem>
 	</Form>
 </template>
@@ -36,6 +40,7 @@ export default {
 				title: '',
 				path: '',
 				targetpath: '',
+				uploader_cmd: '',
 				status: 0,
 			},
 			rules: {
@@ -51,7 +56,7 @@ export default {
 	created() {
 	},
 	methods: {
-		onSelectPath(name) {
+		onSelectPath(name, type = 'openDirectory', options = '') {
 			sys.openFileSelectDialog({
 				properties: ['openDirectory']
 			}).then((files) => {

@@ -35,18 +35,7 @@ export default {
 	methods: {
 		onSelfStartChange(isSwitch) {
 			if (isSwitch) {
-				// console.log(electron.remote.app.getPath('exe'))
-				// regedit.putValue({
-				// 	[selfStartKey]: {
-				// 		'dev-helper': {
-				// 			value: "C:\\Windows",
-				// 			type: 'REG_SZ'
-				// 		}
-				// 	}
-				// }, function(err) {
-				// 	console.error(err);
 				const appPath = electron.remote.app.getPath('exe');
-				// })
 				console.log(`REG ADD ${selfStartKey} /v DevHelper /t REG_SZ /d ${appPath} /f`);
 				childProcess.exec(`REG ADD ${selfStartKey} /v DevHelper /t REG_SZ /d ${appPath} /f`, function(error, stdout) {
 					if (error) {
