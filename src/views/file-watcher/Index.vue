@@ -1,27 +1,39 @@
 <template>
 	<Layout class="layout">
-		<Content>
-			<Table :columns="columns" :data="data" :height="tableHeight">
-				<template v-slot:status="{row,index}">
-					<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(row)" v-if="row.status"></Icon>
-					<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(row)" v-else></Icon>
-				</template>
+		<Content class="content">
+			<Row v-show="data.length">
+				<Col :sm="12" :md="6" :lg="4" v-for="(item,index) in data" :key="index">
+					<Card>
+						<p slot="title">{{item.title}}</p>
 
-				<template v-slot:targetpath="{row,index}">
-					<Icon type="ios-folder" @click="onSelectPath(row,'target_path')" size="18" style="margin-right: 8px"/>
-					<span>{{row.targetpath}}</span>
-				</template>
+						<div class="card-body">
+							<Icon type="ios-folder" @click="onSelectPath(row,'target_path')" size="18" style="margin-right: 8px"/>
+							<span>{{row.targetpath}}</span>
+						</div>
 
-				<template v-slot:count="{row,index}">
-					<span style="color: #19be6b">{{row.count}}</span>
-				</template>
+						<Row class="action">
+							<Col>
+								<span style="color: #19be6b">{{item.count}}</span>
+							</Col>
+							<Col>
+								<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(item)"></Icon>
+							</Col>
+							<Col>
+								<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(row)" v-if="row.status"></Icon>
+								<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(row)" v-else></Icon>
+							</Col>
+							<Col>
+								<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
+										:to="{name:'filewatcher.detail',query:{id:item.id}}"></router-link>
+							</Col>
+						</Row>
 
-				<template v-slot:action="{row,index}">
-					<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(row)"></Icon>
-					<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
-							:to="{name:'filewatcher.detail',query:{id:row.id}}"></router-link>
-				</template>
-			</Table>
+					</Card>
+				</Col>
+			</Row>
+			<div class="empty-tips" v-show="!data.length">
+				暂没有创建任何项目！
+			</div>
 		</Content>
 		<Footer class="layout-footer">
 			<Button :to="{name:'filewatcher.add'}" icon="ios-add" type="primary">新增</Button>
@@ -31,63 +43,24 @@
 
 <script>
 import store from './store';
+import Col from "iview/src";
 
 export default {
 	name: "FileWatcher",
+	components: {Col},
 	$store: store,
 	data: function() {
 		return {
 			data: store.getProjectList(),
-			columns: [
-				// {
-				// 	type: 'selection'
-				// },
-				{
-					title: '名称',
-					key: 'title'
-				},
-				{
-					title: '路径',
-					key: 'path'
-				},
-				{
-					title: '目标路径',
-					slot: 'targetpath'
-				},
-				{
-					title: '状态',
-					slot: 'status',
-					width: 100,
-				},
-				{
-					title: '改动数量',
-					slot: 'count',
-					width: 100,
-				},
-				{
-					title: '操作',
-					slot: 'action',
-					width: 100,
-				}
-			],
-			tableHeight: 0
 		};
 	},
 	mounted() {
-		const handler = () => {
-			this.tableHeight = this.$el.getBoundingClientRect().height - 48;
-		};
-		window.addEventListener('resize', handler);
-		this.$once('hook:beforeDestroy', () => {
-			window.removeEventListener('resize', handler);
-		});
-		handler();
 	},
 	created() {
-		const win = sys.getCurrentWindow();
-		if (win.getSize()[0] < 640) {
-			win.setSize(640, 480, true);
-		}
+		// const win = sys.getCurrentWindow();
+		// if (win.getSize()[0] < 640) {
+		// 	win.setSize(640, 480, true);
+		// }
 	},
 	destroyed() {
 		// if (IS_DEV) store.destroy();
@@ -130,13 +103,19 @@ export default {
 		bottom: 0;
 	}
 
-	>>> .ivu-table-wrapper,
-	>>> .ivu-table-wrapper .ivu-table,
-	>>> .ivu-table-wrapper .ivu-table td {
-		border: none;
+	.content {
+		padding: 16px;
 	}
 
 	.layout-footer {
 		padding: 8px 16px;
+	}
+
+	.empty-tips {
+		color: #808695;
+		font-size: 24px;
+		text-align: center;
+		margin-top: 15%;
+		font-weight: bold;
 	}
 </style>

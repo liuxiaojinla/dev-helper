@@ -26,7 +26,7 @@
 				<div class="app-layout-action-btn" @click.capture.stop="onMinni">
 					<Icon type="ios-remove" size="24" v-show="isMinimizable"></Icon>
 				</div>
-				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMoreMenuSelect">
+				<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMoreMenuSelect" style="-webkit-app-region: no-drag">
 					<div class="layout-action-btn">
 						<Icon type="ios-more" size="24"></Icon>
 					</div>
@@ -178,7 +178,6 @@ export default {
 			this.isIn = toDepth >= fromDepth;
 			this.$nextTick(this.updateTitle);
 			console.log(location.href);
-			console.log(this.$router, window.history.length)
 		}
 	}
 }
