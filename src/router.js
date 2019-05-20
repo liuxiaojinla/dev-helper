@@ -87,6 +87,14 @@ export default new Router({
 			}
 		},
 		{
+			path: '/time',
+			name: 'time',
+			component: () => import(/* webpackChunkName: "util" */ './views/index/Time.vue'),
+			meta: {
+				title: '时间戳'
+			}
+		},
+		{
 			path: '/weapp_transform',
 			name: 'weapp_transform',
 			component: () => import(/* webpackChunkName: "util" */ './views/weapp-transform/Index.vue'),

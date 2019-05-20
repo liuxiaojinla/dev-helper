@@ -1,13 +1,13 @@
-export default  {
+export default {
 	particles: {
 		number: {
-			value: 50
+			value: 150
 		},
 		color: {
 			value: ["#b61924", "#009688", "#5FB878", "#393D49", "#1E9FFF", "#FFB800"]
 		},
 		opacity: {
-			value: 0.75,
+			value: 0.9,
 			random: true,
 			anim: {
 				enable: true,
@@ -29,23 +29,46 @@ export default  {
 		line_linked: {
 			enable: false
 		},
-		move: {
-			speed: 1,
-			random: true
-		},
 		shape: {
 			type: ["circle", "edge", "polygon", "star"]
+		},
+		move: {
+			speed: 1,
+			random: true,
+			bounce: true,
+			attract: {
+				enable: true,
+				rotateX: 3000,
+				rotateY: 1500,
+			},
 		}
 	},
 	interactivity: {
-		detect_on: "canvas",
+		detect_on: "window",
+		events: {
+			onhover: {
+				enable: true,
+				mode: "bubble"
+			},
+			onclick: {
+				enable: true,
+				// mode: "push",
+				mode: "repulse"
+			},
+			resize: true
+		},
 		modes: {
 			bubble: {
-				distance: 250,
-				size: 20,
+				distance: 50,
+				size: 10,
 				duration: 2,
-				opacity: 0,
-				speed: 3
+				opacity: 0.3,
+			},
+			repulse: {
+				distance: 150
+			},
+			push: {
+				particles_nb: 10
 			}
 		}
 	},

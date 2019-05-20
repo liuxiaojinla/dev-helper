@@ -37,6 +37,10 @@ function copyFileSync(src, dest, flags) {
 	return fs.copyFileSync(src, dest, flags);
 }
 
+function readFile() {
+
+}
+
 /**
  * 格式化时间日期
  * @param {string} fmt

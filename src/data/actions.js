@@ -35,7 +35,7 @@ export default [
 				{
 					title: '时间戳',
 					icon: 'ios-time',
-					type: 'custom',
+					type: 'page',
 					detail: {
 						name: 'time',
 					},

@@ -1,6 +1,6 @@
 {
 	"name": "dev-helper",
-	"version": "1.2.142",
+	"version": "1.2.145",
 	"description": "开发小助手",
 	"author": {
 		"name": "BD"
@@ -20,6 +20,7 @@
 		"iview": "^3.4.1",
 		"js-md5": "^0.7.3",
 		"js-sha1": "^0.6.0",
+		"moment": "^2.24.0",
 		"particles.js": "^2.0.0",
 		"regedit": "^3.0.2",
 		"ssh2-sftp-client": "^2.4.3",
