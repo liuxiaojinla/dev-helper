@@ -33,7 +33,7 @@
 import store from './store';
 
 export default {
-	name: "FileWatcherAdd",
+	name: "AutoDeploymentAdd",
 	data: function() {
 		return {
 			filterFile: [
@@ -88,6 +88,5 @@ export default {
 <style scoped>
 	Form {
 		padding: 15px;
-		max-width: 560px;
 	}
 </style>

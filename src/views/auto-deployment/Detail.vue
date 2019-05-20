@@ -42,7 +42,7 @@
 
 <script>
 import store from './store';
-import util from './util';
+import util from '../../libs/util';
 
 const os = require('os');
 const path = require('path');
@@ -50,7 +50,7 @@ const fs = require('fs');
 const {spawn, exec} = require('child_process');
 let uploaderProcess = null;
 export default {
-	name: "FileWatcherDetail",
+	name: "AutoDeploymentDetail",
 	data: function() {
 		return {
 			isStartUploader: false,

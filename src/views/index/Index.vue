@@ -18,7 +18,7 @@
 
 <script>
 import ACTION_LIST from '../../data/actions';
-import FileWatcher from '../file-watcher/Index';
+import AutoDeployment from '../auto-deployment/Index';
 import Action from './Action';
 
 const iconPrefixCls = 'ivu-icon';
@@ -26,7 +26,7 @@ const iconPrefixCls = 'ivu-icon';
 export default {
 	name: 'Home',
 	components: {
-		FileWatcher,
+		AutoDeployment,
 		Action
 	},
 	data() {

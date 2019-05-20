@@ -4,8 +4,7 @@ export default [
 		title: '自动化部署',
 		name: 'auto-deployment',
 		icon: 'ios-code-working',
-		// page: 'auto-deployment',
-		page: 'FileWatcher',
+		page: 'auto-deployment',
 		options: {
 			actions: []
 		}
@@ -26,43 +25,20 @@ export default [
 		options: {
 			actions: [
 				{
-					title: '目录监听器',
-					icon: 'ios-archive',
-					type: 'page',
-					detail: {
-						name: 'filewatcher',
-					}
-				},
-				{
 					title: 'Hosts文件',
 					icon: 'ios-document',
-					type: 'custom',
+					type: 'page',
 					detail: {
 						name: 'hosts',
-					},
-					click() {
-						sys.showToast({content: '开发中...'});
-					}
-				},
-				{
-					title: '微信小程序转换',
-					icon: 'ios-build',
-					// type: 'page',
-					detail: {
-						name: 'weapp_transform',
-					},
-					type: 'custom',
-					click() {
-						sys.showToast({content: '开发中...'});
 					}
 				},
 				{
 					title: '时间戳',
 					icon: 'ios-time',
-					detail: {
-						name: 'weapp_transform',
-					},
 					type: 'custom',
+					detail: {
+						name: 'time',
+					},
 					click() {
 						clipboard.writeText(Math.floor(new Date().getTime() / 1000).toString());
 						sys.showToast({content: '已复制！'});
@@ -71,10 +47,11 @@ export default [
 				{
 					title: '颜色转换器',
 					icon: 'ios-color-palette',
+					type: 'custom',
 					detail: {
 						name: 'weapp_transform',
 					},
-					type: 'custom',
+
 					click() {
 						sys.showToast({content: '开发中...'});
 					}
@@ -82,10 +59,23 @@ export default [
 				{
 					title: 'TP5验证器',
 					icon: 'ios-create',
+					type: 'custom',
+					detail: {
+						name: 'tp5_validate',
+					},
+
+					click() {
+						sys.showToast({content: '开发中...'});
+					}
+				},
+				{
+					title: '微信小程序转换',
+					icon: 'ios-build',
+					// type: 'page',
+					type: 'custom',
 					detail: {
 						name: 'weapp_transform',
 					},
-					type: 'custom',
 					click() {
 						sys.showToast({content: '开发中...'});
 					}

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Webview from './components/Webview.vue';
 import Home from './views/index/Index.vue';
+import Setting from './views/index/Setting.vue';
 
 Vue.use(Router);
 const isDev = process.env.NODE_ENV !== 'production';
@@ -9,7 +10,6 @@ export default new Router({
 	mode: isDev ? 'history' : 'hash',
 	base: process.env.BASE_URL,
 	scrollBehavior(to, from, savedPosition) {
-		console.log(to, from, savedPosition);
 		if (savedPosition) {
 			// savedPosition is only available for popstate navigations.
 			return savedPosition
@@ -35,7 +35,7 @@ export default new Router({
 		}
 	},
 	exclude: [
-		'FileWatcherDetail'
+		'AutoDeploymentDetail'
 	],
 	routes: [
 		{
@@ -49,9 +49,57 @@ export default new Router({
 		{
 			path: '/setting',
 			name: 'setting',
-			component: () => import(/* webpackChunkName: "setting" */ './views/index/Setting.vue'),
+			component: Setting,
 			meta: {
 				title: '设置'
+			}
+		},
+		{
+			path: '/auto-deployment',
+			name: 'auto-deployment',
+			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Index.vue'),
+			meta: {
+				title: '目录监听器'
+			}
+		},
+		{
+			path: '/auto-deployment/add',
+			name: 'auto-deployment.add',
+			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Add.vue'),
+			meta: {
+				title: '添加监听目录'
+			}
+		},
+		{
+			path: '/auto-deployment/detail',
+			name: 'auto-deployment.detail',
+			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Detail.vue'),
+			meta: {
+				title: '文件变化详情'
+			}
+		},
+		{
+			path: '/hosts',
+			name: 'hosts',
+			component: () => import(/* webpackChunkName: "util" */ './views/index/Hosts.vue'),
+			meta: {
+				title: 'HOSTS文件'
+			}
+		},
+		{
+			path: '/weapp_transform',
+			name: 'weapp_transform',
+			component: () => import(/* webpackChunkName: "util" */ './views/weapp-transform/Index.vue'),
+			meta: {
+				title: '微信小程序转换助手'
+			}
+		},
+		{
+			path: '/weapp_transform/add',
+			name: 'weapp_transform.add',
+			component: () => import(/* webpackChunkName: "util" */ './views/weapp-transform/Add.vue'),
+			meta: {
+				title: '微信小程序转换助手'
 			}
 		},
 		{
@@ -76,54 +124,6 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "util" */ './views/index/Request.vue'),
 			meta: {
 				title: '请求器'
-			}
-		},
-		{
-			path: '/filewatcher',
-			name: 'filewatcher',
-			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Index.vue'),
-			meta: {
-				title: '目录监听器'
-			}
-		},
-		{
-			path: '/filewatcher/add',
-			name: 'filewatcher.add',
-			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Add.vue'),
-			meta: {
-				title: '添加监听目录'
-			}
-		},
-		{
-			path: '/filewatcher/detail',
-			name: 'filewatcher.detail',
-			component: () => import(/* webpackChunkName: "file-watcher" */ './views/file-watcher/Detail.vue'),
-			meta: {
-				title: '文件变化详情'
-			}
-		},
-		{
-			path: '/hosts',
-			name: 'hosts',
-			component: () => import(/* webpackChunkName: "hosts" */ './views/hosts/Index.vue'),
-			meta: {
-				title: '微信小程序转换助手'
-			}
-		},
-		{
-			path: '/weapp_transform',
-			name: 'weapp_transform',
-			component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/weapp-transform/Index.vue'),
-			meta: {
-				title: '微信小程序转换助手'
-			}
-		},
-		{
-			path: '/weapp_transform/add',
-			name: 'weapp_transform.add',
-			component: () => import(/* webpackChunkName: "weapp_trsanform" */ './views/weapp-transform/Add.vue'),
-			meta: {
-				title: '微信小程序转换助手'
 			}
 		},
 		{

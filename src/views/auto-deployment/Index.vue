@@ -55,7 +55,7 @@
 import store from './store';
 
 export default {
-	name: "FileWatcher",
+	name: "AutoDeployment",
 	$store: store,
 	data: function() {
 		return {

@@ -184,6 +184,11 @@ export default {
 </script>
 
 <style>
+	body, html {
+		/*background-color: transparent;*/
+		-webkit-user-select: none;
+	}
+
 	.particles-js-canvas-el {
 		position: fixed;
 		left: 0;
@@ -197,14 +202,14 @@ export default {
 		margin: 5px;
 		border-radius: 5px;
 	}
+
+	Form {
+		max-width: 560px;
+	}
 </style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-	body, html {
-		/*background-color: transparent;*/
-	}
-
 	.app-layout {
 		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
@@ -239,6 +244,7 @@ export default {
 		font-size: 16px;
 		line-height: 48px;
 		text-overflow: ellipsis;
+		flex: 0 0 140px;
 	}
 
 	.app-layout-header > .app-layout-header-center {
@@ -263,7 +269,6 @@ export default {
 		transition: all 0.1s;
 
 		user-select: none;
-		-webkit-user-select: none;
 		-webkit-app-region: no-drag;
 	}
 
