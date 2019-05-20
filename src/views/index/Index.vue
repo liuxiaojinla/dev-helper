@@ -58,6 +58,11 @@ export default {
 
 	.nav {
 		height: calc(100vh - 58px);
+		background-color: transparent;
+	}
+
+	.nav .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
+		background-color: rgba(0, 0, 0, 0.1);
 	}
 
 	.content {

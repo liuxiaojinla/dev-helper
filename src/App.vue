@@ -187,6 +187,11 @@ export default {
 	body, html {
 		/*background-color: transparent;*/
 		-webkit-user-select: none;
+		color: white;
+	}
+
+	.ivu-layout-footer {
+		background-color: rgba(0, 0, 0, 0.1) !important;
 	}
 
 	.particles-js-canvas-el {
@@ -223,6 +228,24 @@ export default {
 		border-radius: 5px;
 
 		background-color: white !important;
+		background: url("./assets/images/bg.jpg");
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: center center;
+		background-size: cover;
+	}
+
+	.app-layout::before {
+		content: '';
+		filter: blur(10px);
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		/*z-index: -1;*/
+		background: inherit;
+		margin: -30px;
 	}
 
 	.app-layout-header {
