@@ -55,7 +55,7 @@ export default {
 		return {
 			isStartUploader: false,
 			data: store.getFiles(this.$route.query.id),
-			info: store.getProjectDetail(this.$route.query.id),
+			info: store.getProjectDetail(this.$route.query.id, true),
 			columns: [
 				{
 					type: 'selection',

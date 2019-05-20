@@ -67,10 +67,19 @@ const getProjectList = (function() {
 /**
  * 获取项目详情
  * @param projectId
+ * @param isUpdateToFirst
  * @return {*}
  */
-function getProjectDetail(projectId) {
-	return getProjectList().find(item => item.id === projectId);
+function getProjectDetail(projectId, isUpdateToFirst = false) {
+	const list = getProjectList();
+	const index = list.findIndex(item => item.id === projectId);
+	const item = list[index];
+	if (isUpdateToFirst && index !== -1) {
+		list.splice(index, 1);
+		list.unshift(item);
+		saveProject();
+	}
+	return item;
 }
 
 /**
