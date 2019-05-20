@@ -33,7 +33,7 @@
 							<Col span="6">
 								<Tooltip content="查看项目文件监听详情" style="color: #2db7f5">
 									<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
-											:to="{name:'filewatcher.detail',query:{id:item.id}}"></router-link>
+											:to="{name:'auto-deployment.detail',query:{id:item.id}}"></router-link>
 								</Tooltip>
 							</Col>
 						</Row>
@@ -46,7 +46,7 @@
 			</div>
 		</Content>
 		<Footer class="layout-footer">
-			<Button :to="{name:'filewatcher.add'}" icon="ios-add" type="primary">新增</Button>
+			<Button :to="{name:'auto-deployment.add'}" icon="ios-add" type="primary">新增</Button>
 		</Footer>
 	</Layout>
 </template>
