@@ -74,7 +74,7 @@ function getProjectDetail(projectId, isUpdateToFirst = false) {
 	const list = getProjectList();
 	const index = list.findIndex(item => item.id === projectId);
 	const item = list[index];
-	if (isUpdateToFirst && index !== -1) {
+	if (isUpdateToFirst && index !== -1 && index !== 0) {
 		list.splice(index, 1);
 		list.unshift(item);
 		saveProject();
