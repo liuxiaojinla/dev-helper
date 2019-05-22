@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import util from '../../libs/util';
 
 const fs = require('fs');
@@ -148,15 +149,16 @@ function updateProjectCount(projectId, count) {
 }
 
 /**
- * 设置导出路径
+ * 设置项目新的属性值
  * @param {string} projectId
- * @param {string} path
+ * @param {string} key
+ * @param {*} value
  */
-function setProjectTargetPath(projectId, path) {
+function setProjectAttribute(projectId, key, value) {
 	const project = getProjectDetail(projectId);
-	console.log('设置导出目录', projectId, project);
+	console.log('设置项目新的属性值', projectId, project, key, value);
 	if (!project) return;
-	project.targetpath = path;
+	Vue.set(project,key,value);
 	saveProject();
 }
 
@@ -312,7 +314,7 @@ export default {
 	getProjectDetail,
 	addProject,
 	deleteProject,
-	setProjectTargetPath,
+	setProjectAttribute,
 	getProjectPath,
 	startProject,
 	stopProject,

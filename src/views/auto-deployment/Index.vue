@@ -15,8 +15,18 @@
 
 						<Row class="action">
 							<Col span="6">
-								<Tooltip content="重新设置目标目录" style="color: #ff9900">
-									<Icon type="ios-folder" @click="onSelectPath(item,'target_path')" size="18"/>
+								<Tooltip content="重新设置目录" style="color: #ff9900">
+									<Dropdown @on-click="onSelectPath(item,$event)">
+										<Icon type="ios-folder" size="18"/>
+										<DropdownMenu slot="list">
+											<DropdownItem name="targetpath">
+												目标目录
+											</DropdownItem>
+											<DropdownItem name="uploader_cmd">
+												上传命令
+											</DropdownItem>
+										</DropdownMenu>
+									</Dropdown>
 								</Tooltip>
 							</Col>
 							<Col span="6">
@@ -91,11 +101,17 @@ export default {
 				}
 			});
 		},
-		onSelectPath(row) {
-			sys.openFileSelectDialog({
-				properties: ['openDirectory']
-			}).then((files) => {
-				store.setProjectTargetPath(row.id, files[0]);
+		onSelectPath(row, name) {
+			const options = 'uploader_cmd' === name ? {
+				properties: ['openFile'],
+				filters: [
+					{name: '可执行文件', extensions: ['exe', 'bat']},
+				]
+			} : {
+				properties: ['openDirectory'],
+			};
+			sys.openFileSelectDialog(options).then((files) => {
+				store.setProjectAttribute(row.id, name, files[0]);
 			});
 		},
 	}

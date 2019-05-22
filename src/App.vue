@@ -228,7 +228,7 @@ export default {
 		border-radius: 5px;
 
 		background-color: white !important;
-		background: url("./assets/images/bg.jpg");
+		/*background: url("./assets/images/bg.jpg");*/
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-position: center center;
@@ -245,7 +245,7 @@ export default {
 		bottom: 0;
 		/*z-index: -1;*/
 		background: inherit;
-		margin: -30px;
+		margin: -50px;
 	}
 
 	.app-layout-header {
