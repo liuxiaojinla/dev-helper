@@ -1,10 +1,12 @@
 'use strict';
-import {app, BrowserWindow, Menu, protocol, Tray} from 'electron'
+import {app, BrowserWindow, ipcMain, Menu, protocol, Tray} from 'electron'
 import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
+import {autoUpdater} from 'electron-updater'
 import "./ipc";
 
 const path = require('path');
 
+const feedUrl = `http://xx5.51daoteng.com/win32`; // 更新包位置
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -100,6 +102,47 @@ app.on('activate', () => {
 	}
 })();
 
+// 初始化检查自动更新
+const initCheckForUpdates = function() {
+	// 主进程主动发送消息给渲染进程函数
+	function sendUpdateMessage(message, data) {
+		console.log(message, data);
+		getWindow().webContents.send('app.update', {message, data});
+	}
+
+	// 配置安装包远端服务器
+	autoUpdater.setFeedURL(feedUrl);
+
+	// 下面是自动更新的整个生命周期所发生的事件
+	autoUpdater.on('error', function(message) {
+		sendUpdateMessage('error', message);
+	});
+	// // 检查是否有更新
+	// autoUpdater.on('checking-for-update', function(message) {
+	// 	sendUpdateMessage('checking-for-update', message);
+	// });
+	// 有新版本更新
+	autoUpdater.on('update-available', function(message) {
+		sendUpdateMessage('update-available', message);
+	});
+	// // 无新版本
+	// autoUpdater.on('update-not-available', function(message) {
+	// 	sendUpdateMessage('update-not-available', message);
+	// });
+	// 更新下载进度事件
+	autoUpdater.on('download-progress', function(progressObj) {
+		sendUpdateMessage('downloadProgress', progressObj);
+	});
+	// 更新下载完成事件
+	autoUpdater.on('update-downloaded', function(event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
+		sendUpdateMessage('isUpdateNow');
+		ipcMain.on('updateNow', (e, arg) => {
+			autoUpdater.quitAndInstall();
+		});
+	});
+};
+
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -132,6 +175,17 @@ app.on('ready', async () => {
 	});
 	win.on('hide', () => {
 		tray.setHighlightMode('never')
+	});
+
+	// 自动更新
+	initCheckForUpdates();
+	// autoUpdater.checkForUpdates();
+
+	// 主进程监听渲染进程传来的信息
+	ipcMain.on('app.update', () => {
+		console.log("event", "检查更新...");
+		//执行自动更新检查
+		autoUpdater.checkForUpdates();
 	});
 });
 

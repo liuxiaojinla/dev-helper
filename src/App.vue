@@ -47,6 +47,10 @@
 							<Icon type="ios-cog-outline" size="18"/>
 							设置
 						</DropdownItem>
+						<DropdownItem name="update">
+							<Icon type="ios-cloud-download-outline" size="18"/>
+							检查更新
+						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
 			</div>
@@ -64,6 +68,7 @@
 </template>
 
 <script>
+import {ipcRenderer} from 'electron';
 import particlesConfig from "./particles.config";
 
 export default {
@@ -105,6 +110,21 @@ export default {
 	mounted() {
 		require('particles.js');
 		particlesJS('app-layout', particlesConfig);
+
+		ipcRenderer.on('app.update', (event, {message, data}) => {
+			console.log(message, data)
+			if (message === 'isUpdateNow') {
+				if (confirm('是否现在更新？')) {
+					ipcRenderer.send('updateNow');
+				}
+			}else{
+				const html = message + " <br>data:" + JSON.stringify(data) + "<hr>";
+				sys.showModal({
+					content: html,
+					showCancel: false
+				});
+			}
+		});
 	},
 	created() {
 		this.$nextTick(this.updateTitle);
@@ -152,6 +172,8 @@ export default {
 				this.isAlwaysOnTop = !isAlwaysOnTop;
 			} else if ('setting' === name) {
 				this.$router.push('/setting');
+			} else if ('update' === name) {
+				ipcRenderer.send('app.update');
 			}
 		},
 		onMinni() {
