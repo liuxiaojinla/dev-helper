@@ -129,9 +129,13 @@ export default {
 				// transferred:1017715
 			} else if (type === 'update-downloaded') {
 				this.$Loading.finish();
-				if (confirm(`'最新版本：${res.version}',现在是否马上更新？`)) {
-					ipcRenderer.send('updateNow');
-				}
+				sys.showModal({
+					title: "温馨提示",
+					content:`'最新版本：${res.version}',现在是否马上更新？`,
+					onOk: () => {
+						ipcRenderer.send('updateNow');
+					}
+				});
 			} else {
 				sys.showModal({
 					content: JSON.stringify(res),
