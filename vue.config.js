@@ -4,7 +4,7 @@ module.exports = {
 			builderOptions: {
 				appId: "com.duoguan.dev",
 				copyright: "beidou",
-				productName: "dev-helper",
+				productName: "开发小助手",
 				// afterAllArtifactBuild?, afterPack?, afterSign?, apk?, appId?, appImage?,
 				// appx?, artifactBuildCompleted?, artifactBuildStarted?, artifactName?,
 				// asar?, asarUnpack?, beforeBuild?, buildDependenciesFromSource?,
