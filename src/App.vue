@@ -43,13 +43,13 @@
 							<Icon :type="isAlwaysOnTop?'ios-radio-button-on':'ios-radio-button-off'" size="18"/>
 							{{isAlwaysOnTop?'取消':'设置'}}置顶
 						</DropdownItem>
-						<DropdownItem name="setting">
-							<Icon type="ios-cog-outline" size="18"/>
-							设置
-						</DropdownItem>
 						<DropdownItem name="update">
 							<Icon type="ios-cloud-download-outline" size="18"/>
 							检查更新
+						</DropdownItem>
+						<DropdownItem name="setting">
+							<Icon type="ios-cog-outline" size="18"/>
+							设置
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
@@ -111,16 +111,25 @@ export default {
 		require('particles.js');
 		particlesJS('app-layout', particlesConfig);
 
-		ipcRenderer.on('app.update', (event, {message, data}) => {
-			console.log(message, data)
-			if (message === 'isUpdateNow') {
-				if (confirm('是否现在更新？')) {
+		ipcRenderer.on('app.update', (_, type, res) => {
+			console.log('app.update', type, res);
+			if (type === 'update-available') {
+				this.$Loading.start();
+			} else if (type === 'download-progress') {
+				this.$Loading.update(res.percent);
+				// bytesPerSecond:141507
+				// delta:156732
+				// percent:2.553867696195353
+				// total:39849950
+				// transferred:1017715
+			} else if (type === 'update-downloaded') {
+				this.$Loading.finish();
+				if (confirm(`'最新版本：${res.version}',现在是否马上更新？`)) {
 					ipcRenderer.send('updateNow');
 				}
-			}else{
-				const html = message + " <br>data:" + JSON.stringify(data) + "<hr>";
+			} else {
 				sys.showModal({
-					content: html,
+					content: JSON.stringify(res),
 					showCancel: false
 				});
 			}
@@ -214,6 +223,10 @@ export default {
 
 	.ivu-layout-footer {
 		background-color: rgba(0, 0, 0, 0.1) !important;
+	}
+
+	.ivu-modal-confirm-body {
+		word-wrap: break-word;
 	}
 
 	.particles-js-canvas-el {
