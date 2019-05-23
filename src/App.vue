@@ -115,6 +115,11 @@ export default {
 			console.log('app.update', type, res);
 			if (type === 'update-available') {
 				this.$Loading.start();
+			} else if (type === 'update-not-available') {
+				sys.showModal({
+					content: '当前版本已是最新！',
+					showCancel: false
+				});
 			} else if (type === 'download-progress') {
 				this.$Loading.update(res.percent);
 				// bytesPerSecond:141507

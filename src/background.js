@@ -124,10 +124,10 @@ const initCheckForUpdates = function() {
 	autoUpdater.on('update-available', function(event) {
 		sendUpdateMessage('update-available', event);
 	});
-	// // 无新版本
-	// autoUpdater.on('update-not-available', function(message) {
-	// 	sendUpdateMessage('update-not-available', message);
-	// });
+	// 无新版本
+	autoUpdater.on('update-not-available', function(message) {
+		sendUpdateMessage('update-not-available', message);
+	});
 	// 更新下载进度事件
 	autoUpdater.on('download-progress', function(progress) {
 		sendUpdateMessage('download-progress', progress);
