@@ -20,10 +20,10 @@ const getWindow = function() {
 		// width: 320,
 		// height: 500,
 		width: isDevelopment ? 1080 : 570,
-		height: isDevelopment ? 560 : 400,
+		height: isDevelopment ? 560 : 520,
 
 		minWidth: 570,
-		minHeight: 240,
+		minHeight: 520,
 		show: false,
 		titleBarStyle: 'hidden',
 		transparent: true,

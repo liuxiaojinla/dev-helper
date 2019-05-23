@@ -1,7 +1,7 @@
 export default {
 	particles: {
 		number: {
-			value: 150
+			value: 100
 		},
 		color: {
 			value: ["#b61924", "#009688", "#5FB878", "#393D49", "#1E9FFF", "#FFB800"]
