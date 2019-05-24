@@ -20,7 +20,7 @@ const getWindow = function() {
 		// width: 320,
 		// height: 500,
 		width: isDevelopment ? 1080 : 570,
-		height: isDevelopment ? 560 : 520,
+		height: isDevelopment ? 560 : 480,
 
 		minWidth: 570,
 		minHeight: 520,

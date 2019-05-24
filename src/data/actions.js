@@ -13,8 +13,8 @@ export default [
 		title: '网站套件',
 		name: 'website-kit',
 		icon: 'ios-power-outline',
-		// page: 'website-kit',
-		page: 'Action',
+		page: 'website-kit',
+		// page: 'Action',
 		options: {}
 	},
 	{

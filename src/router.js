@@ -79,6 +79,14 @@ export default new Router({
 			}
 		},
 		{
+			path: '/website-kit',
+			name: 'website-kit',
+			component: () => import(/* webpackChunkName: "website-kit" */ './views/website-kit/Index.vue'),
+			meta: {
+				title: '网站套件'
+			}
+		},
+		{
 			path: '/hosts',
 			name: 'hosts',
 			component: () => import(/* webpackChunkName: "util" */ './views/index/Hosts.vue'),

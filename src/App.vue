@@ -115,6 +115,10 @@ export default {
 			console.log('app.update', type, res);
 			if (type === 'update-available') {
 				this.$Loading.start();
+				this.$Notice.success({
+					title: '已发现新版本!',
+					desc: '正在下载，请稍后...'
+				});
 			} else if (type === 'update-not-available') {
 				sys.showModal({
 					content: '当前版本已是最新！',
@@ -131,7 +135,7 @@ export default {
 				this.$Loading.finish();
 				sys.showModal({
 					title: "温馨提示",
-					content:`'最新版本：${res.version}',现在是否马上更新？`,
+					content: `'最新版本：${res.version}',现在是否马上更新？`,
 					onOk: () => {
 						ipcRenderer.send('updateNow');
 					}
