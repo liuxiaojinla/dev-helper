@@ -236,8 +236,8 @@ export default {
 				return;
 			}
 
-
-			const showModal = function(content) {
+			// 显示消息
+			const showMessage = function(content) {
 				sys.showModal({
 					width: '80%',
 					content: `<pre style="white-space: pre-wrap">${content}</pre>`,
@@ -253,11 +253,11 @@ export default {
 			uploaderProcess = spawn(CMD, []);
 			uploaderProcess.stdout.on('data', (data) => {
 				console.log(`stdout: ${data}`);
-				showModal(data);
+				showMessage(data);
 			});
 			uploaderProcess.stderr.on('data', (data) => {
 				console.log(`stderr: ${data}`);
-				showModal(data);
+				showMessage(data);
 			});
 			uploaderProcess.on('close', (code, signal) => {
 				console.log('close', code, signal);
@@ -268,7 +268,7 @@ export default {
 			});
 			uploaderProcess.on('error', (err) => {
 				console.log('error', err);
-				showModal(typeof err === 'object' ? JSON.stringify(err) : err);
+				showMessage(typeof err === 'object' ? JSON.stringify(err) : err);
 			});
 		}
 	}

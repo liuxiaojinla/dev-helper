@@ -240,6 +240,8 @@ export default {
 
 	.ivu-modal-confirm-body {
 		word-wrap: break-word;
+		max-height: 400px;
+		overflow-y: auto;
 	}
 
 	.particles-js-canvas-el {
