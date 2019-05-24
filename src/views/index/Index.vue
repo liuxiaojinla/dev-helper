@@ -19,6 +19,7 @@
 <script>
 import ACTION_LIST from '../../data/actions';
 import AutoDeployment from '../auto-deployment/Index';
+import WebsiteKit from '../website-kit/Index';
 import Action from './Action';
 
 const iconPrefixCls = 'ivu-icon';
@@ -27,6 +28,7 @@ export default {
 	name: 'Home',
 	components: {
 		AutoDeployment,
+		WebsiteKit,
 		Action
 	},
 	data() {
