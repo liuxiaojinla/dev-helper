@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {ipcRenderer} from 'electron';
 import ACTION_LIST from '../../data/actions';
 import AutoDeployment from '../auto-deployment/Index';
 import WebsiteKit from '../website-kit/Index';
@@ -49,7 +50,11 @@ export default {
 			];
 		},
 		onNavChange(index) {
-			this.componentIndex = index;
+			if ('app.update' === this.data[index].name) {
+				ipcRenderer.send('app.update');
+			} else {
+				this.componentIndex = index;
+			}
 		}
 	}
 }

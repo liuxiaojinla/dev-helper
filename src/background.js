@@ -134,11 +134,17 @@ const initCheckForUpdates = function() {
 	});
 	// 更新下载完成事件
 	autoUpdater.on('update-downloaded', function(event, result) {
-		sendUpdateMessage('update-downloaded',event);
+		sendUpdateMessage('update-downloaded', event);
 		ipcMain.on('updateNow', (e, arg) => {
 			autoUpdater.quitAndInstall();
 		});
 	});
+
+	return () => {
+		console.log("event", "检查更新...");
+		//执行自动更新检查
+		autoUpdater.checkForUpdates();
+	};
 };
 
 
@@ -177,15 +183,17 @@ app.on('ready', async () => {
 	});
 
 	// 自动更新
-	initCheckForUpdates();
-	// autoUpdater.checkForUpdates();
+	const checkForUpdates = initCheckForUpdates();
+
+
+	// 循环检查新版本
+	// if (!isDevelopment) {
+	// 	setInterval(checkForUpdates, 60 * 1000);
+	// 	setTimeout(checkForUpdates, 3000);
+	// }
 
 	// 主进程监听渲染进程传来的信息
-	ipcMain.on('app.update', () => {
-		console.log("event", "检查更新...");
-		//执行自动更新检查
-		autoUpdater.checkForUpdates();
-	});
+	ipcMain.on('app.update', checkForUpdates);
 });
 
 // Exit cleanly on request from parent process in development mode.

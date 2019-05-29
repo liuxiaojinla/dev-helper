@@ -3,7 +3,7 @@ export default [
 	{
 		title: '自动化部署',
 		name: 'auto-deployment',
-		icon: 'ios-code-working',
+		icon: 'md-code-working',
 		page: 'auto-deployment',
 		options: {
 			actions: []
@@ -12,7 +12,7 @@ export default [
 	{
 		title: '网站套件',
 		name: 'website-kit',
-		icon: 'ios-power-outline',
+		icon: 'md-power',
 		page: 'website-kit',
 		// page: 'Action',
 		options: {}
@@ -20,7 +20,7 @@ export default [
 	{
 		title: '常用工具',
 		name: 'util',
-		icon: 'ios-bulb-outline',
+		icon: 'ios-bulb',
 		page: 'Action',
 		options: {
 			actions: [
@@ -110,7 +110,7 @@ export default [
 	{
 		title: '加密/解密',
 		name: 'encrypt',
-		icon: 'ios-swap',
+		icon: 'md-swap',
 		page: 'Action',
 		options: {
 			actions: [
@@ -152,7 +152,7 @@ export default [
 	{
 		title: '文档/链接',
 		name: 'document',
-		icon: 'ios-link-outline',
+		icon: 'md-link',
 		page: 'ActionGroup',
 		options: {
 			actions: [
@@ -328,4 +328,9 @@ export default [
 			],
 		}
 	},
+	{
+		name: 'app.update',
+		title: '检查版本',
+		icon: 'ios-cloud-download'
+	}
 ]
