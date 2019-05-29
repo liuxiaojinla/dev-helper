@@ -21,6 +21,7 @@ import ACTION_LIST from '../../data/actions';
 import AutoDeployment from '../auto-deployment/Index';
 import WebsiteKit from '../website-kit/Index';
 import Action from './Action';
+import ActionGroup from './ActionGroup';
 
 const iconPrefixCls = 'ivu-icon';
 
@@ -29,7 +30,8 @@ export default {
 	components: {
 		AutoDeployment,
 		WebsiteKit,
-		Action
+		Action,
+		ActionGroup
 	},
 	data() {
 		return {
@@ -69,6 +71,8 @@ export default {
 
 	.content {
 		transform: translate(0, 0);
+		overflow-y: auto;
+		max-height: calc(100vh - 58px);
 	}
 
 

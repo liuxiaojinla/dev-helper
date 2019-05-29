@@ -15,7 +15,11 @@ import {shell} from 'electron';
 export default {
 	name: "Action",
 	props: {
-		actions: Array
+		actions: Array,
+		type: {
+			type: String,
+			default: 'link'
+		}
 	},
 	computed: {},
 	methods: {
