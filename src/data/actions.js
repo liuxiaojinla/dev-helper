@@ -329,8 +329,15 @@ export default [
 		}
 	},
 	{
+		title: '设置',
+		name: 'setting',
+		icon: 'md-cog',
+		page: 'setting',
+		options: {}
+	},
+	{
 		name: 'app.update',
 		title: '检查版本',
-		icon: 'ios-cloud-download'
+		icon: 'md-cloud-download'
 	}
 ]

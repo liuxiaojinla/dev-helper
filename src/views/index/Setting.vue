@@ -12,7 +12,6 @@ const electron = require('electron');
 const childProcess = require('child_process');
 const selfStartKey = 'HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run';
 
-
 export default {
 	name: "Setting",
 	data() {

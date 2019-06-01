@@ -1,6 +1,6 @@
 <template>
-	<Row type="flex">
-		<Col :xs="6" :sm="8" :md="6" :lg="4" class="nav">
+	<Row type="flex" class="home">
+		<Col class="nav">
 			<Menu :active-name="0" width="auto" @on-select="onNavChange" class="nav">
 				<MenuItem v-for="(group,index) in data" :key="group.name" :name="index">
 					<span :class="iconClasses(group.icon)" style="font-size: 28px"></span>
@@ -8,7 +8,7 @@
 				</MenuItem>
 			</Menu>
 		</Col>
-		<Col :xs="18" :sm="16" :md="18" :lg="20" class="content">
+		<Col class="content">
 			<keep-alive :exclude="$router.options.exclude" :max="10">
 				<component :is="data[componentIndex].page" v-bind="data[componentIndex].options"></component>
 			</keep-alive>
@@ -23,6 +23,7 @@ import AutoDeployment from '../auto-deployment/Index';
 import WebsiteKit from '../website-kit/Index';
 import Action from './Action';
 import ActionGroup from './ActionGroup';
+import Setting from './Setting';
 
 const iconPrefixCls = 'ivu-icon';
 
@@ -32,7 +33,8 @@ export default {
 		AutoDeployment,
 		WebsiteKit,
 		Action,
-		ActionGroup
+		ActionGroup,
+		Setting
 	},
 	data() {
 		return {
@@ -63,20 +65,28 @@ export default {
 <style scoped>
 	.home {
 		user-select: none;
+		flex-wrap: nowrap;
 	}
 
 	.nav {
 		height: calc(100vh - 58px);
 		background-color: transparent;
+		flex: 0 0 138px;
 	}
 
 	.nav .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
 		background-color: rgba(0, 0, 0, 0.1);
 	}
 
+	.nav .ivu-menu-vertical .ivu-menu-item {
+		padding: 15px;
+	}
+
 	.content {
 		transform: translate(0, 0);
 		overflow-y: auto;
-		max-height: calc(100vh - 58px);
+		height: calc(100vh - 58px);
+		flex: 1 0 auto;
+		overflow-x: hidden;
 	}
 </style>
