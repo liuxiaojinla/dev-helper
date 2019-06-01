@@ -3,8 +3,8 @@
 		<Col :xs="6" :sm="8" :md="6" :lg="4" class="nav">
 			<Menu :active-name="0" width="auto" @on-select="onNavChange" class="nav">
 				<MenuItem v-for="(group,index) in data" :key="group.name" :name="index">
-					<span :class="iconClasses(group.icon)" style="font-size: 18px"></span>
-					{{group.title}}
+					<span :class="iconClasses(group.icon)" style="font-size: 28px"></span>
+					<span style="font-size:13px;margin-left: 5px">{{group.title}}</span>
 				</MenuItem>
 			</Menu>
 		</Col>
@@ -79,6 +79,4 @@ export default {
 		overflow-y: auto;
 		max-height: calc(100vh - 58px);
 	}
-
-
 </style>
