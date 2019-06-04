@@ -30,7 +30,7 @@ export default {
 			enable: false
 		},
 		shape: {
-			type: ["circle", "edge", "polygon", "star"]
+			type: ["circle", "polygon"]
 		},
 		move: {
 			speed: 1,
@@ -60,7 +60,7 @@ export default {
 		modes: {
 			bubble: {
 				distance: 50,
-				size: 10,
+				size: 20,
 				duration: 2,
 				opacity: 0.3,
 			},
