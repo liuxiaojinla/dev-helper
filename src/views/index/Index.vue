@@ -86,7 +86,7 @@ export default {
 		transform: translate(0, 0);
 		overflow-y: auto;
 		height: calc(100vh - 58px);
-		flex: 1 0 auto;
 		overflow-x: hidden;
+		flex: 1 1 auto;
 	}
 </style>
