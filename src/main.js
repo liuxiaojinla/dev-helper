@@ -5,6 +5,9 @@ import store from './store';
 import './plugins/iview';
 import './plugins/vuejs-plugin';
 
+import './app.less';
+import './animate.css';
+
 Vue.config.productionTip = false;
 
 window.IS_DEV = process.env.NODE_ENV !== 'production';

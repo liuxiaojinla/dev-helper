@@ -121,8 +121,9 @@ export default {
 				});
 			} else if (type === 'update-not-available') {
 				sys.showModal({
+					icon: 'info',
 					content: '当前版本已是最新！',
-					showCancel: false
+					showCancel: true,
 				});
 			} else if (type === 'download-progress') {
 				this.$Loading.update(res.percent);
@@ -228,48 +229,16 @@ export default {
 </script>
 
 <style>
-	body, html {
-		/*background-color: transparent;*/
-		-webkit-user-select: none;
-		color: white;
-	}
-
-	.ivu-layout-footer {
-		background-color: rgba(0, 0, 0, 0.1) !important;
-	}
-
-	.ivu-modal-confirm-body {
-		word-wrap: break-word;
-		max-height: 400px;
-		overflow-y: auto;
-	}
-
-	.particles-js-canvas-el {
-		position: fixed;
-		left: 0;
-		top: 0;
-		pointer-events: none;
-		z-index: 0;
-	}
-
 	.ivu-modal-mask {
 		height: calc(100vh - 10px);
 		margin: 5px;
 		border-radius: 5px;
-	}
-
-	Form {
-		max-width: 560px;
 	}
 </style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 	.app-layout {
-		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-
 		position: relative;
 		overflow: hidden;
 		height: calc(100vh - 10px);
