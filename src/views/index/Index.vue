@@ -72,6 +72,7 @@ export default {
 		height: calc(100vh - 58px);
 		background-color: transparent;
 		flex: 0 0 138px;
+		color: inherit;
 	}
 
 	.nav .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {

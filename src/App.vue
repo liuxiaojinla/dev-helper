@@ -1,5 +1,5 @@
 <template>
-	<Layout class="app-layout" id="app-layout">
+	<Layout class="app-layout" id="app-layout" :style="appStyle">
 		<Header class="app-layout-header">
 			<div class="app-layout-header-left" @dblclick="onMax">
 				<Icon type="ios-bug" size="24" style="color: #19be6b"/>
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import setting from './data/setting';
 import {ipcRenderer} from 'electron';
 import particlesConfig from "./particles.config";
 
@@ -87,6 +88,9 @@ export default {
 			isClosable: win.isClosable(),
 			isDev: IS_DEV,
 			isIn: true,
+
+			backgroundImage: setting.getValue('backgroundImage'),
+			foregroundColor: setting.getValue('color'),
 		}
 	},
 	computed: {
@@ -106,6 +110,13 @@ export default {
 				};
 			}
 		},
+		appStyle() {
+			const result = {
+				'backgroundImage': `url(${this.backgroundImage})`,
+			};
+			if (this.foregroundColor) result.color = 'white';
+			return result;
+		}
 	},
 	mounted() {
 		require('particles.js');
@@ -158,6 +169,10 @@ export default {
 		this.isAlwaysOnTop = sys.getStorage('isAlwaysOnTop', false);
 		win.setAlwaysOnTop(this.isAlwaysOnTop === 'true');
 		this.isAlwaysOnTop = win.isAlwaysOnTop();
+
+		// 监听背景图片被更新
+		this.$on('update.background.image', (url) => this.backgroundImage = url);
+		this.$on('update.color', (color) => this.foregroundColor = color);
 	},
 	methods: {
 		isCanBack() {
