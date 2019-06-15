@@ -271,7 +271,7 @@ export default {
 
 	.app-layout::before {
 		content: '';
-		filter: blur(10px);
+		filter: blur(5px);
 		position: absolute;
 		left: 0;
 		right: 0;
