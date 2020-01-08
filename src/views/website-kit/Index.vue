@@ -1,9 +1,8 @@
 <template>
 	<Row class="website-kit">
-		<Col :xs="12" :sm="8" :md="6" :lg="3" v-for="item in actions" @click.native="onHandle(item)" :key="item.title">
+		<Col :xs="8" :sm="8" :md="6" :lg="3" v-for="item in actions" @click.native="onHandle(item)" :key="item.title">
 			<p class="icon-wrapper">
 				<Icon :custom="item.icon" size="72"/>
-				<span class="tips" v-show="item.status">运行中</span>
 			</p>
 			<p class="action-title">{{item.title}}</p>
 			<p class="action-title">

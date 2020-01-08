@@ -21,8 +21,8 @@ import {ipcRenderer} from 'electron';
 import ACTION_LIST from '../../data/actions';
 import AutoDeployment from '../auto-deployment/Index';
 import WebsiteKit from '../website-kit/Index';
-import Action from './Action';
-import ActionGroup from './ActionGroup';
+import Action from '../../components/Action';
+import ActionGroup from '../../components/ActionGroup';
 import Setting from './Setting';
 
 const iconPrefixCls = 'ivu-icon';

@@ -14,14 +14,13 @@ export default [
 		name: 'website-kit',
 		icon: 'md-power',
 		page: 'website-kit',
-		// page: 'Action',
 		options: {}
 	},
 	{
 		title: '常用工具',
 		name: 'util',
 		icon: 'ios-bulb',
-		page: 'Action',
+		page: 'action',
 		options: {
 			actions: [
 				{

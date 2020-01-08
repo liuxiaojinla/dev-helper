@@ -29,5 +29,4 @@ function init() {
 export default {
 	add() {
 	},
-
 };

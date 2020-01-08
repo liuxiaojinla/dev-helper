@@ -9,34 +9,6 @@ const isDev = process.env.NODE_ENV !== 'production';
 export default new Router({
 	mode: isDev ? 'history' : 'hash',
 	base: process.env.BASE_URL,
-	scrollBehavior(to, from, savedPosition) {
-		if (savedPosition) {
-			// savedPosition is only available for popstate navigations.
-			return savedPosition
-		} else {
-			const position = {};
-			// new navigation.
-			// scroll to anchor by returning the selector
-			if (to.hash) {
-				position.selector = to.hash
-			}
-
-			// 如果meta中有scrollTop
-			if (to.matched.some(m => m.meta.scrollToTop)) {
-				// cords will be used if no selector is provided,
-				// or if the selector didn't match any element.
-				position.x = 0;
-				position.y = 0;
-			}
-
-			// if the returned position is falsy or an empty object,
-			// will retain current scroll position.
-			return position
-		}
-	},
-	exclude: [
-		'AutoDeploymentDetail'
-	],
 	routes: [
 		{
 			path: '/',
@@ -87,49 +59,49 @@ export default new Router({
 			}
 		},
 		{
-			path: '/hosts',
-			name: 'hosts',
-			component: () => import(/* webpackChunkName: "util" */ './views/index/Hosts.vue'),
+			path: '/util/hosts',
+			name: 'util.hosts',
+			component: () => import(/* webpackChunkName: "util" */ './views/util/Hosts.vue'),
 			meta: {
 				title: 'HOSTS文件'
 			}
 		},
 		{
-			path: '/time',
-			name: 'time',
-			component: () => import(/* webpackChunkName: "util" */ './views/index/Time.vue'),
+			path: '/util/time',
+			name: 'util.time',
+			component: () => import(/* webpackChunkName: "util" */ './views/util/Time.vue'),
 			meta: {
 				title: '时间戳'
 			}
 		},
 		{
-			path: '/weapp_transform',
-			name: 'weapp_transform',
+			path: '/util/weapp_transform',
+			name: 'util.weapp_transform',
 			component: () => import(/* webpackChunkName: "util" */ './views/weapp-transform/Index.vue'),
 			meta: {
 				title: '微信小程序转换助手'
 			}
 		},
 		{
-			path: '/weapp_transform/add',
-			name: 'weapp_transform.add',
+			path: '/util/weapp_transform/add',
+			name: 'util.weapp_transform.add',
 			component: () => import(/* webpackChunkName: "util" */ './views/weapp-transform/Add.vue'),
 			meta: {
 				title: '微信小程序转换助手'
 			}
 		},
 		{
-			path: '/logistics',
-			name: 'logistics',
-			component: () => import(/* webpackChunkName: "util" */ './views/index/Logistics.vue'),
+			path: '/util/logistics',
+			name: 'util.logistics',
+			component: () => import(/* webpackChunkName: "util" */ './views/util/Logistics.vue'),
 			meta: {
 				title: '物流查询'
 			}
 		},
 		{
-			path: '/IntelliJIDEA',
-			name: 'IntelliJIDEA',
-			component: () => import(/* webpackChunkName: "util" */ './views/index/IntelliJIDEA.vue'),
+			path: '/util/IntelliJIDEA',
+			name: 'util.IntelliJIDEA',
+			component: () => import(/* webpackChunkName: "util" */ './views/util/IntelliJIDEA.vue'),
 			meta: {
 				title: 'IntelliJ IDEA注册码'
 			}
@@ -137,7 +109,7 @@ export default new Router({
 		{
 			path: '/request',
 			name: 'request',
-			component: () => import(/* webpackChunkName: "util" */ './views/index/Request.vue'),
+			component: () => import(/* webpackChunkName: "util" */ './views/util/Request.vue'),
 			meta: {
 				title: '请求器'
 			}
@@ -186,5 +158,33 @@ export default new Router({
 			},
 			props: true
 		},
-	]
+	],
+	scrollBehavior(to, from, savedPosition) {
+		if (savedPosition) {
+			// savedPosition is only available for popstate navigations.
+			return savedPosition
+		} else {
+			const position = {};
+			// new navigation.
+			// scroll to anchor by returning the selector
+			if (to.hash) {
+				position.selector = to.hash
+			}
+
+			// 如果meta中有scrollTop
+			if (to.matched.some(m => m.meta.scrollToTop)) {
+				// cords will be used if no selector is provided,
+				// or if the selector didn't match any element.
+				position.x = 0;
+				position.y = 0;
+			}
+
+			// if the returned position is falsy or an empty object,
+			// will retain current scroll position.
+			return position
+		}
+	},
+	exclude: [
+		'AutoDeploymentDetail'
+	],
 })
