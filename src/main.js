@@ -7,6 +7,10 @@ import './plugins/sys-vue-iview-plugin';
 import './app.less';
 import './animate.css';
 
+const fs = require('fs');
+const nodeUtil = require('util');
+const writeFile = nodeUtil.promisify(fs.writeFile);
+
 Vue.config.productionTip = false;
 
 window.IS_DEV = process.env.NODE_ENV !== 'production';
@@ -23,4 +27,6 @@ window.app = new Vue({
 
 process.on('unhandledRejection', error => {
 	console.error(error)
+
+	writeFile('00.txt', JSON.stringify(error));
 });

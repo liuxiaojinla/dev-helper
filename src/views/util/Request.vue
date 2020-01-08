@@ -68,7 +68,7 @@ class Request {
 			});
 
 			fetch(this.config.url).then(response => {
-				console.debug(response);
+				// console.debug(response);
 				this.currentExecCount--;
 				update({currentExecCount: this.currentExecCount});
 				onRequest(response);
@@ -119,7 +119,7 @@ export default {
 					}, 1000);
 				};
 				currentRequest.onRequestCallback = (res) => {
-					console.log(res);
+					// console.log(res);
 				};
 				currentRequest.send();
 			}

@@ -8,6 +8,7 @@ const path = require('path');
 
 const feedUrl = `http://xx5.51daoteng.com/win32`; // 更新包位置
 const isDevelopment = process.env.NODE_ENV !== 'production';
+// const isDevelopment = false;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,10 +18,10 @@ const getWindow = function() {
 
 	// Create the browser window.
 	win = new BrowserWindow({
-		// width: 320,
-		// height: 500,
 		width: isDevelopment ? 1080 : 420,
-		height: isDevelopment ? 560 : 520,
+		height: isDevelopment ? 560 : 560,
+		// width: 420,
+		// height: 560,
 
 		minWidth: 420,
 		minHeight: 560,
@@ -29,7 +30,7 @@ const getWindow = function() {
 		transparent: true,
 		frame: isDevelopment,
 		minimizable: true,
-		maximizable: true,
+		maximizable: false,
 		closable: true,
 		hasShadow: true,
 		isShowMoreMenu: false,
@@ -85,6 +86,7 @@ app.on('activate', () => {
 // 创建单实例
 (function() {
 	if (isDevelopment) return;
+
 	const lock = app.requestSingleInstanceLock();
 	if (!lock) {
 		app.quit();
@@ -183,8 +185,7 @@ app.on('ready', async () => {
 	});
 
 	// 自动更新
-	const checkForUpdates = initCheckForUpdates();
-
+	// const checkForUpdates = initCheckForUpdates();
 
 	// 循环检查新版本
 	// if (!isDevelopment) {
@@ -193,7 +194,7 @@ app.on('ready', async () => {
 	// }
 
 	// 主进程监听渲染进程传来的信息
-	ipcMain.on('app.update', checkForUpdates);
+	// ipcMain.on('app.update', checkForUpdates);
 });
 
 // Exit cleanly on request from parent process in development mode.

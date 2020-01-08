@@ -13,14 +13,14 @@
 			<span class="app-header-title">{{title}}</span>
 		</div>
 		<div class="app-header-right">
-			<div class="app-header-action-btn" @click.capture.stop="onClose">
-				<Icon type="md-close" size="24" v-show="isClosable"/>
+			<div class="app-header-action-btn" @click.capture.stop="onClose" v-show="isClosable">
+				<Icon type="md-close" size="24"/>
 			</div>
-			<div class="app-header-action-btn" @click.capture.stop="onMax">
-				<Icon :type="maxIcon" size="19" v-show="isMaximizable"/>
+			<div class="app-header-action-btn" @click.capture.stop="onMax" v-show="isMaximizable">
+				<Icon :type="maxIcon" size="19"/>
 			</div>
-			<div class="app-header-action-btn" @click.capture.stop="onMinni">
-				<Icon type="md-remove" size="24" v-show="isMinimizable"/>
+			<div class="app-header-action-btn" @click.capture.stop="onMinni" v-show="isMinimizable">
+				<Icon type="md-remove" size="24"/>
 			</div>
 			<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMoreMenuSelect" style="-webkit-app-region: no-drag">
 				<div class="layout-action-btn">
@@ -68,7 +68,7 @@ export default {
 			isAlwaysOnTop: win.isAlwaysOnTop(),
 
 			isMaximize: false,
-			isMaximizable: win.isMaximizable() || true,
+			isMaximizable: win.isMaximizable(),
 			isMinimizable: win.isMinimizable(),
 			isClosable: win.isClosable(),
 

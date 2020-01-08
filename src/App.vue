@@ -130,7 +130,7 @@ export default {
 		overflow: hidden;
 		height: calc(100vh - 10px);
 		margin: 5px;
-		box-shadow: 0 0 5px #A0A0A0;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 		transform: translate(0, 0);
 
 		background-color: white !important;
