@@ -1,29 +1,26 @@
 <template>
 	<Header class="app-header">
 		<div class="app-header-left" @dblclick="onMax">
-			<Icon type="ios-bug" size="24" style="color: #19be6b"/>
-			{{title}}
-		</div>
-		<div class="app-header-center" @dblclick="onMax">
-			<div class="app-header-action-btn" :class="{'disabled':!isCanBack}">
-				<Icon type="ios-arrow-back" size="24" @click.capture.stop="onBack"/>
+			<div class="app-header-action-btn" :class="{'disabled':!isCanBacked}">
+				<Icon type="md-arrow-back" size="24" @click.capture.stop="onBack"/>
 			</div>
-			<div class="app-header-action-btn" :class="{'disabled':!isCanForward}" @click.capture.stop="onForward">
-				<Icon type="ios-arrow-forward" size="24"/>
-			</div>
+			<!--			<div class="app-header-action-btn" :class="{'disabled':!isCanForward()}" @click.capture.stop="onForward">-->
+			<!--				<Icon type="ios-arrow-forward" size="24"/>-->
+			<!--			</div>-->
 			<div class="app-header-action-btn" v-if="isDev" @click.capture.stop="onRefresh">
 				<Icon type="md-refresh" size="24"/>
 			</div>
+			<span class="app-header-title">{{title}}</span>
 		</div>
 		<div class="app-header-right">
 			<div class="app-header-action-btn" @click.capture.stop="onClose">
-				<Icon type="ios-close" size="24" v-show="isClosable"/>
+				<Icon type="md-close" size="24" v-show="isClosable"/>
 			</div>
 			<div class="app-header-action-btn" @click.capture.stop="onMax">
-				<Icon :type="maxIcon" size="16" v-show="isMaximizable" style="width: 24px;height: 24px;text-align: center;line-height: 24px"/>
+				<Icon :type="maxIcon" size="19" v-show="isMaximizable"/>
 			</div>
 			<div class="app-header-action-btn" @click.capture.stop="onMinni">
-				<Icon type="ios-remove" size="24" v-show="isMinimizable"/>
+				<Icon type="md-remove" size="24" v-show="isMinimizable"/>
 			</div>
 			<Dropdown trigger="click" placement="bottom-end" :transfer="true" @on-click="onMoreMenuSelect" style="-webkit-app-region: no-drag">
 				<div class="layout-action-btn">
@@ -57,33 +54,42 @@
 </template>
 
 <script>
+import {ipcRenderer} from 'electron';
+
 export default {
 	name: "AppHeader",
 	data() {
 		const win = this.$options.win = sys.getCurrentWindow();
 		return {
+			title: '',
+
+			isDev: IS_DEV,
 			isDebug: win.webContents.isDevToolsOpened(),
 			isAlwaysOnTop: win.isAlwaysOnTop(),
 
-			title: '',
 			isMaximize: false,
 			isMaximizable: win.isMaximizable() || true,
 			isMinimizable: win.isMinimizable(),
 			isClosable: win.isClosable(),
+
+			isCanBack: false
 		}
 	},
 	computed: {
 		maxIcon() {
-			return this.isMaximize ? 'ios-browsers-outline' : 'ios-square-outline';
+			return this.isMaximize ? 'md-contract' : 'md-square-outline';
 		},
-		isCanBack() {
-			return this.$router.history.current.fullPath !== '/';
+		isCanBacked() {
+			// console.log(this.$router)
+			return this.$route.fullPath !== '/'; //  && this.isCanBack
 		},
 		isCanForward() {
 			return true;
 		},
 	},
 	created() {
+		this.$nextTick(this.updateTitle);
+
 		const win = this.$options.win;
 		win.on('maximize', () => this.isMaximize = true);
 		win.on('unmaximize', () => this.isMaximize = false);
@@ -94,7 +100,7 @@ export default {
 	},
 	methods: {
 		onBack() {
-			if (!this.isCanBack) return;
+			if (!this.isCanBacked) return;
 			this.$router.go(-1);
 		},
 		onForward() {
@@ -138,21 +144,31 @@ export default {
 			// this.$options.win.close();
 			this.$options.win.hide();
 		},
+		updateTitle() {
+			this.title = this.$route.meta.title;
+		},
+	},
+	watch: {
+		'$route'(to, from) {
+			this.isCanBack = to.path !== '/';
+			this.$nextTick(this.updateTitle);
+		}
 	}
 }
 </script>
 
 <style scoped>
-	.app-header {
+	.ivu-layout .ivu-layout-header.app-header {
 		display: flex;
 		z-index: 10;
+		height: 44px;
 		-webkit-app-region: drag;
 	}
 
 	.app-header > .app-header-left,
-	.app-header > .app-header-center,
 	.app-header > .app-header-right {
-		padding: 0 5px;
+		padding: 9px 5px;
+		line-height: 24px;
 		white-space: nowrap;
 		overflow: hidden;
 	}
@@ -160,49 +176,43 @@ export default {
 	.app-header > .app-header-left {
 		font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 		font-size: 16px;
-		line-height: 48px;
 		text-overflow: ellipsis;
-		flex: 0 0 140px;
-	}
-
-	.app-header > .app-header-center {
-		/*width: 84px;*/
-		flex-grow: 1;
+		flex: 1 1 140px;
 	}
 
 	.app-header > .app-header-right {
-		/*width: 156px;*/
+		flex: 1 1 138px;
 	}
 
 	.app-header > .app-header-right > div {
 		float: right;
 	}
 
-	.app-header .app-header-action-btn {
-		display: inline-block;
-		/*padding-left: 10px;*/
-		/*padding-right: 10px;*/
+	.app-header-title {
+		margin: 0 10px;
+	}
 
-		line-height: 48px;
+	.app-header-action-btn {
+		display: inline-block;
+
 		transition: all 0.1s;
 
 		user-select: none;
 		-webkit-app-region: no-drag;
 	}
 
-	.app-header .app-header-action-btn:not(.disabled):active {
+	.app-header-action-btn .ivu-icon {
+		line-height: 24px;
+		vertical-align: bottom;
+	}
+
+	.app-header-action-btn:active {
 		opacity: 0.8;
 	}
 
-	.app-header .app-header-action-btn.disabled {
-		opacity: 0.6;
+	.app-header-action-btn.disabled {
+		opacity: 0.2;
 	}
 
-	.app-header > .app-header-action-btn > .ivu-icon {
-		vertical-align: middle;
-	}
 
-	.app-header > .app-header-action-btn:active {
-		opacity: 0.3;
-	}
 </style>

@@ -18,7 +18,7 @@ const uniqueId = util.uniqueIdor('fw_');
  */
 function makeWatcher(projectId) {
 	if (!watchers.hasOwnProperty(projectId)) {
-		watchers[projectId] = sys.getStorageObject('filewatch.watcher.' + projectId, {
+		watchers[projectId] = sys.getStorage('filewatch.watcher.' + projectId, {
 			files: []
 		});
 		watchers[projectId].files = watchers[projectId].files.map(item => {
@@ -34,7 +34,7 @@ function makeWatcher(projectId) {
  * @param {string} projectId
  */
 function saveWatcher(projectId) {
-	sys.setStorageObject('filewatch.watcher.' + projectId, {
+	sys.setStorage('filewatch.watcher.' + projectId, {
 		files: watchers[projectId].files
 	});
 }
@@ -55,7 +55,7 @@ const getProjectList = (function() {
 	let list = null;
 	return () => {
 		if (list === null) {
-			list = sys.getStorageObject('filewatch.list', []).map(function(item) {
+			list = sys.getStorage('filewatch.list', []).map(function(item) {
 				item.status = 0;
 				if (!item.targetpath) item.targetpath = '';
 				return item;
@@ -102,7 +102,7 @@ function saveProject() {
 	const data = getProjectList().map(function(item) {
 		return item;
 	});
-	sys.setStorageObject('filewatch.list', data);
+	sys.setStorage('filewatch.list', data);
 }
 
 /**

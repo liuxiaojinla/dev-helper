@@ -1,5 +1,5 @@
 <template>
-	<Form ref="form" :model="form" :rules="rules" :label-width="80">
+	<Form ref="form" :model="form" :rules="rules" label-position="top">
 		<FormItem prop="order_sn" label="订单号">
 			<Input type="text" v-model="form.order_sn" placeholder="请输入订单号"/>
 		</FormItem>
@@ -102,7 +102,7 @@ export default {
 
 <style scoped>
 	Form {
-		padding: 15px;
+		margin-top: 8px;
 	}
 
 	.time {

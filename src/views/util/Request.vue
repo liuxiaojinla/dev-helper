@@ -1,5 +1,5 @@
 <template>
-	<Form>
+	<Form label-position="top">
 		<FormItem label="请求地址">
 			<Input type="text" v-model="form.url" search :enter-button="isRequesting?'Stop':'Send'" placeholder="请输入请求地址" @on-search="onSubmit"/>
 		</FormItem>
@@ -130,7 +130,7 @@ export default {
 
 <style scoped>
 	Form {
-		padding: 15px;
+		margin-top: 8px;
 	}
 
 	.form-mini-block {

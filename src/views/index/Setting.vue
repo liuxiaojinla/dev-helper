@@ -1,5 +1,5 @@
 <template>
-	<Form :label-width="80">
+	<Form>
 		<FormItem label="开机自启动">
 			<i-switch v-model="self_start" @on-change="onSelfStartChange"/>
 		</FormItem>
@@ -78,7 +78,7 @@ export default {
 			this.$root.$children[0].$emit('update.background.image', newValue);
 		},
 		'form.color': function(newValue) {
-			console.log(newValue,this.$root);
+			console.log(newValue, this.$root);
 			this.$root.$children[0].$emit('update.color', newValue);
 		}
 	}
@@ -87,6 +87,6 @@ export default {
 
 <style scoped>
 	Form {
-		padding: 15px;
+		margin-top: 8px;
 	}
 </style>

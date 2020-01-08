@@ -1,28 +1,40 @@
 <template>
 	<div class="time">
-		<Input search enter-button="复制" v-model="currentTime" @on-search="onCopy('currentTime')" readonly>
-			<span slot="prepend">当前时间戳</span>
-		</Input>
+		<div class="item">
+			<Input search enter-button="复制" v-model="currentTime" @on-search="onCopy('currentTime')" readonly>
+				<span slot="prepend">当前时间戳</span>
+			</Input>
+		</div>
 
-		<Input search enter-button="复制" v-model="datetime" @on-search="onTransform" clearable>
-			<span slot="prepend">日期转时间戳</span>
-		</Input>
+		<div class="item">
+			<Input search enter-button="复制" v-model="datetime" @on-search="onTransform" clearable>
+				<span slot="prepend">日期转时间戳</span>
+			</Input>
+		</div>
 
-		<Input search enter-button="复制" v-model="todayStartTime" @on-search="onCopy('todayStartTime')" readonly>
-			<span slot="prepend">今天开始时间戳</span>
-		</Input>
+		<div class="item">
+			<Input search enter-button="复制" v-model="todayStartTime" @on-search="onCopy('todayStartTime')" readonly>
+				<span slot="prepend">今天开始时间戳</span>
+			</Input>
+		</div>
 
-		<Input search enter-button="复制" v-model="todayEndTime" @on-search="onCopy('todayEndTime')" readonly>
-			<span slot="prepend">今天结束时间戳</span>
-		</Input>
+		<div class="item">
+			<Input search enter-button="复制" v-model="todayEndTime" @on-search="onCopy('todayEndTime')" readonly>
+				<span slot="prepend">今天结束时间戳</span>
+			</Input>
+		</div>
 
-		<Input search enter-button="复制" v-model="yesterdayStartTime" @on-search="onCopy('yesterdayStartTime')" readonly>
-			<span slot="prepend">昨天开始时间戳</span>
-		</Input>
+		<div class="item">
+			<Input search enter-button="复制" v-model="yesterdayStartTime" @on-search="onCopy('yesterdayStartTime')" readonly>
+				<span slot="prepend">昨天开始时间戳</span>
+			</Input>
+		</div>
 
-		<Input search enter-button="复制" v-model="yesterdayEndTime" @on-search="onCopy('yesterdayEndTime')" readonly>
-			<span slot="prepend">昨天结束时间戳</span>
-		</Input>
+		<div class="item">
+			<Input search enter-button="复制" v-model="yesterdayEndTime" @on-search="onCopy('yesterdayEndTime')" readonly>
+				<span slot="prepend">昨天结束时间戳</span>
+			</Input>
+		</div>
 	</div>
 </template>
 
@@ -94,11 +106,10 @@ export default {
 
 <style scoped>
 	.time {
-		margin: 16px;
-		max-width: 560px;
+		margin-top: 8px;
 	}
 
-	.col {
-		margin-bottom: 16px;
+	.item {
+		margin-bottom: 8px;
 	}
 </style>

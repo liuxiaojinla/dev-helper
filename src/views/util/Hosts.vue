@@ -1,7 +1,7 @@
 <template>
-	<Form>
+	<Form label-position="top">
 		<FormItem>
-			<Input type="textarea" :rows="12" v-model="data" readonly="" ref="input"/>
+			<Input type="textarea" :rows="16" v-model="data" readonly="" ref="input" class="no-wrap"/>
 		</FormItem>
 		<FormItem class="form-footer">
 			<Button type="primary">保存</Button>
@@ -30,7 +30,9 @@ export default {
 	},
 	created() {
 		console.log(hostsPath);
-		readFile(hostsPath, {encoding: 'utf8'}).then(res => {
+		readFile(hostsPath, {
+			encoding: 'utf8'
+		}).then(res => {
 			this.data = res;
 		});
 	},
@@ -46,10 +48,16 @@ export default {
 
 <style scoped>
 	Form {
-		padding: 16px;
+		margin-top: 8px;
 	}
 
 	.form-footer Button:not(:first-child) {
-		margin-left: 16px;
+		margin-left: 8px;
+	}
+
+	.no-wrap >>> textarea {
+		word-wrap: normal;
+		white-space: pre;
+		padding-right: 15px;
 	}
 </style>

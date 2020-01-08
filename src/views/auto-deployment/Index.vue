@@ -1,56 +1,54 @@
 <template>
 	<Layout class="layout">
 		<Content class="content">
-			<Row v-show="data.length" :gutter="16">
-				<Col :md="12" :lg="8" v-for="(item,index) in data" :key="index">
-					<Card style="margin-bottom: 16px">
-						<p slot="title">{{item.title}}</p>
-						<p slot="extra">共<span style="color: #19be6b">{{item.count}}</span>个文件</p>
+			<template v-show="data.length">
+				<Card v-for="(item,index) in data" :key="index" style="margin-bottom: 16px">
+					<p slot="title">{{item.title}}</p>
+					<p slot="extra">共<span style="color: #19be6b">{{item.count}}</span>个文件</p>
 
-						<div class="card-body">
-							<p class="path">监听目录：{{item.path}}</p>
-							<p class="path">目标目录：{{item.targetpath||'未设置'}}</p>
-							<p class="path">上传命令：{{item.uploader_cmd||'未设置'}}</p>
-						</div>
+					<div class="card-body">
+						<p class="path">监听目录：{{item.path}}</p>
+						<p class="path">目标目录：{{item.targetpath||'未设置'}}</p>
+						<p class="path">上传命令：{{item.uploader_cmd||'未设置'}}</p>
+					</div>
 
-						<Row class="action">
-							<Col span="6">
-								<Tooltip content="重新设置目录" style="color: #ff9900">
-									<Dropdown @on-click="onSelectPath(item,$event)">
-										<Icon type="ios-folder" size="18"/>
-										<DropdownMenu slot="list">
-											<DropdownItem name="targetpath">
-												目标目录
-											</DropdownItem>
-											<DropdownItem name="uploader_cmd">
-												上传命令
-											</DropdownItem>
-										</DropdownMenu>
-									</Dropdown>
-								</Tooltip>
-							</Col>
-							<Col span="6">
-								<Tooltip content="删除项目">
-									<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(item)"></Icon>
-								</Tooltip>
-							</Col>
-							<Col span="6">
-								<Tooltip content="启动/终止监听目录">
-									<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(item)" v-if="item.status"></Icon>
-									<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(item)" v-else></Icon>
-								</Tooltip>
-							</Col>
-							<Col span="6">
-								<Tooltip content="查看项目文件监听详情" style="color: #2db7f5">
-									<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
-											:to="{name:'auto-deployment.detail',query:{id:item.id}}"></router-link>
-								</Tooltip>
-							</Col>
-						</Row>
+					<Row class="action">
+						<Col span="6">
+							<Tooltip content="重新设置目录" style="color: #ff9900">
+								<Dropdown @on-click="onSelectPath(item,$event)">
+									<Icon type="ios-folder" size="18"/>
+									<DropdownMenu slot="list">
+										<DropdownItem name="targetpath">
+											目标目录
+										</DropdownItem>
+										<DropdownItem name="uploader_cmd">
+											上传命令
+										</DropdownItem>
+									</DropdownMenu>
+								</Dropdown>
+							</Tooltip>
+						</Col>
+						<Col span="6">
+							<Tooltip content="删除项目">
+								<Icon type="ios-trash-outline" style="color: #ed4014" size="24" @click="onDelete(item)"></Icon>
+							</Tooltip>
+						</Col>
+						<Col span="6">
+							<Tooltip content="启动/终止监听目录">
+								<Icon type="ios-square" style="color: #ed4014" size="24" @click="onToggle(item)" v-if="item.status"></Icon>
+								<Icon type="ios-play" style="color: #19be6b" size="24" @click="onToggle(item)" v-else></Icon>
+							</Tooltip>
+						</Col>
+						<Col span="6">
+							<Tooltip content="查看项目文件监听详情" style="color: #2db7f5">
+								<router-link tag="Icon" class="ivu-icon-ios-eye" style="font-size: 24px"
+										:to="{name:'auto-deployment.detail',query:{id:item.id}}"></router-link>
+							</Tooltip>
+						</Col>
+					</Row>
 
-					</Card>
-				</Col>
-			</Row>
+				</Card>
+			</template>
 			<div class="empty-tips" v-show="!data.length">
 				暂没有创建任何项目！
 			</div>
@@ -120,7 +118,7 @@ export default {
 
 <style scoped>
 	.layout {
-		position: fixed;
+		position: absolute;
 		left: 0;
 		top: 0;
 		right: 0;

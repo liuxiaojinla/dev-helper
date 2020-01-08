@@ -41,10 +41,11 @@ export default {
 
 <style scoped>
 	.action {
+		margin-top: 8px;
 	}
 
 	.action >>> .ivu-col {
-		padding: 8px;
+		/*padding: 8px;*/
 		cursor: pointer;
 		text-align: center;
 	}

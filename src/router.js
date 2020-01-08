@@ -3,7 +3,12 @@ import Router from 'vue-router';
 import Webview from './components/Webview.vue';
 import Setting from './views/index/Setting.vue';
 import Action from "./components/Action";
+import ActionGroup from "./components/ActionGroup";
+
 import utilList from "./data/util-list";
+import docList from "./data/doc-list";
+import encryptList from "./data/encrypt-list";
+
 
 Vue.use(Router);
 const isDev = process.env.NODE_ENV !== 'production';
@@ -14,7 +19,6 @@ export default new Router({
 		{
 			path: '/',
 			name: 'home',
-			alias: 'util',
 			component: Action,
 			props: {
 				actions: utilList
@@ -112,6 +116,17 @@ export default new Router({
 			}
 		},
 		{
+			path: '/encrypt',
+			name: 'encrypt',
+			component: Action,
+			props: {
+				actions: encryptList
+			},
+			meta: {
+				title: '加密/解密'
+			}
+		},
+		{
 			path: '/encrypt/url',
 			name: 'encrypt.url',
 			component: () => import(/* webpackChunkName: "encrypt" */ './views/encrypt/Url.vue'),
@@ -141,6 +156,17 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "encrypt" */ './views/encrypt/Sha1.vue'),
 			meta: {
 				title: 'SHA1加密'
+			}
+		},
+		{
+			path: '/docs',
+			name: 'docs',
+			component: ActionGroup,
+			props: {
+				actions: docList
+			},
+			meta: {
+				title: '常用文档'
 			}
 		},
 		{

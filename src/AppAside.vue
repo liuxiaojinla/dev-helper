@@ -1,5 +1,9 @@
 <template>
-	<Sider class="app-aside" width="140" hide-trigger collapsible :collapsed-width="78">
+	<Sider class="app-aside" width="120" hide-trigger collapsible :collapsed-width="78">
+		<div class="app-title">
+			<Icon type="ios-bug" size="24" class="app-logo-icon"/>
+			<span>开发小助手</span>
+		</div>
 		<Menu :active-name="0" theme="dark" width="auto" @on-select="onNavChange" class="nav">
 			<MenuItem v-for="(group,index) in data" :key="group.name" :name="index">
 				<span :class="iconClasses(group.icon)" class="app-aside-icon"/>
@@ -57,5 +61,23 @@ export default {
 		font-size: 20px;
 		line-height: 13px;
 		vertical-align: middle;
+	}
+
+	.app-title {
+		color: white;
+		padding: 10px 8px;
+		line-height: 24px;
+
+		-webkit-app-region: drag;
+	}
+
+	.app-logo-icon {
+		color: #19be6b;
+		vertical-align: bottom;
+	}
+
+	.app-aside .ivu-menu-vertical .ivu-menu-item {
+		padding-left: 8px;
+		padding-right: 8px;
 	}
 </style>

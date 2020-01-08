@@ -3,9 +3,9 @@
 
 		<AppAside/>
 
-		<Layout :style="{marginLeft: '140px'}">
-			<Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>
-			<Content :style="{padding: '0 16px 16px'}">
+		<Layout :style="{marginLeft: '120px'}">
+			<AppHeader/>
+			<Content class="app-content">
 				<transition :name="transitionName" v-bind="transitionClass" mode="out-in">
 					<keep-alive :exclude="$router.options.exclude" :max="10">
 						<router-view/>
@@ -21,18 +21,16 @@
 import setting from './data/setting';
 import {ipcRenderer} from 'electron';
 import AppAside from "./AppAside";
+import AppHeader from "./AppHeader";
 
 export default {
 	name: 'app',
-	components: {AppAside},
+	components: {AppHeader, AppAside},
 	win: null,
 	data() {
-		const win = this.$options.win = sys.getCurrentWindow();
 		return {
-			transitionName: '',
-
-			isDev: IS_DEV,
 			isIn: true,
+			transitionName: '',
 
 			backgroundImage: setting.getValue('backgroundImage'),
 			foregroundColor: setting.getValue('color'),
@@ -100,24 +98,17 @@ export default {
 		});
 	},
 	created() {
-		this.$nextTick(this.updateTitle);
-
 		// 监听背景图片被更新
 		this.$on('update.background.image', (url) => this.backgroundImage = url);
 		this.$on('update.color', (color) => this.foregroundColor = color);
 	},
-	methods: {
-		updateTitle() {
-			this.title = this.$route.meta.title;
-		},
-	},
+	methods: {},
 	watch: {
 		'$route'(to, from) {
 			const toDepth = to.path.split('/').length;
 			const fromDepth = from.path.split('/').length;
 			this.transitionName = toDepth < fromDepth ? 'transition-out' : 'transition-in';
 			this.isIn = toDepth >= fromDepth;
-			this.$nextTick(this.updateTitle);
 			console.log(location.href);
 		}
 	}
@@ -161,5 +152,11 @@ export default {
 		/*z-index: -1;*/
 		background: inherit;
 		margin: -50px;
+	}
+
+	.app-content {
+		position: relative;
+		padding: 0 8px 8px;
+		overflow-y: auto;
 	}
 </style>

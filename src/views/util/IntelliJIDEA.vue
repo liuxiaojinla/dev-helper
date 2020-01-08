@@ -1,5 +1,5 @@
 <template>
-	<Form>
+	<Form label-position="top">
 		<div class="tips">
 			请复制您的注册码
 			(请加“0.0.0.0 account.jetbrains.com”及““0.0.0.0 www.jetbrains.com””到hosts中屏蔽联网)
@@ -55,6 +55,6 @@ export default {
 	}
 
 	Form {
-		padding: 15px;
+		margin-top: 8px;
 	}
 </style>
