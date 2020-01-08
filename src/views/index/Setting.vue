@@ -1,5 +1,5 @@
 <template>
-	<Form>
+	<Form label-position="top">
 		<FormItem label="开机自启动">
 			<i-switch v-model="self_start" @on-change="onSelfStartChange"/>
 		</FormItem>
