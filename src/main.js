@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import './plugins/iview';
-import './plugins/vuejs-plugin';
+import './plugins/sys-vue-iview-plugin';
 
 import './app.less';
 import './animate.css';

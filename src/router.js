@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Webview from './components/Webview.vue';
-import Home from './views/index/Index.vue';
 import Setting from './views/index/Setting.vue';
+import Action from "./components/Action";
+import utilList from "./data/util-list";
 
 Vue.use(Router);
 const isDev = process.env.NODE_ENV !== 'production';
@@ -13,49 +14,13 @@ export default new Router({
 		{
 			path: '/',
 			name: 'home',
-			component: Home,
+			alias: 'util',
+			component: Action,
+			props: {
+				actions: utilList
+			},
 			meta: {
-				title: '开发小助手'
-			}
-		},
-		{
-			path: '/setting',
-			name: 'setting',
-			component: Setting,
-			meta: {
-				title: '设置'
-			}
-		},
-		{
-			path: '/auto-deployment',
-			name: 'auto-deployment',
-			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Index.vue'),
-			meta: {
-				title: '目录监听器'
-			}
-		},
-		{
-			path: '/auto-deployment/add',
-			name: 'auto-deployment.add',
-			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Add.vue'),
-			meta: {
-				title: '添加监听目录'
-			}
-		},
-		{
-			path: '/auto-deployment/detail',
-			name: 'auto-deployment.detail',
-			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Detail.vue'),
-			meta: {
-				title: '文件变化详情'
-			}
-		},
-		{
-			path: '/website-kit',
-			name: 'website-kit',
-			component: () => import(/* webpackChunkName: "website-kit" */ './views/website-kit/Index.vue'),
-			meta: {
-				title: '网站套件'
+				title: '常用工具'
 			}
 		},
 		{
@@ -107,11 +72,43 @@ export default new Router({
 			}
 		},
 		{
-			path: '/request',
-			name: 'request',
+			path: '/util/request',
+			name: 'util.request',
 			component: () => import(/* webpackChunkName: "util" */ './views/util/Request.vue'),
 			meta: {
 				title: '请求器'
+			}
+		},
+		{
+			path: '/auto-deployment',
+			name: 'auto-deployment',
+			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Index.vue'),
+			meta: {
+				title: '目录监听器'
+			}
+		},
+		{
+			path: '/auto-deployment/add',
+			name: 'auto-deployment.add',
+			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Add.vue'),
+			meta: {
+				title: '添加监听目录'
+			}
+		},
+		{
+			path: '/auto-deployment/detail',
+			name: 'auto-deployment.detail',
+			component: () => import(/* webpackChunkName: "auto-deployment" */ './views/auto-deployment/Detail.vue'),
+			meta: {
+				title: '文件变化详情'
+			}
+		},
+		{
+			path: '/website-kit',
+			name: 'website-kit',
+			component: () => import(/* webpackChunkName: "website-kit" */ './views/website-kit/Index.vue'),
+			meta: {
+				title: '网站套件'
 			}
 		},
 		{
@@ -157,6 +154,14 @@ export default new Router({
 				title: ''
 			},
 			props: true
+		},
+		{
+			path: '/setting',
+			name: 'setting',
+			component: Setting,
+			meta: {
+				title: '设置'
+			}
 		},
 	],
 	scrollBehavior(to, from, savedPosition) {

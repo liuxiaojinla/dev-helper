@@ -2,7 +2,14 @@
 Write your variables here. All available variables can be
 found in https://github.com/iview/iview/blob/2.0/src/styles/custom.less.
 */
-@import '~view-design/dist/styles/iview.css';
+@import '~view-design/src/styles/index.less';
 
 // Here are the variables to cover, such as:
-@primary-color: darkcyan;
+// Color
+//@primary-color: darkcyan;
+
+
+// Background color
+@layout-sider-background: black;
+@menu-dark-title: @layout-sider-background;
+@menu-dark-active-bg: tint(@menu-dark-title, 20%);

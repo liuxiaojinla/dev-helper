@@ -1,15 +1,30 @@
 <template>
 	<Layout class="app-layout" id="app-layout" :style="appStyle">
 
+		<AppAside/>
+
+		<Layout :style="{marginLeft: '140px'}">
+			<Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>
+			<Content :style="{padding: '0 16px 16px'}">
+				<transition :name="transitionName" v-bind="transitionClass" mode="out-in">
+					<keep-alive :exclude="$router.options.exclude" :max="10">
+						<router-view/>
+					</keep-alive>
+				</transition>
+			</Content>
+		</Layout>
+
 	</Layout>
 </template>
 
 <script>
 import setting from './data/setting';
 import {ipcRenderer} from 'electron';
+import AppAside from "./AppAside";
 
 export default {
 	name: 'app',
+	components: {AppAside},
 	win: null,
 	data() {
 		const win = this.$options.win = sys.getCurrentWindow();
@@ -176,13 +191,13 @@ export default {
 }
 </script>
 
-<style>
-	.ivu-modal-mask {
-		height: calc(100vh - 10px);
-		margin: 5px;
-		border-radius: 5px;
-	}
-</style>
+<!--<style>-->
+<!--	.ivu-modal-mask {-->
+<!--		height: calc(100vh - 10px);-->
+<!--		margin: 5px;-->
+<!--		border-radius: 5px;-->
+<!--	}-->
+<!--</style>-->
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -192,6 +207,7 @@ export default {
 		height: calc(100vh - 10px);
 		margin: 5px;
 		box-shadow: 0 0 5px #A0A0A0;
+		transform: translate(0, 0);
 
 		background-color: white !important;
 		/*background: url("./assets/images/bg.jpg");*/
@@ -275,13 +291,5 @@ export default {
 
 	.app-layout-header > .app-layout-action-btn:active {
 		opacity: 0.3;
-	}
-
-	.app-layout-content {
-		position: relative;
-		overflow-x: hidden;
-		overflow-y: auto;
-		transform: translate(0, 0);
-		/*background-color: white;*/
 	}
 </style>

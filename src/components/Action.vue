@@ -24,12 +24,15 @@ export default {
 	computed: {},
 	methods: {
 		onHandle: function(item) {
-			if (item.type === 'page') {
-				this.$router.push(item.detail);
-			} else if (item.type === 'url') {
+			if (item.type === 'url') {
 				shell.openExternal(item.url);
 			} else if (item.type === 'custom') {
 				item.click();
+			} else {
+				const detail = item.detail;
+				if (!detail) return;
+
+				this.$router.push(detail);
 			}
 		},
 	}
@@ -38,7 +41,6 @@ export default {
 
 <style scoped>
 	.action {
-		margin: 16px;
 	}
 
 	.action >>> .ivu-col {

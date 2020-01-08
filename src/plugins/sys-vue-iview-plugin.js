@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import ViewUI from 'view-design';
+// import ViewUI from 'view-design';
 import sys from 'sys-vue-iview-adapter';
 import router from '../router';
 import util from "../libs/util";
