@@ -18,15 +18,15 @@
 	"dependencies": {
 		"archiver": "^3.0.0",
 		"electron-updater": "^4.0.6",
-		"view-design": "^4.0.0",
 		"js-md5": "^0.7.3",
 		"js-sha1": "^0.6.0",
 		"moment": "^2.24.0",
 		"regedit": "^3.0.2",
 		"ssh2-sftp-client": "^2.4.3",
+		"sys-vue-iview-adapter": "^1.2.25",
+		"view-design": "^4.0.0",
 		"vue": "^2.6.10",
 		"vue-router": "^3.0.6",
-		"sys-vue-iview-adapter": "^1.2.25",
 		"vuex": "^3.1.1"
 	},
 	"devDependencies": {

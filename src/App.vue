@@ -29,14 +29,8 @@ export default {
 	data() {
 		const win = this.$options.win = sys.getCurrentWindow();
 		return {
-			isDebug: win.webContents.isDevToolsOpened(),
-			isAlwaysOnTop: win.isAlwaysOnTop(),
 			transitionName: '',
-			title: '',
-			isMaximize: false,
-			isMaximizable: win.isMaximizable() || true,
-			isMinimizable: win.isMinimizable(),
-			isClosable: win.isClosable(),
+
 			isDev: IS_DEV,
 			isIn: true,
 
@@ -45,9 +39,6 @@ export default {
 		}
 	},
 	computed: {
-		maxIcon() {
-			return this.isMaximize ? 'ios-browsers-outline' : 'ios-square-outline';
-		},
 		transitionClass() {
 			if (this.isIn) {
 				return {
@@ -110,70 +101,12 @@ export default {
 	},
 	created() {
 		this.$nextTick(this.updateTitle);
-		const win = this.$options.win;
-		win.on('maximize', () => this.isMaximize = true);
-		win.on('unmaximize', () => this.isMaximize = false);
-
-		this.isAlwaysOnTop = sys.getStorage('isAlwaysOnTop', false);
-		win.setAlwaysOnTop(this.isAlwaysOnTop === 'true');
-		this.isAlwaysOnTop = win.isAlwaysOnTop();
 
 		// 监听背景图片被更新
 		this.$on('update.background.image', (url) => this.backgroundImage = url);
 		this.$on('update.color', (color) => this.foregroundColor = color);
 	},
 	methods: {
-		isCanBack() {
-			return this.$router.history.current.fullPath !== '/';
-		},
-		isCanForward() {
-			return true;
-		},
-		onBack() {
-			if (!this.isCanBack()) return;
-			this.$router.go(-1);
-		},
-		onForward() {
-			if (!this.isCanForward()) return;
-			this.$router.go(1);
-		},
-		onRefresh() {
-			window.location.reload();
-		},
-		onMoreMenuSelect(name) {
-			const win = this.$options.win;
-			if ('debug' === name) {
-				const isDebug = win.webContents.isDevToolsOpened();
-				if (isDebug) {
-					win.webContents.closeDevTools();
-				} else {
-					win.webContents.openDevTools();
-				}
-				this.isDebug = !isDebug;
-			} else if ('home' === name) {
-				this.$router.replace('/');
-			} else if ('always-top' === name) {
-				const isAlwaysOnTop = this.$options.win.isAlwaysOnTop();
-				win.setAlwaysOnTop(!isAlwaysOnTop);
-				this.isAlwaysOnTop = !isAlwaysOnTop;
-			} else if ('setting' === name) {
-				this.$router.push('/setting');
-			} else if ('update' === name) {
-				ipcRenderer.send('app.update');
-			}
-		},
-		onMinni() {
-			this.$options.win.minimize();
-		},
-		onMax() {
-			const win = this.$options.win;
-			this.isMaximize ? win.unmaximize() : win.maximize();
-			this.isMaximize = !this.isMaximize;
-		},
-		onClose() {
-			// this.$options.win.close();
-			this.$options.win.hide();
-		},
 		updateTitle() {
 			this.title = this.$route.meta.title;
 		},
@@ -228,68 +161,5 @@ export default {
 		/*z-index: -1;*/
 		background: inherit;
 		margin: -50px;
-	}
-
-	.app-layout-header {
-		display: flex;
-		z-index: 10;
-		-webkit-app-region: drag;
-	}
-
-	.app-layout-header > .app-layout-header-left,
-	.app-layout-header > .app-layout-header-center,
-	.app-layout-header > .app-layout-header-right {
-		padding: 0 5px;
-		white-space: nowrap;
-		overflow: hidden;
-	}
-
-	.app-layout-header > .app-layout-header-left {
-		font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-		font-size: 16px;
-		line-height: 48px;
-		text-overflow: ellipsis;
-		flex: 0 0 140px;
-	}
-
-	.app-layout-header > .app-layout-header-center {
-		/*width: 84px;*/
-		flex-grow: 1;
-	}
-
-	.app-layout-header > .app-layout-header-right {
-		/*width: 156px;*/
-	}
-
-	.app-layout-header > .app-layout-header-right > div {
-		float: right;
-	}
-
-	.app-layout-header .app-layout-action-btn {
-		display: inline-block;
-		/*padding-left: 10px;*/
-		/*padding-right: 10px;*/
-
-		line-height: 48px;
-		transition: all 0.1s;
-
-		user-select: none;
-		-webkit-app-region: no-drag;
-	}
-
-	.app-layout-header .app-layout-action-btn:not(.disabled):active {
-		opacity: 0.8;
-	}
-
-	.app-layout-header .app-layout-action-btn.disabled {
-		opacity: 0.6;
-	}
-
-	.app-layout-header > .app-layout-action-btn > .ivu-icon {
-		vertical-align: middle;
-	}
-
-	.app-layout-header > .app-layout-action-btn:active {
-		opacity: 0.3;
 	}
 </style>

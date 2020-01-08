@@ -1,39 +1,28 @@
 <template>
 	<div class="time">
-		<Row :gutter="16" class="">
-			<Col :span="12" class="col">
-				<Input search enter-button="复制" v-model="currentTime" @on-search="onCopy('currentTime')" readonly>
-					<span slot="prepend">当前时间戳</span>
-				</Input>
-			</Col>
-			<Col :span="12" class="col">
-				<Input search enter-button="复制" v-model="datetime" @on-search="onTransform" clearable>
-					<span slot="prepend">日期转时间戳</span>
-				</Input>
-			</Col>
+		<Input search enter-button="复制" v-model="currentTime" @on-search="onCopy('currentTime')" readonly>
+			<span slot="prepend">当前时间戳</span>
+		</Input>
 
-			<Col :span="12" class="col">
-				<Input search enter-button="复制" v-model="todayStartTime" @on-search="onCopy('todayStartTime')" readonly>
-					<span slot="prepend">今天开始时间戳</span>
-				</Input>
-			</Col>
-			<Col :span="12" class="col">
-				<Input search enter-button="复制" v-model="todayEndTime" @on-search="onCopy('todayEndTime')" readonly>
-					<span slot="prepend">今天结束时间戳</span>
-				</Input>
-			</Col>
+		<Input search enter-button="复制" v-model="datetime" @on-search="onTransform" clearable>
+			<span slot="prepend">日期转时间戳</span>
+		</Input>
 
-			<Col :span="12" class="col">
-				<Input search enter-button="复制" v-model="yesterdayStartTime" @on-search="onCopy('yesterdayStartTime')" readonly>
-					<span slot="prepend">昨天开始时间戳</span>
-				</Input>
-			</Col>
-			<Col :span="12" class="col">
-				<Input search enter-button="复制" v-model="yesterdayEndTime" @on-search="onCopy('yesterdayEndTime')" readonly>
-					<span slot="prepend">昨天结束时间戳</span>
-				</Input>
-			</Col>
-		</Row>
+		<Input search enter-button="复制" v-model="todayStartTime" @on-search="onCopy('todayStartTime')" readonly>
+			<span slot="prepend">今天开始时间戳</span>
+		</Input>
+
+		<Input search enter-button="复制" v-model="todayEndTime" @on-search="onCopy('todayEndTime')" readonly>
+			<span slot="prepend">今天结束时间戳</span>
+		</Input>
+
+		<Input search enter-button="复制" v-model="yesterdayStartTime" @on-search="onCopy('yesterdayStartTime')" readonly>
+			<span slot="prepend">昨天开始时间戳</span>
+		</Input>
+
+		<Input search enter-button="复制" v-model="yesterdayEndTime" @on-search="onCopy('yesterdayEndTime')" readonly>
+			<span slot="prepend">昨天结束时间戳</span>
+		</Input>
 	</div>
 </template>
 
