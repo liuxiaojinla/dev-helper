@@ -70,7 +70,6 @@
 <script>
 import setting from './data/setting';
 import {ipcRenderer} from 'electron';
-import particlesConfig from "./particles.config";
 
 export default {
 	name: 'app',
@@ -100,13 +99,13 @@ export default {
 		transitionClass() {
 			if (this.isIn) {
 				return {
-					enterActiveClass: "animated fadeInUp",
-					leaveActiveClass: "animated slideOutLeft"
+					enterActiveClass: "animated fadeIn",
+					leaveActiveClass: "animated fadeOut"
 				};
 			} else {
 				return {
-					enterActiveClass: "animated fadeInDown",
-					leaveActiveClass: "animated bounceOutDown"
+					enterActiveClass: "",
+					leaveActiveClass: "animated fadeOut"
 				};
 			}
 		},
@@ -119,9 +118,6 @@ export default {
 		}
 	},
 	mounted() {
-		require('particles.js');
-		particlesJS('app-layout', particlesConfig);
-
 		ipcRenderer.on('app.update', (_, type, res) => {
 			console.log('app.update', type, res);
 			if (type === 'update-available') {
@@ -259,7 +255,6 @@ export default {
 		height: calc(100vh - 10px);
 		margin: 5px;
 		box-shadow: 0 0 5px #A0A0A0;
-		border-radius: 5px;
 
 		background-color: white !important;
 		/*background: url("./assets/images/bg.jpg");*/

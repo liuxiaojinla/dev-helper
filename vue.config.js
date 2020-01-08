@@ -2,8 +2,8 @@ module.exports = {
 	pluginOptions: {
 		electronBuilder: {
 			builderOptions: {
-				appId: "com.duoguan.dev",
-				copyright: "beidou",
+				appId: "com.xiaojin.dev-helper",
+				copyright: "xiaojin",
 				productName: "开发小助手",
 				// afterAllArtifactBuild?, afterPack?, afterSign?, apk?, appId?, appImage?,
 				// appx?, artifactBuildCompleted?, artifactBuildStarted?, artifactName?,

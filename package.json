@@ -22,7 +22,6 @@
 		"js-md5": "^0.7.3",
 		"js-sha1": "^0.6.0",
 		"moment": "^2.24.0",
-		"particles.js": "^2.0.0",
 		"regedit": "^3.0.2",
 		"ssh2-sftp-client": "^2.4.3",
 		"vue": "^2.6.10",
