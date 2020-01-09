@@ -9,7 +9,6 @@ import utilList from "./data/util-list";
 import docList from "./data/doc-list";
 import encryptList from "./data/encrypt-list";
 
-
 Vue.use(Router);
 const isDev = process.env.NODE_ENV !== 'production';
 export default new Router({

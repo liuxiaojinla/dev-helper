@@ -1,11 +1,14 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+
+// plugins
 import './plugins/iview';
 import './plugins/sys-vue-iview-plugin';
 
+// assets
 import './app.less';
-import './animate.css';
+import './assets/css/animate.css';
 
 const fs = require('fs');
 const nodeUtil = require('util');

@@ -45,7 +45,7 @@ export default {
 	}
 
 	.action >>> .ivu-col {
-		/*padding: 8px;*/
+		padding: 8px 0;
 		cursor: pointer;
 		text-align: center;
 	}
