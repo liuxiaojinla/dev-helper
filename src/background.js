@@ -50,6 +50,8 @@ const getWindow = (function() {
 			createProtocol('app');
 			// Load the index.html when not in development
 			win.loadURL('app://./index.html');
+
+			win.webContents.openDevTools();
 		}
 
 		win.show();
@@ -93,13 +95,9 @@ app.on('ready', () => {
 		// await installVueDevtools()
 	}
 
-	assert('ready1');
 	const win = getWindow();
-	assert('ready2');
 	const iconPath = isDevelopment ? path.resolve(__dirname, '../public/icon.png') : path.join(__dirname, 'icon.png');
-	assert('ready3');
 	const tray = new Tray(iconPath);
-	assert('ready4');
 	const contextMenu = Menu.buildFromTemplate([
 		{
 			label: '退出',
@@ -108,10 +106,8 @@ app.on('ready', () => {
 			}
 		},
 	]);
-	assert('ready5');
 	tray.setToolTip('开发小助手');
 	tray.setContextMenu(contextMenu);
-	assert('ready6');
 	tray.on('click', () => {
 		// win.isVisible() ? win.hide() : win.show();
 		// win.restore();
@@ -123,7 +119,6 @@ app.on('ready', () => {
 	win.on('hide', () => {
 		tray.setHighlightMode('never')
 	});
-	assert('ready7');
 	win.show();
 });
 

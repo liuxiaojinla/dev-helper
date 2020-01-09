@@ -4,7 +4,7 @@ import router from './router';
 
 // plugins
 import './plugins/iview';
-import './plugins/sys-vue-iview-plugin';
+// import './plugins/sys-vue-iview-plugin';
 
 // assets
 import './app.less';
@@ -12,13 +12,12 @@ import './assets/css/animate.css';
 
 const fs = require('fs');
 const nodeUtil = require('util');
-const writeFile = nodeUtil.promisify(fs.writeFile);
+// const writeFile = nodeUtil.promisify(fs.writeFile);
 
 Vue.config.productionTip = false;
-
 window.IS_DEV = process.env.NODE_ENV !== 'production';
+// window.router = sys.__ROUTER__ = router;
 
-window.router = sys.__ROUTER__ = router;
 window.app = new Vue({
 	router,
 	render: h => h(App),
@@ -29,7 +28,5 @@ window.app = new Vue({
 }).$mount('#app');
 
 process.on('unhandledRejection', error => {
-	console.error(error)
-
-	writeFile('00.txt', JSON.stringify(error));
+	console.error(error);
 });

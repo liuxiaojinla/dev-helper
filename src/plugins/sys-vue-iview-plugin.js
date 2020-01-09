@@ -4,6 +4,8 @@ import sys from 'sys-vue-iview-adapter';
 import router from '../router';
 import util from "../libs/util";
 
+import "clipboard";
+
 window.sys = sys;
 sys.request.addResponseInterceptor((res) => {
 	if (res && res.data) {
