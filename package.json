@@ -33,7 +33,7 @@
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "^3.5.5",
 		"@vue/cli-service": "^3.7.0",
-		"electron": "3.1.9",
+		"electron": "9.1.0",
 		"electron-icon-builder": "^1.0.2",
 		"electron-squirrel-startup": "^1.0.0",
 		"less": "^2.7.3",
